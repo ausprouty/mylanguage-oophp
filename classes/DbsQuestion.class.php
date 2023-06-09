@@ -9,7 +9,7 @@ class DbsQuestion extends DbConnection {
     private $question;
     private $hlId;
 
-    public function __construct($id, $topicId, $topic, $questionNumber, $question, $hlId) {
+    public function __construct($id = null, $topicId = null, $topic= null, $questionNumber= null, $question=null, $hlId= null) {
         $this->id = $id;
         $this->topicId = $topicId;
         $this->topic = $topic;
@@ -17,6 +17,16 @@ class DbsQuestion extends DbConnection {
         $this->question = $question;
         $this->hlId = $hlId;
     }
+
+    public function findByHL($id)
+    {
+    $dbh= $this->connect();
+    $sth = $dbh->prepare('SELECT * FROM dbs_question WHERE hl_id = :hl_id ORDER BY question_number');
+    $sth ->execute (array('hl_id'=>$id));
+    $record = $sth->fetchAll(PDO::FETCH_ASSOC);
+    return ($record);
+    }
+
 
     // Getters and setters for each property
 
@@ -67,7 +77,4 @@ class DbsQuestion extends DbConnection {
     public function setHlId($hlId) {
         $this->hlId = $hlId;
     }
-}
-?>
-
 }

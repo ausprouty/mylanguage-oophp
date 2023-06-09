@@ -1,17 +1,26 @@
 <?php
 
 
-class DbsPassage {
+class DbsReference extends DbConnection{
     private $lesson;
     private $dbtArray;
     private $reference;
     private $description;
 
-    public function __construct($lesson, $dbtArray, $reference, $description) {
+    public function __construct($lesson = null, $dbtArray= null, $reference= null, $description= null) {
         $this->lesson = $lesson;
         $this->dbtArray = $dbtArray;
         $this->reference = $reference;
         $this->description = $description;
+    }
+
+ public function findByHL($hl_id)
+    {
+    $dbh= $this->connect();
+    $sth = $dbh->prepare('SELECT * FROM dbs_reference ORDER BY lesson');
+    $sth ->execute ();
+    $record = $sth->fetchAll(PDO::FETCH_ASSOC);
+    return ($record);
     }
 
     // Getters and setters for each property
