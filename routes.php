@@ -4,7 +4,7 @@ require_once __DIR__.'./router.php';
 require_once __DIR__.'/configuration/.env.local.php';
 require_once  __DIR__.'/configuration/class-autoload.inc.php';
 ##################################################
-// see https://opis.io/orm/1.x/quick-start.html
+
 
 // Static GET
 // In the URL -> http://localhost
@@ -12,7 +12,7 @@ require_once  __DIR__.'/configuration/class-autoload.inc.php';
 get('/mylanguage-oophp', 'views/index.php');
 
 get('/mylanguage-oophp/test1', 'views/test1.php');
-get('/mylanguage-oophp/dbs', 'views/dbs.php');
+get('/mylanguage-oophp/dbs/$lang1/$lang2', 'views/dbsBilingual.php');
 get('/mylanguage-oophp/reference', 'views/dbsReference.php');
 
 get('/mylanguage-oophp/import/dbswords', 'translation/importRoutines/importDbsTranslationFromGoogle.php');
