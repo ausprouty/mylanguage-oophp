@@ -12,6 +12,7 @@ require_once  __DIR__.'/configuration/class-autoload.inc.php';
 get('/mylanguage-oophp', 'views/index.php');
 
 get('/mylanguage-oophp/test1', 'views/test1.php');
+get('/mylanguage-oophp/bible', 'views/dbsBiblePassage.php');
 get('/mylanguage-oophp/dbs/$lang1/$lang2', 'views/dbsBilingual.php');
 get('/mylanguage-oophp/reference', 'views/dbsReference.php');
 

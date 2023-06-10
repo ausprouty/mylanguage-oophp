@@ -5,6 +5,7 @@ class DbsPageTranslation
 {
   private $translation;
 
+
   static function findByHL($hl_id)
     {
      $file = __DIR__ .'/../translation/languages/' . $hl_id .'/dbs.json';
@@ -15,14 +16,23 @@ class DbsPageTranslation
      }
      return null;
     }
-    static function getBilingualTemplate()
+
+    static function getBilingualTemplate($translation1, $translation2)
     {
-     $file = __DIR__ .'/../templates/dbs.template.html';
-        if (file_exists($file)){
-            $text = file_get_contents($file);
-            return ($text);
+        $file = __DIR__ .'/../templates/dbs.template.html';
+        if (!file_exists($file)){
+            return null;
         }
-        return null;
+        $text = file_get_contents($file);
+        foreach ($translation1 as $key => $value){
+            $find= '{{' . $key . '}}';
+            $template= str_replace ($find, $value, $template);
+        }
+        foreach ($translation2 as $key => $value){
+            $find= '||' . $key . '||';
+            $template= str_replace ($find, $value, $template);
+        }
+        return ($text);
     }
 
 }

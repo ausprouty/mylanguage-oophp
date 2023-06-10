@@ -8,7 +8,7 @@ function myAutoLoader ($className) {
     $path = 'classes/';
     $extension = '.class.php';
     $fileName = $path . $className . $extension;
-    echo ('Autoloader is looking for file ' . $fileName  . '<br>');
+    //echo ('Autoloader is looking for file ' . $fileName  . '<br>');
     if (!file_exists($fileName)) {
       return false;
     }
