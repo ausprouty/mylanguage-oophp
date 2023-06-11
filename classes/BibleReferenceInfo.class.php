@@ -12,7 +12,7 @@
  */
 
 
-class BiblePassageInfo extends BibleBookID
+class BibleReferenceInfo
 
 {
     public   $entry;
@@ -22,18 +22,21 @@ class BiblePassageInfo extends BibleBookID
     private  $verseEnd;
 
 
-   public function __construct($entry, $language_iso = 'eng'){
+   public function __construct(){
 
-        $this->entry = $entry;
+        $this->entry = null;
         $this->chapterStart = null;
         $this->verseStart = null;
         $this->chapterEnd = null;
         $this->verseEnd = null;;
+    }
 
-
+    public function setFromPassage($entry, $language_iso = 'eng'){
         $this->checkSpacing($entry);
         $this->findBook();
-        $this-> findChapterAndVerses();
+        $this->findBookID();
+        $this->getTestament();
+        return $this;// this should give us   $this->entry;
 
     }
 
@@ -57,7 +60,16 @@ class BiblePassageInfo extends BibleBookID
         $this->entry = $entry;
     }
     function findBook(){
-        $this->getBookID();
+        $parts = explode(' ', $this->entry);
+        $book = $parts[0];
+        if ($book == 1 || $book == 2 || $book == 3){
+            $book .= ' '. $parts[1];
+        }
+        if ($book == 'Psalm'){
+            $book = 'Psalms';
+        }
+        $this->bookName= $book;
+
     }
 
 

@@ -4,5 +4,6 @@ $passage = "Matthew 4:3-7";
 $book="Matthew";
 $language_iso = 'eng';
 //$result= new BibleBookID($book);
-$result = new  BiblePassageInfo($passage);
+$info = new  BiblePassageInfo();
+$result= $info->setFromPassage($passage);
 print_r  ($result);

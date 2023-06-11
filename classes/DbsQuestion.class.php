@@ -1,7 +1,7 @@
 <?php
 
-class DbsQuestion extends DbConnection {
-
+class DbsQuestion  {
+    private $dbConnection;
     private $id;
     private $topicId;
     private $topic;
@@ -9,24 +9,34 @@ class DbsQuestion extends DbConnection {
     private $question;
     private $hlId;
 
-    public function __construct($id = null, $topicId = null, $topic= null, $questionNumber= null, $question=null, $hlId= null) {
-        $this->id = $id;
-        $this->topicId = $topicId;
-        $this->topic = $topic;
-        $this->questionNumber = $questionNumber;
-        $this->question = $question;
-        $this->hlId = $hlId;
+    public function __construct() {
+      $this->dbConnection = new DatabaseConnection();
+
     }
 
-    public function findByHL($id)
+    public function xfindByHL($id)
     {
-    $dbh= $this->connect();
-    $sth = $dbh->prepare('SELECT * FROM dbs_question WHERE hl_id = :hl_id ORDER BY question_number');
+    $dbh =  $this->dbConnection;
+    $sth = $dbh->prepare();
     $sth ->execute (array('hl_id'=>$id));
     $record = $sth->fetchAll(PDO::FETCH_ASSOC);
     return ($record);
     }
-
+    public function findByHL($id){
+        $dbConnection = new DatabaseConnection();
+        $query = "SELECT * FROM dbs_questions WHERE hl_id = :hl_id ORDER BY question_number";
+        $params = array('hl_id'=>$id);
+        try {
+            $statement = $dbConnection->executeQuery($query, $params);
+            $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+            $dbConnection->closeConnection();
+            return $data;
+        } catch (Exception $e) {
+            // Handle any exceptions or errors
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+    }
 
     // Getters and setters for each property
 

@@ -15,6 +15,7 @@ get('/mylanguage-oophp/test1', 'views/test1.php');
 get('/mylanguage-oophp/bible', 'views/dbsBiblePassage.php');
 get('/mylanguage-oophp/dbs/$lang1/$lang2', 'views/dbsBilingual.php');
 get('/mylanguage-oophp/reference', 'views/dbsReference.php');
+get('/mylanguage-oophp/questions', 'views/dbsQuestions.php');
 
 get('/mylanguage-oophp/import/dbswords', 'translation/importRoutines/importDbsTranslationFromGoogle.php');
 
