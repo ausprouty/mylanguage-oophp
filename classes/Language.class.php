@@ -2,56 +2,56 @@
 
 
 
-class Language extends DbConnection
+class Language
 {
+    private $dbConnection;
+    public $id;
+    public $name;
+    public $ethnicName;
+    public $languageCodeBibleBrain;
+    public $languageCodeDrupal;
+    public $languageCodeHL;
+    public $languageCodeIso;
+    public $languageCodeBing;
+    public $languageCodeBrowser;
+    public $languageCodeGoogle;
 
-// see  https://www.php.net/manual/en/pdostatement.execute.php
-public function findByHL($id)
-    {
-    $dbh= $this->connect();
-    $sth = $dbh->prepare('SELECT * FROM hl_language WHERE hl_id = :id LIMIT 1');
-	$sth ->execute (array('id'=>'eng00'));
-    $record = $sth->fetch(PDO::FETCH_ASSOC);
-    return ($record);
+    public $direction;
+    public $numeralSet;
+
+    public $isChinese;
+    public $font;
+
+    public function __construct(){
+            $this->dbConnection = new DatabaseConnection();
+        }
+
+    public function findOneByCode($source, $code){
+        $field ='languageCode'.$source;
+        $query = 'SELECT * FROM hl_languages WHERE ' .$field .'= :id ';
+        $params = array(':id'=> $code );
+        try {
+            $statement = $this->dbConnection->executeQuery($query, $params);
+            $data = $statement->fetch(PDO::FETCH_OBJ);
+            $this->id = $data->id  ;
+            $this->name = $data->name  ;
+            $this->ethnicName = $data->ethnicName  ;
+            $this->languageCodeBibleBrain = $data->languageCodeBibleBrain  ;
+            $this->languageCodeHL = $data->languageCodeHL  ;
+            $this->languageCodeIso = $data->languageCodeIso  ;
+            $this->languageCodeBing = $data->languageCodeBing  ;
+            $this->languageCodeBrowser = $data->languageCodeBrowser  ;
+            $this->languageCodeBrowser = $data->languageCodeDrupal  ;
+            $this->languageCodeGoogle = $data->languageCodeGoogle  ;
+            $this->direction = $data->direction  ;
+            $this->numeralSet = $data->numeralSet  ;
+            $this->isChinese = $data->isChinese  ;
+            $this->font = $data->font  ;
+
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+
     }
-
 }
-
-
-/*<?php
-// Database credentials
-$dsn = 'mysql:host=localhost;dbname=your_database_name';
-$user = 'your_username';
-$password = 'your_password';
-
-try {
-    // Create a new PDO instance
-    $pdo = new PDO($dsn, $user, $password);
-
-    // Set error mode to exception
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-    // SQL query to select a record
-    $sql = 'SELECT * FROM language WHERE index = :index LIMIT 1';
-
-    // Prepare the statement
-    $stmt = $pdo->prepare($sql);
-
-    // Bind the parameter
-    $index = 'eng00';
-    $stmt->bindParam(':index', $index);
-
-    // Execute the query
-    $stmt->execute();
-
-    // Fetch the record as an associative array
-    $record = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    // Output the result
-    print_r($record);
-
-} catch (PDOException $e) {
-    echo 'Error: ' . $e->getMessage();
-}
-?>
-*/

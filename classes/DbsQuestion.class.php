@@ -14,25 +14,15 @@ class DbsQuestion  {
 
     }
 
-    public function xfindByHL($id)
-    {
-    $dbh =  $this->dbConnection;
-    $sth = $dbh->prepare();
-    $sth ->execute (array('hl_id'=>$id));
-    $record = $sth->fetchAll(PDO::FETCH_ASSOC);
-    return ($record);
-    }
+
     public function findByHL($id){
-        $dbConnection = new DatabaseConnection();
         $query = "SELECT * FROM dbs_questions WHERE hl_id = :hl_id ORDER BY question_number";
         $params = array('hl_id'=>$id);
         try {
-            $statement = $dbConnection->executeQuery($query, $params);
+            $statement = $this->dbConnection->executeQuery($query, $params);
             $data = $statement->fetchAll(PDO::FETCH_ASSOC);
-            $dbConnection->closeConnection();
             return $data;
         } catch (Exception $e) {
-            // Handle any exceptions or errors
             echo "Error: " . $e->getMessage();
             return null;
         }
