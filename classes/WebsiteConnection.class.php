@@ -9,7 +9,7 @@ class WebsiteConnection
     public $response;
 
 
-    public function __construct($url, $referer){
+    public function __construct(string $url, string $referer){
       $this->url = $url;
       $this->referer = $referer;
       $this->connect();

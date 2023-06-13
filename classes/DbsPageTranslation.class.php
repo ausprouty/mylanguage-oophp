@@ -6,7 +6,7 @@ class DbsPageTranslation
   private $translation;
 
 
-  static function findByHL($hl_id)
+  static function findByHL(string $hl_id)
     {
      $file = __DIR__ .'/../translation/languages/' . $hl_id .'/dbs.json';
      if (file_exists($file)){
@@ -17,7 +17,7 @@ class DbsPageTranslation
      return null;
     }
 
-    static function getBilingualTemplate($translation1, $translation2)
+    static function getBilingualTemplate(array $translation1, array $translation2)
     {
         $file = __DIR__ .'/../templates/dbs.template.html';
         if (!file_exists($file)){

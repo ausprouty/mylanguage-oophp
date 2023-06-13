@@ -27,7 +27,7 @@ class DatabaseConnection{
       }
     }
 
-    public function executeQuery($query, $params = []) {
+    public function executeQuery(string $query, array $params = []) {
         try {
             $statement = $this->connection->prepare($query);
             $statement->execute($params);

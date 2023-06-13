@@ -16,23 +16,23 @@ class BibleReferenceInfo
 
 {
 
-    private $dbConnection;
+    private  $dbConnection;
     public   $entry;
     private  $language_iso;
-    private  $bookName;
-    private  $bookID;
-    private  $testament;
-    private  $chapterStart;
-    private  $verseStart;
-    private  $chapterEnd;
-    private  $verseEnd;
+    public   $bookName;
+    public   $bookID;
+    public   $testament;
+    public   $chapterStart;
+    public   $verseStart;
+    public   $chapterEnd;
+    public   $verseEnd;
 
 
    public function __construct(){
         $this->dbConnection = new DatabaseConnection();
     }
 
-    public function setFromPassage($entry, $language_iso = 'eng'){
+    public function setFromPassage(string $entry, string $language_iso = 'eng'){
         $this->checkSpacing($entry);
         $this->findBook();
         $this->findBookID();
@@ -42,7 +42,7 @@ class BibleReferenceInfo
 
     }
 
-    private function checkSpacing($entry){
+    private function checkSpacing(string $entry){
         // chinese does not use a space before reference
         $entry = trim($entry);
         if (strpos($entry, ' ') === FALSE){

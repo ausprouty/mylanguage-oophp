@@ -1,6 +1,6 @@
 <?php
 
-
+//todo  I think this needs a rewrite
 class DbsReference extends DbConnection{
     private $lesson;
     private $dbtArray;

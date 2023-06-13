@@ -26,7 +26,7 @@ class Language
             $this->dbConnection = new DatabaseConnection();
         }
 
-    public function findOneByCode($source, $code){
+    public function findOneByCode(string $source, string $code){
         $field ='languageCode'.$source;
         $query = 'SELECT * FROM hl_languages WHERE ' .$field .'= :id ';
         $params = array(':id'=> $code );

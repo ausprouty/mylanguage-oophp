@@ -3,31 +3,31 @@
 
 class Bible {
   private  $dbConnection;
-  private $bid;
-  private $source;
-  private $externalId;
-  private $abbreviation;
-  private $volumeName;
-  private $volumeNameAlt;
-  private $languageCode;
-  private $languageCodeHL;
-  private $languageName;
-  private $languageEnglish;
-  private $languageCodeIso;
-  private $languageCodeDrupal;
-  private $versionCode;
-  private $collectionCode;
-  private $rightToLeft;
-  private $numerals;
-  private $spacePdf;
-  private $noBoldPdf;
-  private $text;
-  private $audio;
-  private $video;
-  private $mobile;
-  private $web;
-  private $weight;
-  private $dateVerified;
+  public $bid;
+  public $source;
+  public $externalId;
+  public $abbreviation;
+  public $volumeName;
+  public $volumeNameAlt;
+  public $languageCode;
+  public $languageCodeHL;
+  public $languageName;
+  public $languageEnglish;
+  public $languageCodeIso;
+  public $languageCodeDrupal;
+  public $idBibleGateway;
+  public $collectionCode;
+  public $rightToLeft;
+  public $numerals;
+  public $spacePdf;
+  public $noBoldPdf;
+  public $text;
+  public $audio;
+  public $video;
+  public $mobile;
+  public $web;
+  public $weight;
+  public $dateVerified;
 
    public function __construct(){
         $this->dbConnection = new DatabaseConnection();
@@ -47,7 +47,7 @@ class Bible {
         }
 
     }
-    private function setBibleValues($data){
+    public function setBibleValues($data){
         if (!$data){
             echo('no data');
             return;
@@ -64,7 +64,7 @@ class Bible {
         $this->languageEnglish = $data->languageEnglish;
         $this->languageIso = $data->languageCodeIso;
         $this->languageDrupal = $data->languageCodeDrupal;
-        $this->versionCode = $data->versionCode;
+        $this->idBibleGateway = $data->idBibleGateway;
         $this->collectionCode = $data->collectionCode;
         $this->rightToLeft = $data->rightToLeft;
         $this->numerals = $data->numerals;

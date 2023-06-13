@@ -15,9 +15,9 @@ class DbsQuestion  {
     }
 
 
-    public function findByHL($id){
-        $query = "SELECT * FROM dbs_questions WHERE hl_id = :hl_id ORDER BY question_number";
-        $params = array('hl_id'=>$id);
+    public function findByHL(string $id){
+        $query = "SELECT * FROM dbs_questions WHERE languageCodeHL = :id ORDER BY question_number";
+        $params = array('id'=>$id);
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
             $data = $statement->fetchAll(PDO::FETCH_ASSOC);
