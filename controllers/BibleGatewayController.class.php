@@ -3,13 +3,14 @@
 require_once ( ROOT. 'includes/getElementsByClass.php');
 require_once (ROOT . 'libraries/simplehtmldom_1_9_1/simple_html_dom.php');
 
-class BiblePassageBibleGatewayController imple
+class BibleGatewayController extends BiblePassage implements BiblePassageController
 {
-
+    private $dbConnection;
     private $bibleReferenceInfo;
     private $bible;
     public  $bibleText;
     public  $passageLink;
+
 
     public function __construct( BibleReferenceInfo $bibleReferenceInfo, Bible $bible){
 
@@ -17,12 +18,9 @@ class BiblePassageBibleGatewayController imple
         $this->bible = $bible;
         $this->bibleText= null;
         $this->passageLink= null;
-        if ($this->bible->source == 'bible_gateway'){
-          $this->bibleText = $this->getBibleGateway();
-        }
     }
 
-    private function getBibleGateway(){
+    private function getExternal(){
         // it seems that Chinese does not always like the way we enter things.// try this and see if it works/
 	    $reference_shaped = str_replace(
                 $this->bibleReferenceInfo->bookName,
@@ -40,8 +38,12 @@ class BiblePassageBibleGatewayController imple
 
 
     }
+    private function saveExternal(){
+        $id =  $BiblePassage::createBiblePassageId($this->bible->bid, $this->BibleReferenceInfo);
+        $newRecord->insertRecord($id, $this->Bibletext);
+    }
 
-     private function bibleGatewayFormat($webpage){
+     private function formatExternal($webpage){
         writeLogDebug('bibleGatewayFormat-42', $webpage);
         $html = str_get_html($webpage);
         $e = $html->find('.dropdown-display-text', 0);

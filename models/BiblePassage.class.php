@@ -15,6 +15,16 @@ class BiblePassage
    public function __construct(){
         $this->dbConnection = new DatabaseConnection();
     }
+    public static function createBiblePassageId(string $bid, BibleReferenceInfo $passage){
+        // 1026-Luke-10-1-42
+        $id=$bid .'-' .
+            $passage->bookID . '-' .
+            $passage->chapterStart . '-'.
+            $passage->verseStart . '-' .
+            $passage->verseEnd;
+        return $id;
+
+    }
     public function findStoredById($id){
         $query = "SELECT * FROM bible_passages WHERE id = :id LIMIT 1";
         $params = array('id'=>$id);
@@ -27,13 +37,9 @@ class BiblePassage
                 $this->dateLastUsed = $data->dateLastUsed;
                 $this->dateChecked = $data->dateChecked;
                 $this->timesUsed = $data->timesUsed;
-                $this->updateUse();
+                $this->updatePassageUse();
             }
-            else{
-                $data=BiblePassageExternal::Bible();
-                $this->text = $data->text;
-                $this->insertRecord();
-            }
+
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return null;
@@ -42,7 +48,7 @@ class BiblePassage
     private function setBiblePassageValues($data){
 
     }
-    private function updateUse(){
+    private function updatePassageUse(){
         $this->dateLastUsed = date("Y-m-d");
         $this->timesUsed=$this->timesUsed + 1;
         $query = "UPDATE bible_passages SET WHERE id = :id LIMIT 1";
@@ -56,24 +62,22 @@ class BiblePassage
                 $this->dateLastUsed = $data->dateLastUsed;
                 $this->dateChecked = $data->dateChecked;
                 $this->timesUsed = $data->timesUsed;
-                $this->updateUse();
             }
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return null;
         }
     }
-    private function insertRecord(){
-        $this->dateLastUsed = date("Y-m-d");
-        $this->timesUsed= 1;
+    protected function insertRecord($id, $text){
+        $dateLastUsed = date("Y-m-d");
         $query = "INSERT INTO bible_passages (id, text, dateLastUsed, dateChecked, timesUsed)
            VALUES (:id, :text, :dateLastUsed, :dateChecked, :timesUsed);
         $params = array(
-            ':id' => $this->id ,
-            ':text' => $this->text,
-            ':dateLastUsed' => $this->dateLastUsed,
-            ':dateChecked' => $this->dateChecked,
-            ':timesUsed' => $this->timesUsed
+            ':id' => $id ,
+            ':text' => $text,
+            ':dateLastUsed' => $dateLastUsed,
+            ':dateChecked' => null,
+            ':timesUsed' => 1
         );
         $statement = $this->dbConnection->executeQuery($query, $params);
     }

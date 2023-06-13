@@ -17,6 +17,7 @@ get('/mylanguage-oophp/test1', 'tests/test1.php');
 get('/mylanguage-oophp/language', 'tests/languageFind.php');
 get('/mylanguage-oophp/reference', 'tests/bibleReferenceInfo.php');
 get('/mylanguage-oophp/dbs/$lang1/$lang2', 'tests/dbsBilingual.php');
+get('/mylanguage-oophp/passage/stored', 'tests/canSeePassageStored.php');
 get('/mylanguage-oophp/questions', 'tests/dbsQuestions.php');
 get('/mylanguage-oophp/webpage', 'tests/webpage.php');
 get('/mylanguage-oophp/import/dbswords', 'translation/importRoutines/importDbsTranslationFromGoogle.php');

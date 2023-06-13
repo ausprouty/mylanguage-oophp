@@ -47,6 +47,19 @@ class Bible {
         }
 
     }
+     public function selectBibleByBid($bid){
+        $query = "SELECT * FROM bibles WHERE bid = :bid";
+        $params = array(':bid'=>$bid);
+        try {
+            $statement = $this->dbConnection->executeQuery($query, $params);
+            $data = $statement->fetch(PDO::FETCH_OBJ);
+            $this->setBibleValues($data);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+
+    }
     public function setBibleValues($data){
         if (!$data){
             echo('no data');
