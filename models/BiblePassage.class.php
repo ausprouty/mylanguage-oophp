@@ -5,8 +5,8 @@
 class BiblePassage
 {
     private $dbConnection;
-    public   $id;
-    private  $text;
+    public   $bpid;
+    public   $text;
     private  $dateLastUsed;
     private  $dateChecked;
     private  $timesUsed;
@@ -17,22 +17,22 @@ class BiblePassage
     }
     public static function createBiblePassageId(string $bid, BibleReferenceInfo $passage){
         // 1026-Luke-10-1-42
-        $id=$bid .'-' .
+        $bpid=$bid .'-' .
             $passage->bookID . '-' .
             $passage->chapterStart . '-'.
             $passage->verseStart . '-' .
             $passage->verseEnd;
-        return $id;
+        return $bpid;
 
     }
-    public function findStoredById($id){
-        $query = "SELECT * FROM bible_passages WHERE id = :id LIMIT 1";
-        $params = array('id'=>$id);
+    public function findStoredById($bpid){
+        $query = "SELECT * FROM bible_passages WHERE bpid = :bpid LIMIT 1";
+        $params = array('bpid'=>$bpid);
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
-            $data = $statement->fetchAll(PDO::FETCH_OBJ);
+            $data = $statement->fetch(PDO::FETCH_OBJ);
             if ($data){
-                $this->id= $data->id;
+                $this->bpid= $data->bpid;
                 $this->text = $data->text;
                 $this->dateLastUsed = $data->dateLastUsed;
                 $this->dateChecked = $data->dateChecked;
@@ -49,36 +49,31 @@ class BiblePassage
 
     }
     private function updatePassageUse(){
+        echo ('<br>updating PassageUse<br>');
         $this->dateLastUsed = date("Y-m-d");
         $this->timesUsed=$this->timesUsed + 1;
-        $query = "UPDATE bible_passages SET WHERE id = :id LIMIT 1";
-        $params = array('id'=>$id);
-        try {
-            $statement = $this->dbConnection->executeQuery($query, $params);
-            $data = $statement->fetchAll(PDO::FETCH_OBJ);
-            if ($data){
-                $this->id= $data->id;
-                $this->text = $data->text;
-                $this->dateLastUsed = $data->dateLastUsed;
-                $this->dateChecked = $data->dateChecked;
-                $this->timesUsed = $data->timesUsed;
-            }
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-            return null;
-        }
-    }
-    protected function insertRecord($id, $text){
-        $dateLastUsed = date("Y-m-d");
-        $query = "INSERT INTO bible_passages (id, text, dateLastUsed, dateChecked, timesUsed)
-           VALUES (:id, :text, :dateLastUsed, :dateChecked, :timesUsed);
+        $query = "UPDATE bible_passages
+            SET dateLastUsed = :dateLastUsed, timesUsed = :timesUsed
+            WHERE bpid = :bpid LIMIT 1";
         $params = array(
-            ':id' => $id ,
+            ':dateLastUsed' =>$this->dateLastUsed,
+            ':timesUsed' =>  $this->timesUsed,
+            'bpid'=>$this->bpid);
+        $statement = $this->dbConnection->executeQuery($query, $params);
+    }
+    protected function insertRecord ($bpid, $text){
+        $dateLastUsed = date("Y-m-d");
+        $query = "INSERT INTO bible_passages (bpid, 'text', dateLastUsed, dateChecked, timesUsed)
+           VALUES (:bpid, :text, :dateLastUsed, :dateChecked, :timesUsed)";
+        $params = array(
+            ':bpidid' => $bpid ,
             ':text' => $text,
             ':dateLastUsed' => $dateLastUsed,
             ':dateChecked' => null,
             ':timesUsed' => 1
         );
         $statement = $this->dbConnection->executeQuery($query, $params);
+
     }
+
 }

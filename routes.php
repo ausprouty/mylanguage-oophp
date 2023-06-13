@@ -12,6 +12,9 @@ require_once __DIR__.'/includes/writeLog.php';
 // The output -> Index
 get('/mylanguage-oophp', 'tests/index.php');
 get('/mylanguage-oophp/bible/test', 'tests/biblePassageControllerTest.php');
+get('/mylanguage-oophp/test/biblegateway', 'tests/canGetBibleGatewayPassage.php');
+get('/mylanguage-oophp/test/dbs/bilingual', 'tests/canMakeBilingualDBS.php');
+
 get('/mylanguage-oophp/bible/$code', 'tests/bestBible.php');
 get('/mylanguage-oophp/test1', 'tests/test1.php');
 get('/mylanguage-oophp/language', 'tests/languageFind.php');

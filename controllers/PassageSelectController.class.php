@@ -23,12 +23,12 @@ class PassageSelectController extends BiblePassage
         $this->passageId = BiblePassage::createBiblePassageId($this->bible->bid,  $this->bibleReferenceInfo);
         print_r ($this->passageId );
         $passage = new BiblePassage();
-        $passage->findStoredById($passage->id);
-        if ($passage->$text){
-            $this->bibleText= $passage->$text;
+        $passage->findStoredById($this->passageId);
+        if ($passage->text){
+            $this->bibleText= $passage->text;
         }
         else{
-            $this->bibleText=getExternal();
+            $this->bibleText=$this->getExternal();
         }
     }
     private function getExternal(){

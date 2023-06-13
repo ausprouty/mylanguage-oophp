@@ -23,7 +23,7 @@ function myAutoLoader ($className) {
     foreach ($paths as $path){
       $extension = '.class.php';
       $fileName = $path . $className . $extension;
-      echo ('Autoloader is looking for file ' . $fileName  . '<br>');
+      //echo ('Autoloader is looking for file ' . $fileName  . '<br>');
       if (file_exists($fileName)) {
         include_once $path . $className . $extension;
         return ;

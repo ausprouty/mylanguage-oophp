@@ -3,9 +3,8 @@
 require_once ( ROOT. 'includes/getElementsByClass.php');
 require_once (ROOT . 'libraries/simplehtmldom_1_9_1/simple_html_dom.php');
 
-class BibleGatewayController extends BiblePassage implements BiblePassageController
-{
-    private $dbConnection;
+class BibleGatewayController extends BiblePassage{
+
     private $bibleReferenceInfo;
     private $bible;
     public  $bibleText;
@@ -20,19 +19,19 @@ class BibleGatewayController extends BiblePassage implements BiblePassageControl
         $this->passageLink= null;
     }
 
-    private function getExternal(){
+    public function getExternal(){
         // it seems that Chinese does not always like the way we enter things.// try this and see if it works/
 	    $reference_shaped = str_replace(
-                $this->bibleReferenceInfo->bookName,
-                $this->bibleReferenceInfo->bookID,
-                $this->bibleReferenceInfo->entry
+            $this->bibleReferenceInfo->bookName,
+            $this->bibleReferenceInfo->bookID,
+            $this->bibleReferenceInfo->entry
         );
 	    $reference_shaped = str_replace(' ' , '%20', $reference_shaped);
         $this->passageLink= 'https://biblegateway.com/passage/?search='. $reference_shaped . '&version='. $this->bible->idBibleGateway ;
         $referer = $this->passageLink;
         $webpage = new WebsiteConnection($this->passageLink, $referer);
         if ($webpage->response){
-             return $this->bibleGatewayFormat($webpage->response);
+             $this->bibleText =  $this->formatExternal($webpage->response);
         }
         return null;
 
