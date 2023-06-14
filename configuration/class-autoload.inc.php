@@ -19,7 +19,7 @@ function XmyAutoLoader ($className) {
 
 function myAutoLoader ($className) {
   //echo ('AutoloadeR is looking for ' . $className  . "<br>");
-    $paths = array('models/', 'controllers/');
+    $paths = array('models/', 'controllers/', 'imports/');
     foreach ($paths as $path){
       $extension = '.class.php';
       $fileName = $path . $className . $extension;

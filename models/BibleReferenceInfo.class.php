@@ -30,19 +30,41 @@ class BibleReferenceInfo
 
    public function __construct(){
         $this->dbConnection = new DatabaseConnection();
+        $this->entry= ' ';
+        $this->language_iso= null;
+        $this->bookName= ' ';
+        $this->bookID= null;
+        $this->testament= null;
+        $this->chapterStart= null;
+        $this->verseStart= null;
+        $this->chapterEnd= null;
+        $this->verseEnd= null;
     }
 
     public function setFromPassage(string $entry, string $language_iso = 'eng'){
-        $this->checkSpacing($entry);
-        $this->findBook();
+        $this->checkEntrySpacing($entry);
+        $this->findBookName();
         $this->findBookID();
         $this->getTestament();
         $this->findChapterAndVerses();
         return $this;// this should give us   $this->entry;
 
     }
+    public function setFromDbtArray(array $dbtArray){
+        print_r ($dbtArray);
+        $entry =$this->checkEntrySpacing ($dbtArray['entry']);
+        $this->entry= $entry;
+        $this->language_iso=null;
+        $this->bookName= $this->findBookName();
+        $this->bookID= $dbtArray['bookId'];
+        $this->testament= $dbtArray['collection_code'];
+        $this->chapterStart= $dbtArray['chapterId'];
+        $this->verseStart= $dbtArray['verseStart'];
+        $this->chapterEnd= null;
+        $this->verseEnd= $dbtArray['verseEnd'];
+    }
 
-    private function checkSpacing(string $entry){
+    private function checkEntrySpacing(string $entry){
         // chinese does not use a space before reference
         $entry = trim($entry);
         if (strpos($entry, ' ') === FALSE){
@@ -61,7 +83,7 @@ class BibleReferenceInfo
         }
         $this->entry = $entry;
     }
-    function findBook(){
+    private function findBookName(){
         $parts = explode(' ', $this->entry);
         $book = $parts[0];
         if ($book == 1 || $book == 2 || $book == 3){
@@ -88,7 +110,7 @@ class BibleReferenceInfo
         }
     }
 
-    protected function getTestament(){
+    private function getTestament(){
         $query = 'SELECT testament FROM bible_books
             WHERE book_id = :book_id  LIMIT 1';
         $params = array(':book_id'=>$this->bookID );
@@ -103,7 +125,7 @@ class BibleReferenceInfo
     }
 
 
-    function findChapterAndVerses(){
+    private function findChapterAndVerses(){
         $pass = str_replace($this->bookName, '', $this->entry);
         $pass = str_replace(' ' , '', $pass);
         $pass = str_replace('፡' , ':', $pass); // from Amharic
@@ -128,6 +150,17 @@ class BibleReferenceInfo
             }
         }
     }
-
+    public function exportPublic(){
+            $export= new stdClass();
+            $export->entry = $this->entry;
+            $export->bookName = $this->bookName;
+            $export->bookID = $this->bookID;
+            $export->testament = $this->testament;
+            $export->chapterStart = $this->chapterStart;
+            $export->verseStart = $this->verseStart;
+            $export->chapterEnd = $this->chapterEnd;
+            $export->verseEnd = $this->verseEnd;
+            return  $export;
+    }
 
 }

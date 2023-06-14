@@ -1,33 +1,43 @@
 <?php
 
 //todo  I think this needs a rewrite
-class DbsReference extends DbConnection{
+class DbsReference {
+    private $dbConnection;
     private $lesson;
-    private $dbtArray;
-    private $reference;
-    private $description;
+    public $dbtArray;
+    public $reference;
+    public $description;
 
     public function __construct($lesson = null, $dbtArray= null, $reference= null, $description= null) {
+        $this->dbConnection = new DatabaseConnection();
         $this->lesson = $lesson;
         $this->dbtArray = $dbtArray;
         $this->reference = $reference;
         $this->description = $description;
     }
 
- public function findByHL($hl_id)
+    public function getLesson($lesson)
     {
-    $dbh= $this->connect();
-    $sth = $dbh->prepare('SELECT * FROM dbs_reference ORDER BY lesson');
-    $sth ->execute ();
-    $record = $sth->fetchAll(PDO::FETCH_ASSOC);
-    return ($record);
+        $query = "SELECT * FROM dbs_references WHERE lesson = :lesson";
+        $params = array('lesson'=>$lesson);
+        try {
+            $statement = $this->dbConnection->executeQuery($query, $params);
+            $data = $statement->fetch(PDO::FETCH_OBJ);
+            if($data){
+
+                $this->lesson =$data->lesson;
+                $this->reference= $data->reference;
+                $this->description =$data->description;
+                $this->dbtArray = $this->checkDbtArray($data->dbt_array);
+            }
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
     }
+
 
     // Getters and setters for each property
-
-    public function getLesson() {
-        return $this->lesson;
-    }
 
     public function setLesson($lesson) {
         $this->lesson = $lesson;
