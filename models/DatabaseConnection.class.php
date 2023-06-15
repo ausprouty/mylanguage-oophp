@@ -8,6 +8,7 @@ class DatabaseConnection{
     private $password;
     private $database;
 
+
     public function __construct(){
       $this->host = DBHOST;
       $this->username = USERNAME;
@@ -19,9 +20,9 @@ class DatabaseConnection{
     private function connect() {
       try {
           $dsn = "mysql:host={$this->host};dbname={$this->database};charset=utf8mb4";
-          $this->connection = new PDO($dsn, $this->username, $this->password);
+          $this->dbConnection = new PDO($dsn, $this->username, $this->password);
           // Set PDO error mode to exception
-          $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          $this->dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       } catch (PDOException $e) {
           throw new Exception("Failed to connect to the database: " . $e->getMessage());
       }
@@ -29,7 +30,7 @@ class DatabaseConnection{
 
     public function executeQuery(string $query, array $params = []) {
         try {
-            $statement = $this->connection->prepare($query);
+            $statement = $this->dbConnection->prepare($query);
             $statement->execute($params);
             return $statement;
         } catch (PDOException $e) {
@@ -38,6 +39,6 @@ class DatabaseConnection{
     }
 
     public function closeConnection() {
-        $this->connection = null;
+        $this->dbConnection = null;
     }
 }

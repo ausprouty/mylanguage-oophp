@@ -4,14 +4,14 @@
 class DbsReference {
     private $dbConnection;
     private $lesson;
-    public $dbtArray;
+    public $bibleReferenceInfo;
     public $reference;
     public $description;
 
-    public function __construct($lesson = null, $dbtArray= null, $reference= null, $description= null) {
+    public function __construct($lesson = null, BibleReferenceInfo $bibleReferenceInfo = null, $reference= null, $description= null) {
         $this->dbConnection = new DatabaseConnection();
         $this->lesson = $lesson;
-        $this->dbtArray = $dbtArray;
+        $this->bibleReferenceInfo = $bibleReferenceInfo;
         $this->reference = $reference;
         $this->description = $description;
     }
@@ -24,11 +24,10 @@ class DbsReference {
             $statement = $this->dbConnection->executeQuery($query, $params);
             $data = $statement->fetch(PDO::FETCH_OBJ);
             if($data){
-
                 $this->lesson =$data->lesson;
                 $this->reference= $data->reference;
                 $this->description =$data->description;
-                $this->dbtArray = $this->checkDbtArray($data->dbt_array);
+                $this->bibleReferenceInfo = json_decode($data->bible_reference_info);
             }
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
@@ -37,34 +36,6 @@ class DbsReference {
     }
 
 
-    // Getters and setters for each property
 
-    public function setLesson($lesson) {
-        $this->lesson = $lesson;
-    }
-
-    public function getDbtArray() {
-        return $this->dbtArray;
-    }
-
-    public function setDbtArray($dbtArray) {
-        $this->dbtArray = $dbtArray;
-    }
-
-    public function getReference() {
-        return $this->reference;
-    }
-
-    public function setReference($reference) {
-        $this->reference = $reference;
-    }
-
-    public function getDescription() {
-        return $this->description;
-    }
-
-    public function setDescription($description) {
-        $this->description = $description;
-    }
 }
 ?>

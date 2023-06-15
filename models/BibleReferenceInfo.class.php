@@ -162,5 +162,16 @@ class BibleReferenceInfo
             $export->verseEnd = $this->verseEnd;
             return  $export;
     }
+    public function importPublic($import)
+    {
+        $this->entry = $import->entry;
+        $this->bookName = $import->bookName;
+        $this->bookID = $import->bookID;
+        $this->testament = $import->testament;
+        $this->chapterStart = $import->chapterStart;
+        $this->verseStart = $import->verseStart;
+        $this->chapterEnd = $import->chapterEnd;
+        $this->verseEnd = $import->verseEnd;
+    }
 
 }

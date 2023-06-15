@@ -59,21 +59,25 @@ class BiblePassage
             ':dateLastUsed' =>$this->dateLastUsed,
             ':timesUsed' =>  $this->timesUsed,
             'bpid'=>$this->bpid);
-        $statement = $this->dbConnection->executeQuery($query, $params);
+        $this->dbConnection->executeQuery($query, $params);
     }
-    protected function insertRecord ($bpid, $text){
-        $dateLastUsed = date("Y-m-d");
-        $query = "INSERT INTO bible_passages (bpid, 'text', dateLastUsed, dateChecked, timesUsed)
-           VALUES (:bpid, :text, :dateLastUsed, :dateChecked, :timesUsed)";
-        $params = array(
-            ':bpidid' => $bpid ,
-            ':text' => $text,
-            ':dateLastUsed' => $dateLastUsed,
-            ':dateChecked' => null,
-            ':timesUsed' => 1
-        );
-        $statement = $this->dbConnection->executeQuery($query, $params);
+    protected function insertPassageRecord ($bpid, $text){
+        if ($text){
+            $dateLastUsed = date("Y-m-d");
+            $query = "INSERT INTO bible_passages (bpid, 'text', dateLastUsed, dateChecked, timesUsed)
+            VALUES (:bpid, :text, :dateLastUsed, :dateChecked, :timesUsed)";
+            $params = array(
+                ':bpidid' => $bpid,
+                ':text' => $text,
+                ':dateLastUsed' => $dateLastUsed,
+                ':dateChecked' => null,
+                ':timesUsed' => 1
+            );
+            print_r ($this->dbConnection);
+            $this->dbConnection->executeQuery($query, $params);
+            }
 
-    }
+
+        }
 
 }

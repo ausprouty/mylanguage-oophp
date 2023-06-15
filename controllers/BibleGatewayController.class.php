@@ -3,7 +3,7 @@
 require_once ( ROOT. 'includes/getElementsByClass.php');
 require_once (ROOT . 'libraries/simplehtmldom_1_9_1/simple_html_dom.php');
 
-class BibleGatewayController extends BiblePassage{
+class BibleGatewayController extends BiblePassage {
 
     private $bibleReferenceInfo;
     private $bible;
@@ -17,29 +17,32 @@ class BibleGatewayController extends BiblePassage{
         $this->bible = $bible;
         $this->bibleText= null;
         $this->passageLink= null;
+        $this->getExternal();
     }
 
     public function getExternal(){
-        // it seems that Chinese does not always like the way we enter things.// try this and see if it works/
+        /* it seems that Chinese does not always like the way we enter things.// try this and see if it works/
 	    $reference_shaped = str_replace(
             $this->bibleReferenceInfo->bookName,
             $this->bibleReferenceInfo->bookID,
             $this->bibleReferenceInfo->entry
         );
-	    $reference_shaped = str_replace(' ' , '%20', $reference_shaped);
+        $reference_shaped = str_replace(' ', '%20', $reference_shaped);
+*/
+	    $reference_shaped = str_replace(' ' , '%20', $this->bibleReferenceInfo->entry);
         $this->passageLink= 'https://biblegateway.com/passage/?search='. $reference_shaped . '&version='. $this->bible->idBibleGateway ;
         $referer = $this->passageLink;
         $webpage = new WebsiteConnection($this->passageLink, $referer);
         if ($webpage->response){
-             $this->bibleText =  $this->formatExternal($webpage->response);
+            $this->bibleText =  $this->formatExternal($webpage->response);
+            $this->saveExternal();
         }
         return null;
-
-
     }
-    private function saveExternal(){
-        $id =  $BiblePassage::createBiblePassageId($this->bible->bid, $this->BibleReferenceInfo);
-        $newRecord->insertRecord($id, $this->Bibletext);
+    public function saveExternal(){
+        $id =  BiblePassage::createBiblePassageId($this->bible->bid, $this->bibleReferenceInfo);
+        echo("$id<br><br>");
+        parent::insertPassageRecord($id, $this->bibleText);
     }
 
      private function formatExternal($webpage){
