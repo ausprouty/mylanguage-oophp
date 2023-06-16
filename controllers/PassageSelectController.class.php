@@ -5,17 +5,20 @@
 class PassageSelectController extends BiblePassage
 {
 
+    //private $dbConnection;
     private $bibleReferenceInfo;
     private $bible;
     private $passageId;// used to see if data is stored
     public  $bibleText;
-    public  $passageLink;
+    public  $passageUrl;
+    public $referenceLocal;
 
     public function __construct( BibleReferenceInfo $bibleReferenceInfo, Bible $bible){
+        //$this->dbConnection = new DatabaseConnection();
             $this->bibleReferenceInfo=$bibleReferenceInfo;
             $this->bible = $bible;
             $this->bibleText= null;
-            $this->passageLink= null;
+            $this->passageUrl= null;
             $this->checkDatabase();
     }
     private function checkDatabase(){
@@ -24,23 +27,27 @@ class PassageSelectController extends BiblePassage
         $passage->findStoredById($this->passageId);
         if ($passage->text){
             $this->bibleText= $passage->text;
-            print_r("Stored: <br>$this->bibleText <br><br>");
+            $this->passageUrl = $passage->passageUrl;
         }
         else{
             $this->bibleText=$this->getExternal();
-
         }
     }
     private function getExternal(){
         switch($this->bible->source){
             case 'bible_gateway':
-                $bibleGateway  = new BibleGatewayController($this->bibleReferenceInfo, $this->bible);
-                $this->bibleText = $bibleGateway->bibleText;
+                $external = new BibleGatewayController($this->bibleReferenceInfo, $this->bible);
+                $this->bibleText = $external->bibleText;
+                $this->passageUrl = $external->passageURL;
+                echo ("url is  $this->passageUrl");
+                $this->referenceLocal = $external->referenceLocal;
+
                 break;
             default:
             break;
         }
-            return null;
+
+
 
     }
 

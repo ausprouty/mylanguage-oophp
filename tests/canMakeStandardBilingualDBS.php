@@ -22,4 +22,4 @@ $bibleReferenceInfo->importPublic($dbsReference->bibleReferenceInfo);
 $dbs->setPassage($bibleReferenceInfo);
 $output= $dbs->getBilingualTemplate();
 
-print_r ($output);
+echo ($output);

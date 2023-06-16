@@ -1,0 +1,24 @@
+.bible{
+color:green;
+}
+table{
+    width:100%;
+}
+td {
+    width:50%;
+    vertical-align: top;
+    padding: 10px;
+}
+li{
+    padding-top:10px;
+}
+h2{
+    margin-block-end: 0em;
+}
+.biblereference{
+    font-weight: bold;
+}
+
+.ltr.dbs.link {
+    text-align: center;
+}

@@ -5,4 +5,4 @@ $bibleReferenceInfo = new BibleReferenceInfo();
 $bibleReferenceInfo->setFromPassage('Luke 1:1-80');
 
 $bibleText= new  PassageSelectController ($bibleReferenceInfo, $bible);
-print_r ($bibleText);
+print_r ($bibleText->bibleText);

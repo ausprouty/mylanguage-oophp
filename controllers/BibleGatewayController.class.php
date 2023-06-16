@@ -4,19 +4,24 @@ require_once ( ROOT. 'includes/getElementsByClass.php');
 require_once (ROOT . 'libraries/simplehtmldom_1_9_1/simple_html_dom.php');
 
 class BibleGatewayController extends BiblePassage {
-
+    private $dbConnection;
     private $bibleReferenceInfo;
     private $bible;
-    public  $bibleText;
-    public  $passageLink;
+
+
+
 
 
     public function __construct( BibleReferenceInfo $bibleReferenceInfo, Bible $bible){
-
+        $this->dbConnection = new DatabaseConnection();
         $this->bibleReferenceInfo=$bibleReferenceInfo;
         $this->bible = $bible;
-        $this->bibleText= null;
-        $this->passageLink= null;
+        $this->referenceLocal = '';
+        $this->text = '';
+        $this->passageUrl = '';
+        $this->dateLastUsed = '';
+        $this->dateChecked = '';
+        $this->timesUsed = 0;
         $this->getExternal();
     }
 
@@ -30,26 +35,26 @@ class BibleGatewayController extends BiblePassage {
         $reference_shaped = str_replace(' ', '%20', $reference_shaped);
 */
 	    $reference_shaped = str_replace(' ' , '%20', $this->bibleReferenceInfo->entry);
-        $this->passageLink= 'https://biblegateway.com/passage/?search='. $reference_shaped . '&version='. $this->bible->idBibleGateway ;
-        $referer = $this->passageLink;
-        $webpage = new WebsiteConnection($this->passageLink, $referer);
+        $this->passageUrl= 'https://biblegateway.com/passage/?search='. $reference_shaped . '&version='. $this->bible->idBibleGateway ;
+        $referer = $this->passageUrl;
+        $webpage = new WebsiteConnection($this->passageUrl, $referer);
         if ($webpage->response){
-            $this->bibleText =  $this->formatExternal($webpage->response);
+            $this->text =  $this->formatExternal($webpage->response);
             $this->saveExternal();
         }
         return null;
     }
     public function saveExternal(){
-        $id =  BiblePassage::createBiblePassageId($this->bible->bid, $this->bibleReferenceInfo);
-        echo("$id<br><br>");
-        parent::insertPassageRecord($id, $this->bibleText);
+        $bpid =  BiblePassage::createBiblePassageId($this->bible->bid, $this->bibleReferenceInfo);
+         echo("  see this  $this->referenceLocal, $this->passageUrl");
+        parent::insertPassageRecord($bpid, $this->referenceLocal,  $this->text, $this->passageUrl);
     }
 
      private function formatExternal($webpage){
         writeLogDebug('bibleGatewayFormat-42', $webpage);
         $html = str_get_html($webpage);
         $e = $html->find('.dropdown-display-text', 0);
-        $reference = $e->innertext;
+        $this->referenceLocal = $e->innertext;
         $passages = $html->find('.passage-text');
         $bible = '';
         foreach($passages as $passage){

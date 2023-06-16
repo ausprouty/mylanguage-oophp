@@ -47,17 +47,17 @@ class DbsBilingualTemplateController
             $find= '||' . $key . '||';
             $template= str_replace ($find, $value, $template);
         }
-        print_r($this->bible1);
-       // print_r($this->bibleReferenceInfo);
+
         $biblePassage1= new PassageSelectController ($this->bibleReferenceInfo, $this->bible1);
-        print_r($biblePassage1);
-echo('<BR><BR>');
-        $bibleText1= $biblePassage1->bibleText;
-//print_r($bibleText1);
         $biblePassage2= new PassageSelectController ($this->bibleReferenceInfo, $this->bible2);
-        $template= str_replace ('{{Bible Block}}', $bibleText1, $template);
-        $bibleText2 = $biblePassage2->bibleText;
-        $this->template= str_replace ('||Bible Block||', $bibleText2, $template);
+        $template = str_replace('{{Bible Reference}}', $biblePassage1->referenceLocal, $template);
+        $template = str_replace('||Bible Reference||', $biblePassage2->referenceLocal, $template);
+        $template = str_replace('{{url}}', $biblePassage1->passageUrl, $template);
+        $template = str_replace('||url||', $biblePassage2->passageUrl, $template);
+
+        $template= str_replace ('{{Bible Block}}', $biblePassage1->bibleText, $template);
+        $template = str_replace ('||Bible Block||', $biblePassage2->bibleText, $template);
+        $this->template = $template;
         return $this->template;
     }
 }

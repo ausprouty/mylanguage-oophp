@@ -6,7 +6,9 @@ class BiblePassage
 {
     private $dbConnection;
     public   $bpid;
+    private  $referenceLocal;
     public   $text;
+    public   $passageUrl;
     private  $dateLastUsed;
     private  $dateChecked;
     private  $timesUsed;
@@ -14,7 +16,14 @@ class BiblePassage
 
    public function __construct(){
         $this->dbConnection = new DatabaseConnection();
-    }
+        $this->bpid = '';
+        $this->referenceLocal= '';
+        $this->text = '';
+        $this->passageUrl='';
+        $this->dateLastUsed = '';
+        $this->dateChecked = '';
+        $this->timesUsed= 0;
+            }
     public static function createBiblePassageId(string $bid, BibleReferenceInfo $passage){
         // 1026-Luke-10-1-42
         $bpid=$bid .'-' .
@@ -49,7 +58,7 @@ class BiblePassage
 
     }
     private function updatePassageUse(){
-        echo ('<br>updating PassageUse<br>');
+
         $this->dateLastUsed = date("Y-m-d");
         $this->timesUsed=$this->timesUsed + 1;
         $query = "UPDATE bible_passages
@@ -61,19 +70,21 @@ class BiblePassage
             'bpid'=>$this->bpid);
         $this->dbConnection->executeQuery($query, $params);
     }
-    protected function insertPassageRecord ($bpid, $text){
+    protected function insertPassageRecord ($bpid, $referenceLocal,  $text, $passageUrl){
         if ($text){
             $dateLastUsed = date("Y-m-d");
-            $query = "INSERT INTO bible_passages (bpid, 'text', dateLastUsed, dateChecked, timesUsed)
-            VALUES (:bpid, :text, :dateLastUsed, :dateChecked, :timesUsed)";
+            $query = "INSERT INTO bible_passages (bpid, reference_local,  text, passage_url, dateLastUsed, dateChecked, timesUsed)
+            VALUES (:bpid,:reference, :textValue, :passageUrl, :dateLastUsed, :dateChecked, :timesUsed)";
             $params = array(
-                ':bpidid' => $bpid,
-                ':text' => $text,
+                ':bpid' => $bpid,
+                'reference'=> $referenceLocal,
+                ':textValue' => $text,
+                ':passageUrl'=> $passageUrl,
                 ':dateLastUsed' => $dateLastUsed,
                 ':dateChecked' => null,
                 ':timesUsed' => 1
             );
-            print_r ($this->dbConnection);
+            $this->dbConnection = new DatabaseConnection();
             $this->dbConnection->executeQuery($query, $params);
             }
 
