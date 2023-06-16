@@ -17,7 +17,7 @@ class BibleGatewayController extends BiblePassage {
         $this->bibleReferenceInfo=$bibleReferenceInfo;
         $this->bible = $bible;
         $this->referenceLocal = '';
-        $this->text = '';
+        $this->passageText = '';
         $this->passageUrl = '';
         $this->dateLastUsed = '';
         $this->dateChecked = '';
@@ -39,7 +39,7 @@ class BibleGatewayController extends BiblePassage {
         $referer = $this->passageUrl;
         $webpage = new WebsiteConnection($this->passageUrl, $referer);
         if ($webpage->response){
-            $this->text =  $this->formatExternal($webpage->response);
+            $this->passageText =  $this->formatExternal($webpage->response);
             $this->saveExternal();
         }
         return null;
@@ -47,7 +47,7 @@ class BibleGatewayController extends BiblePassage {
     public function saveExternal(){
         $bpid =  BiblePassage::createBiblePassageId($this->bible->bid, $this->bibleReferenceInfo);
          echo("  see this  $this->referenceLocal, $this->passageUrl");
-        parent::insertPassageRecord($bpid, $this->referenceLocal,  $this->text, $this->passageUrl);
+        parent::insertPassageRecord($bpid, $this->referenceLocal,  $this->passageText, $this->passageUrl);
     }
 
      private function formatExternal($webpage){

@@ -67,16 +67,16 @@ class Bible {
         }
         $this->bid = $data->bid;
         $this->source = $data->source;
-        $this->damId = $data->externalId;
-        $this->abbr = $data->abbreviation;
+        $this->externalId = $data->externalId;
+        $this->abbreviation = $data->abbreviation;
         $this->volumeName = $data->volumeName;
         $this->volumeNameAlt = $data->volumeNameAlt;
         $this->languageCode = $data->languageCode;
         $this->languageCodeHL = $data->languageCodeHL;
         $this->languageName = $data->languageName;
         $this->languageEnglish = $data->languageEnglish;
-        $this->languageIso = $data->languageCodeIso;
-        $this->languageDrupal = $data->languageCodeDrupal;
+        $this->languageCodeIso = $data->languageCodeIso;
+        $this->languageCodeDrupal = $data->languageCodeDrupal;
         $this->idBibleGateway = $data->idBibleGateway;
         $this->collectionCode = $data->collectionCode;
         $this->rightToLeft = $data->rightToLeft;

@@ -8,4 +8,4 @@ $referenceInfo = new  BibleReferenceInfo();
 $referenceInfo->setFromPassage($entry);
 $passage = new BiblePassageExternalController($referenceInfo, $bibleInfo);
 print_r($passage->passageLink);
-print_r($passage->bibleText);
+print_r($passage->passageText);

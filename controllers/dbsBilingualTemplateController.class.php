@@ -55,8 +55,8 @@ class DbsBilingualTemplateController
         $template = str_replace('{{url}}', $biblePassage1->passageUrl, $template);
         $template = str_replace('||url||', $biblePassage2->passageUrl, $template);
 
-        $template= str_replace ('{{Bible Block}}', $biblePassage1->bibleText, $template);
-        $template = str_replace ('||Bible Block||', $biblePassage2->bibleText, $template);
+        $template= str_replace ('{{Bible Block}}', $biblePassage1->passageText, $template);
+        $template = str_replace ('||Bible Block||', $biblePassage2->passageText, $template);
         $this->template = $template;
         return $this->template;
     }

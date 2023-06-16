@@ -4,26 +4,26 @@
 
 class BiblePassage
 {
-    private $dbConnection;
-    public   $bpid;
-    private  $referenceLocal;
-    public   $text;
-    public   $passageUrl;
-    private  $dateLastUsed;
-    private  $dateChecked;
-    private  $timesUsed;
+    private    $dbConnection;
+    public     $bpid;
+    protected  $referenceLocal;
+    protected  $passageText;
+    protected  $passageUrl;
+    protected  $dateLastUsed;
+    protected  $dateChecked;
+    protected  $timesUsed;
 
 
    public function __construct(){
         $this->dbConnection = new DatabaseConnection();
         $this->bpid = '';
         $this->referenceLocal= '';
-        $this->text = '';
+        $this->passageText = '';
         $this->passageUrl='';
         $this->dateLastUsed = '';
         $this->dateChecked = '';
         $this->timesUsed= 0;
-            }
+    }
     public static function createBiblePassageId(string $bid, BibleReferenceInfo $passage){
         // 1026-Luke-10-1-42
         $bpid=$bid .'-' .
@@ -32,7 +32,6 @@ class BiblePassage
             $passage->verseStart . '-' .
             $passage->verseEnd;
         return $bpid;
-
     }
     public function findStoredById($bpid){
         $query = "SELECT * FROM bible_passages WHERE bpid = :bpid LIMIT 1";
@@ -42,53 +41,103 @@ class BiblePassage
             $data = $statement->fetch(PDO::FETCH_OBJ);
             if ($data){
                 $this->bpid= $data->bpid;
-                $this->text = $data->text;
+                $this->referenceLocal = $data->referenceLocal;
+                $this->passageText = $data->passageText;
+                $this->passageUrl = $data->passageUrl;
                 $this->dateLastUsed = $data->dateLastUsed;
                 $this->dateChecked = $data->dateChecked;
                 $this->timesUsed = $data->timesUsed;
                 $this->updatePassageUse();
             }
-
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return null;
         }
     }
-    private function setBiblePassageValues($data){
-
-    }
-    private function updatePassageUse(){
-
-        $this->dateLastUsed = date("Y-m-d");
-        $this->timesUsed=$this->timesUsed + 1;
-        $query = "UPDATE bible_passages
-            SET dateLastUsed = :dateLastUsed, timesUsed = :timesUsed
-            WHERE bpid = :bpid LIMIT 1";
-        $params = array(
-            ':dateLastUsed' =>$this->dateLastUsed,
-            ':timesUsed' =>  $this->timesUsed,
-            'bpid'=>$this->bpid);
-        $this->dbConnection->executeQuery($query, $params);
-    }
-    protected function insertPassageRecord ($bpid, $referenceLocal,  $text, $passageUrl){
-        if ($text){
+    protected function insertPassageRecord($bpid, $referenceLocal,  $passageText, $passageUrl)
+    {
+        if ($passageText) {
             $dateLastUsed = date("Y-m-d");
-            $query = "INSERT INTO bible_passages (bpid, reference_local,  text, passage_url, dateLastUsed, dateChecked, timesUsed)
-            VALUES (:bpid,:reference, :textValue, :passageUrl, :dateLastUsed, :dateChecked, :timesUsed)";
+            $query = "INSERT INTO bible_passages (bpid, referenceLocal,  passageText, passageUrl, dateLastUsed, dateChecked, timesUsed)
+            VALUES (:bpid,:referenceLocal, :passageText, :passageUrl, :dateLastUsed, :dateChecked, :timesUsed)";
             $params = array(
                 ':bpid' => $bpid,
-                'reference'=> $referenceLocal,
-                ':textValue' => $text,
-                ':passageUrl'=> $passageUrl,
+                'referenceLocal' => $referenceLocal,
+                ':passageText' => $passageText,
+                ':passageUrl' => $passageUrl,
                 ':dateLastUsed' => $dateLastUsed,
                 ':dateChecked' => null,
                 ':timesUsed' => 1
             );
             $this->dbConnection = new DatabaseConnection();
             $this->dbConnection->executeQuery($query, $params);
-            }
-
-
         }
+    }
+
+
+    protected function updateDateChecked(){
+
+        $query = "UPDATE bible_passages
+            SET  dateChecked = :today
+            WHERE bpid = :bpid LIMIT 1";
+        $params = array(
+            ':today' => date("Y-m-d"),
+            ':bpid' => $this->bpid
+        );
+        $this->dbConnection = new DatabaseConnection();
+        $this->dbConnection->executeQuery($query, $params);
+    }
+    protected function updatePassageUrl()
+    {
+        $query = "UPDATE bible_passages
+            SET  passageUrl = :passageUrl
+            WHERE bpid = :bpid LIMIT 1";
+        $params = array(
+            ':passageUrl' => $this->passageUrl,
+            ':bpid' => $this->bpid
+        );
+        $this->dbConnection = new DatabaseConnection();
+        $this->dbConnection->executeQuery($query, $params);
+    }
+
+    private function updatePassageUse()
+    {
+        $this->dateLastUsed = date("Y-m-d");
+        $this->timesUsed = $this->timesUsed + 1;
+        $query = "UPDATE bible_passages
+            SET dateLastUsed = :dateLastUsed, timesUsed = :timesUsed
+            WHERE bpid = :bpid LIMIT 1";
+        $params = array(
+            ':dateLastUsed' => $this->dateLastUsed,
+            ':timesUsed' =>  $this->timesUsed,
+            ':bpid' => $this->bpid
+        );
+        $this->dbConnection->executeQuery($query, $params);
+    }
+    protected function updateReferenceLocal()
+    {   echo ("In updateReferenceLocal with value of $this->referenceLocal and bpid of $this->bpid");
+        $query = "UPDATE bible_passages
+            SET referenceLocal = :referenceLocal
+            WHERE bpid = :bpid LIMIT 1";
+        $params = array(
+            ':referenceLocal' => $this->referenceLocal,
+            ':bpid' => $this->bpid
+        );
+        $this->dbConnection = new DatabaseConnection();
+        $this->dbConnection->executeQuery($query, $params);
+    }
+    protected function updatepassageText()
+    {
+        $query = "UPDATE bible_passages
+            SET  text = :text
+            WHERE bpid = :bpid LIMIT 1";
+        $params = array(
+            ':text' => $this->passageText,
+            ':bpid' => $this->bpid
+        );
+        $this->dbConnection = new DatabaseConnection();
+        $this->dbConnection->executeQuery($query, $params);
+    }
+
 
 }
