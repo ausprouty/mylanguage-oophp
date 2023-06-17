@@ -31,6 +31,31 @@ class Bible {
 
    public function __construct(){
         $this->dbConnection = new DatabaseConnection();
+        $this->bid = ' ';
+        $this->source = ' ';
+        $this->externalId = NULL;
+        $this->abbreviation = NULL;
+        $this->volumeName = ' ';
+        $this->volumeNameAlt = NULL;
+        $this->languageCode = ' ';
+        $this->languageCodeHL = ' ';
+        $this->languageName = ' ';
+        $this->languageEnglish = ' ';
+        $this->languageCodeIso = ' ';
+        $this->languageCodeDrupal = ' ';
+        $this->idBibleGateway = ' ';
+        $this->collectionCode = ' ';
+        $this->rightToLeft = ' ';
+        $this->numerals = ' ';
+        $this->spacePdf = NULL;
+        $this->noBoldPdf = ' ';
+        $this->text = ' ';
+        $this->audio = NULL;
+        $this->video = ' ';
+        $this->mobile = ' ';
+        $this->web = ' ';
+        $this->weight = ' ';
+        $this->dateVerified = ' ';
     }
 
     public function setBestBibleByLanguageCodeHL($code){

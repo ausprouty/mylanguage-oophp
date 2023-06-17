@@ -1,15 +1,11 @@
 <?php
 
-require_once ( ROOT. 'includes/getElementsByClass.php');
-require_once (ROOT . 'libraries/simplehtmldom_1_9_1/simple_html_dom.php');
+
 
 class BibleGatewayController extends BiblePassage {
     private $dbConnection;
     private $bibleReferenceInfo;
     private $bible;
-
-
-
 
 
     public function __construct( BibleReferenceInfo $bibleReferenceInfo, Bible $bible){
@@ -24,6 +20,7 @@ class BibleGatewayController extends BiblePassage {
         $this->timesUsed = 0;
         $this->getExternal();
     }
+ 
 
     public function getExternal(){
         /* it seems that Chinese does not always like the way we enter things.// try this and see if it works/
@@ -40,27 +37,24 @@ class BibleGatewayController extends BiblePassage {
         $webpage = new WebsiteConnection($this->passageUrl, $referer);
         if ($webpage->response){
             $this->passageText =  $this->formatExternal($webpage->response);
-            $this->saveExternal();
         }
-        return null;
+        else{
+            $this->passageText = '';
+        }
     }
-    public function saveExternal(){
-        $bpid =  BiblePassage::createBiblePassageId($this->bible->bid, $this->bibleReferenceInfo);
-         echo("  see this  $this->referenceLocal, $this->passageUrl");
-        parent::insertPassageRecord($bpid, $this->referenceLocal,  $this->passageText, $this->passageUrl);
-    }
+   
 
      private function formatExternal($webpage){
-        writeLogDebug('bibleGatewayFormat-42', $webpage);
+       // writeLogDebug('bibleGatewayFormat-42', $webpage);
         $html = str_get_html($webpage);
         $e = $html->find('.dropdown-display-text', 0);
-        $this->referenceLocal = $e->innertext;
+        $this->createLocalReference($e->innertext);
         $passages = $html->find('.passage-text');
         $bible = '';
         foreach($passages as $passage){
             $bible .= $passage;
         }
-        writeLogDebug('bibleGatewayFormat-51', $bible);
+       // writeLogDebug('bibleGatewayFormat-51', $bible);
         $html->clear();
         unset($html);
         //
@@ -83,7 +77,7 @@ class BibleGatewayController extends BiblePassage {
             $footnote->outertext= '';
         }
         $bible = $html->outertext;
-        writeLogDebug('bibleGatewayFormat-75', $bible);
+       // writeLogDebug('bibleGatewayFormat-75', $bible);
 
         $html = str_get_html($bible);
         $ret = $html->find ('span[class=woj]');
@@ -91,7 +85,7 @@ class BibleGatewayController extends BiblePassage {
             $span->outertext= $span->innertext;
         }
         $bible = $html->outertext;
-        writeLogDebug('bibleGatewayFormat-82', $bible);
+       // writeLogDebug('bibleGatewayFormat-82', $bible);
         $html->clear();
         $html = str_get_html($bible);
         // remove links to footnotes
@@ -119,14 +113,14 @@ class BibleGatewayController extends BiblePassage {
             $chapter->outertext= '<sup class="versenum">1&nbsp;</sup>';
         }
         $bible = $html->outertext;
-        writeLogDebug('bibleGatewayFormat-111', $bible);
+       // writeLogDebug('bibleGatewayFormat-111', $bible);
         unset($html);
         $bad= array(
             '<!--end of crossrefs-->'
         );
         $good='';
         $bible= str_replace( $bad, $good, $bible);
-        writeLogDebug('bibleGatewayFormat-116', $bible);
+       // writeLogDebug('bibleGatewayFormat-116', $bible);
         $pos_start = strpos($bible,'<p' );
         if ($pos_start !== FALSE){
             $bible = substr($bible, $pos_start);
@@ -137,6 +131,15 @@ class BibleGatewayController extends BiblePassage {
         $output =   "\n" . '<!-- begin bible -->'. $bible   ;
         $output.=  "\n" . '<!-- end bible -->' . "\n";
         return $output;
+    }
+    private function createLocalReference($websiteReference){
+        $expectedInReference = $this->bibleReferenceInfo->chapterStart . ':' .
+            $this->bibleReferenceInfo->verseStart . '-' . $this->bibleReferenceInfo->verseEnd;
+        if (strpos($websiteReference, $expectedInReference) == FALSE){
+            $lastSpace =strrpos($websiteReference, ' ');
+            $websiteReference = substr($websiteReference,0, $lastSpace) .' '. $expectedInReference;
+        }
+        $this->referenceLocal =$websiteReference;
     }
 
 }

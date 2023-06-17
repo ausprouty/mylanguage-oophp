@@ -13,7 +13,6 @@ class BiblePassage
     protected  $dateChecked;
     protected  $timesUsed;
 
-
    public function __construct(){
         $this->dbConnection = new DatabaseConnection();
         $this->bpid = '';
@@ -72,6 +71,36 @@ class BiblePassage
             $this->dbConnection = new DatabaseConnection();
             $this->dbConnection->executeQuery($query, $params);
         }
+    }
+    protected function savePassageRecord($bpid, $referenceLocal,  $passageText, $passageUrl){
+        $this->dbConnection = new DatabaseConnection();
+        $query = 'SELECT bpid FROM bible_passages WHERE bpid = :bpid LIMIT 1';
+        $params = array(':bpid'=> $bpid);
+        try {
+            $statement = $this->dbConnection->executeQuery($query, $params);
+            $data = $statement->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+        if ($data->bpid){
+            $query = "UPDATE bible_passages
+            SET  referenceLocal = :referenceLocal,
+            passageText = :passageText,
+            passageUrl = :passageUrl
+            WHERE bpid = :bpid LIMIT 1";
+            $params = array(
+                ':referenceLocal' => $referenceLocal,
+                ':passageText'=> $passageText,
+                ':passageUrl'=> $passageUrl,
+                ':bpid' => $this->bpid
+            );
+            $this->dbConnection->executeQuery($query, $params);
+        }
+        else{
+           $this->insertPassageRecord($bpid, $referenceLocal,  $passageText, $passageUrl);
+        }
+
     }
 
 
