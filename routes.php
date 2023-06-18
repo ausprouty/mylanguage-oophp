@@ -12,7 +12,7 @@ get('/mylanguage-oophp/import/dbs/import', 'imports/canImportDBSReferenceDatabas
 // The output -> Index
 get('/mylanguage-oophp', 'tests/index.php');
 get('/mylanguage-oophp/bible/test', 'tests/biblePassageControllerTest.php');
-get('/mylanguage-oophp/import/bibles/biblebrain', 'imports/canImportBibleBrainBibles.php.php');
+get('/mylanguage-oophp/import/bibles/biblebrain', 'imports/canImportBibleBrainBibles.php');
 get('/mylanguage-oophp/import/passage/update/url', 'imports/canUpdatePassageDatabaseUrl.php');
 get('/mylanguage-oophp/import/passage/update/reference', 'imports/canUpdatePassageDatabaseReference.php');
 get('/mylanguage-oophp/test/biblegateway', 'tests/canGetBibleGatewayPassage.php');
@@ -20,6 +20,7 @@ get('/mylanguage-oophp/test/dbs/bilingual', 'tests/canMakeStandardBilingualDBS.p
 get('/mylanguage-oophp/bible/$code', 'tests/bestBible.php');
 get('/mylanguage-oophp/test/translation', 'tests/canGetTranslation.php');
 get('/mylanguage-oophp/language/hl', 'tests/canGetLanguageFromHL.php');
+get('/mylanguage-oophp/languages/country', 'tests/canGetLanguagesForCountryCode.php');
 get('/mylanguage-oophp/test/bible/reference/info', 'tests/CanCreateBibleReferenceInfo.php');
 get('/mylanguage-oophp/test/passage/select', 'tests/canSelectBiblePassageFromDatabaseOrExternal.php');
 get('/mylanguage-oophp/dbs/$lang1/$lang2', 'tests/dbsBilingual.php');

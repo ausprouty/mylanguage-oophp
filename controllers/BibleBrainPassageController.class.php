@@ -3,7 +3,7 @@
 
 }
 
-class DbtBibleController extends BiblePassage {
+class BibleBrainPassageController extends BiblePassage {
     private $dbConnection;
     private $bibleReferenceInfo;
     private $bible;
@@ -25,6 +25,7 @@ class DbtBibleController extends BiblePassage {
 
     public function getExternal(){
         
-   
-
+   /* to get verses: https://4.dbt.io/api/bibles/filesets/:fileset_id/:book/:chapter?verse_start=5&verse_end=5&v=4
+  */
+  
 }

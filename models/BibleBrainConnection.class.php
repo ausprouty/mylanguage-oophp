@@ -6,6 +6,7 @@ class BibleBrainConnection
 {
     private $url;
     public $response;
+    
     public function __construct(string $url){
       $this->url = $url . '&v=4&key=' .  BIBLE_BRAIN_KEY;
       $this->connect();
@@ -23,7 +24,8 @@ class BibleBrainConnection
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => 'GET',
             ));
-            $this->response = json_decode(curl_exec($curl));
+           $decode = json_decode(curl_exec($curl));
+           $this->response = $decode->data;
         } catch (PDOException $e) {
                 throw new Exception("Failed to connect to the website: " . $e->getMessage());
         }
