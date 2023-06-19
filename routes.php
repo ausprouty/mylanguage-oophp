@@ -16,6 +16,7 @@ get('/mylanguage-oophp/import/bibles/biblebrain', 'imports/canImportBibleBrainBi
 get('/mylanguage-oophp/import/passage/update/url', 'imports/canUpdatePassageDatabaseUrl.php');
 get('/mylanguage-oophp/import/passage/update/reference', 'imports/canUpdatePassageDatabaseReference.php');
 get('/mylanguage-oophp/test/biblegateway', 'tests/canGetBibleGatewayPassage.php');
+get('/mylanguage-oophp/test/biblebrain/bible/default', 'tests/canGetBestBibleFromBibleBrain.php');
 get('/mylanguage-oophp/test/dbs/bilingual', 'tests/canMakeStandardBilingualDBS.php');
 get('/mylanguage-oophp/bible/$code', 'tests/bestBible.php');
 get('/mylanguage-oophp/test/translation', 'tests/canGetTranslation.php');

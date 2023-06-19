@@ -50,7 +50,7 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
 
     }
     public function getDefaultBible($languageCodeIso){
-        $url ='https: //4.dbt.io/api/bibles/defaults/types?language_code='. strtoupper($languageCodeIso);
+        $url ='https://4.dbt.io/api/bibles/defaults/types?language_code='. $languageCodeIso;
         $bible =  new BibleBrainConnection($url);
         $this->response = $bible->response;
     }
