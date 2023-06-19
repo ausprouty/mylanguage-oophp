@@ -1,7 +1,7 @@
 <?php
 
-
-}
+/*  see https://documenter.getpostman.com/view/12519377/Tz5p6dp7
+*/
 
 class BibleBrainPassageController extends BiblePassage {
     private $dbConnection;

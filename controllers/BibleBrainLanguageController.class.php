@@ -1,8 +1,8 @@
 <?php
+/*  see https://documenter.getpostman.com/view/12519377/Tz5p6dp7
+*/
 
-
-class BibleBrainLanguageController extends Bible {
-    private $dbConnection;
+class BibleBrainLanguageController extends Language {
     public $languageCodeIso;
     public $response;
 
@@ -23,5 +23,18 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
         $languages =  new BibleBrainConnection($url);
         $this->response = $languages->response;
     }
-    
+
+    public function getAllLanguages(){
+        $url = 'https://4.dbt.io/api/languages?';
+        $languages =  new BibleBrainConnection($url);
+        $this->response = $languages->response;
+     
     }
+    public function updateBibleBrainLanguages(){
+        $records = $this->response;
+        foreach ($records as $record){
+            parent::updateBibleBrainLanguage($record);
+        }
+    }
+    
+}

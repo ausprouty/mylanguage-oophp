@@ -1,8 +1,9 @@
 <?php
 
-
+/*  see https://documenter.getpostman.com/view/12519377/Tz5p6dp7
+*/
 class BibleBrainBibleController extends Bible {
-    private $dbConnection;
+
     public $languageCodeIso;
     public $response;
 

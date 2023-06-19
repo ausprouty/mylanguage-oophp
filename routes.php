@@ -13,6 +13,7 @@ get('/mylanguage-oophp/import/dbs/import', 'imports/canImportDBSReferenceDatabas
 get('/mylanguage-oophp', 'tests/index.php');
 get('/mylanguage-oophp/bible/test', 'tests/biblePassageControllerTest.php');
 get('/mylanguage-oophp/import/bibles/biblebrain', 'imports/canImportBibleBrainBibles.php');
+get('/mylanguage-oophp/import/languages/biblebrain','imports/updateBibleBrainLanguages.php');
 get('/mylanguage-oophp/import/passage/update/url', 'imports/canUpdatePassageDatabaseUrl.php');
 get('/mylanguage-oophp/import/passage/update/reference', 'imports/canUpdatePassageDatabaseReference.php');
 get('/mylanguage-oophp/test/biblegateway', 'tests/canGetBibleGatewayPassage.php');
