@@ -27,5 +27,6 @@ class BibleBrainPassageController extends BiblePassage {
         
    /* to get verses: https://4.dbt.io/api/bibles/filesets/:fileset_id/:book/:chapter?verse_start=5&verse_end=5&v=4
   */
+    }
   
 }

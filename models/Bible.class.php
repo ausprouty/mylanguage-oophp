@@ -21,11 +21,11 @@ class Bible {
   public $numerals;
   public $spacePdf;
   public $noBoldPdf;
+  public $format;
   public $text;
   public $audio;
   public $video;
-  public $mobile;
-  public $web;
+
   public $weight;
   public $dateVerified;
 
@@ -49,11 +49,11 @@ class Bible {
         $this->numerals = ' ';
         $this->spacePdf = NULL;
         $this->noBoldPdf = ' ';
+        $this->format = '';
         $this->text = ' ';
         $this->audio = NULL;
         $this->video = ' ';
-        $this->mobile = ' ';
-        $this->web = ' ';
+
         $this->weight = ' ';
         $this->dateVerified = ' ';
     }
@@ -85,6 +85,30 @@ class Bible {
         }
 
     }
+
+    protected function addBibleBrainBible(){
+        echo ("external id is $this->externalId");
+        $query = "SELECT bid  FROM bibles WHERE externalId = :externalId";
+        $params = array(':externalId' => $this->externalId);
+        $this->dbConnection = new DatabaseConnection();
+        $statement = $this->dbConnection->executeQuery($query, $params);
+        $bid = $statement->fetch(PDO::FETCH_COLUMN);
+        if (!$bid){
+            $query = "INSERT INTO bibles 
+            (source, externalId, volumeName, languageCodeIso, 
+            collectionCode,format, text, audio, video, dateVerified) 
+            VALUES (:source, :externalId, :volumeName,:languageCodeIso, 
+            :collectionCode,:format,:text,:audio,:video,:dateVerified)";
+            $params = array(
+                ':source' => $this->source , ':externalId' => $this->externalId , 
+                ':volumeName' => $this->volumeName ,':languageCodeIso' => $this->languageCodeIso ,
+                ':collectionCode' => $this->collectionCode ,':format' => $this->format ,
+                ':text' => $this->text ,':audio' => $this->audio ,':video' => $this->video ,
+                ':dateVerified' => $this->dateVerified);
+            $this->dbConnection->executeQuery($query, $params);
+        }
+
+    }
     public function setBibleValues($data){
         if (!$data){
             echo('no data');
@@ -108,11 +132,11 @@ class Bible {
         $this->numerals = $data->numerals;
         $this->spacePdf = $data->spacePdf;
         $this->noBoldPdf = $data->noBoldPdf;
+        $this->format = $data->format;
         $this->text = $data->text;
         $this->audio = $data->audio;
         $this->video = $data->video;
-        $this->mobile = $data->mobile;
-        $this->web = $data->web;
+     
         $this->weight = $data->weight;
         $this->dateVerified = $data->dateVerified;
 

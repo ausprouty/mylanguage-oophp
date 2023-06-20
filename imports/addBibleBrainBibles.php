@@ -2,4 +2,6 @@
 $languageCodeIso = 'ahk';
 $bibles = new BibleBrainBibleController();
 $bibles->getBiblesForLanguageIso($languageCodeIso, 5);
-print_r($bibles->response);
+$bibles->updateBibleDatabaseWithArray();
+echo($languageCodeIso);
+writeLogDebug('bibles-'. $languageCodeIso , $bibles->response);

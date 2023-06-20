@@ -54,51 +54,31 @@ class Language
         }
 
     }
-    /*[20]=>
-  object(stdClass)#26 (8) {
-    ["id"]=>
-    int(8208)
-    ["glotto_id"]=>
-    NULL
-    ["iso"]=>
-    string(3) "cmn"
-    ["name"]=>
-    string(3) "Hui"
-    ["autonym"]=>
-    string(15) "回族版圣经"
-    ["bibles"]=>
-    int(1)
-    ["filesets"]=>
-    int(12)
-    ["rolv_code"]=>
-    NULL
-  }*/
-    function  updateBibleBrainLanguage($record){
-        if (!$this->BibleBrainRecordExists($record->id)){
-            if ($this->LanguageIsoRecordExists($record->iso)){
-
-            }
-
+    protected function CreateLanguageFromBibleBrainRecord($record){
+        $languageCodeHL = $record->iso . '23';
+        if ($record->name == NULL){
+            writeLogAppend ('ERROR - CreateLanguageFromBibleBrainRecord', $record);
+            $record->name = ' ';
         }
-    }
-    private function BibleBrainRecordExists($languageCodeBibleBrain){
-        $query = 'SELECT id FROM hl_languages WHERE languageCodeBibleBrain = :languageCodeBibleBrain LIMIT 1';
-        $params = array(':languageCodeBibleBrain' => $languageCodeBibleBrain);
-        try {
-            $statement = $this->dbConnection->executeQuery($query, $params);
-            $id = $statement->fetch(PDO::FETCH_COLUMN);
-            return $id;
-        } catch (Exception $e) {
-            echo "Error: " . $e->getMessage();
-            return null;
-        }
+        $query = 'INSERT INTO hl_languages (languageCodeHL,  languageCodeIso, name, ethnicName, languageCodeBibleBrain) 
+        VALUES (:languageCodeHL, :languageCodeIso, :name, :ethnicName, :languageCodeBibleBrain)';
+        $params = array(
+            ':languageCodeHL' => $languageCodeHL,
+            ':languageCodeIso' => $record->iso,
+            ':name' => $record->name,
+            ':ethnicName'=> $record->autonym, 
+            ':languageCodeBibleBrain'=> $record->id
+        );
+        $this->dbConnection = new DatabaseConnection();
+        $this->dbConnection->executeQuery($query, $params);
 
     }
-    private function LanguageIsoRecordExists($languageCodeBibleBrain)
+    protected function LanguageIsoRecordExists($languageCodeIso)
     {
-        $query = 'SELECT id FROM hl_languages WHERE languageCodeBibleBrain = :languageCodeBibleBrain LIMIT 1';
-        $params = array(':languageCodeBibleBrain' => $languageCodeBibleBrain);
+        $query = 'SELECT id FROM hl_languages WHERE languageCodeIso = :languageCodeIso LIMIT 1';
+        $params = array(':languageCodeIso' => $languageCodeIso);
         try {
+            $this->dbConnection = new DatabaseConnection();
             $statement = $this->dbConnection->executeQuery($query, $params);
             $id = $statement->fetch(PDO::FETCH_COLUMN);
             return $id;
@@ -107,5 +87,36 @@ class Language
             return null;
         }
     }
-}
+    protected function EthnicNamesForLanguageIso($languageCodeIso)
+    {
+        $query = 'SELECT ethnicName FROM hl_languages WHERE languageCodeIso = :languageCodeIso';
+        $params = array(':languageCodeIso' => $languageCodeIso);
+        try {
+            $this->dbConnection = new DatabaseConnection();
+            $statement = $this->dbConnection->executeQuery($query, $params);
+            $ethnicNames = $statement->fetchALL(PDO::FETCH_COLUMN);
+            return $ethnicNames;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+    }
+    protected function UpdateEthnicNameFromIso($languageCodeIso, $ethnicName){
+        $query = 'UPDATE hl_languages SET ethnicName = :ethnicName 
+             WHERE languageCodeIso = :languageCodeIso';
+        $params = array(':languageCodeIso' => $languageCodeIso, ':ethnicName'=> $ethnicName
+        );
+        $this->dbConnection = new DatabaseConnection();
+        $this->dbConnection->executeQuery($query, $params);
+    }
+    protected function UpdateLanguageCodeBibleBrainFromIso($languageCodeIso, $languageCodeBibleBrain)
+    {
+        $query = 'UPDATE hl_languages SET languageCodeBibleBrain = :languageCodeBibleBrain 
+             WHERE languageCodeIso = :languageCodeIso';
+        $params = array(
+            ':languageCodeIso' => $languageCodeIso, ':languageCodeBibleBrain' => $languageCodeBibleBrain
+        );
+        $this->dbConnection = new DatabaseConnection();
+        $this->dbConnection->executeQuery($query, $params);
+    }
 }
