@@ -37,23 +37,20 @@ class Bible {
         $this->abbreviation = NULL;
         $this->volumeName = ' ';
         $this->volumeNameAlt = NULL;
-        $this->languageCode = ' ';
         $this->languageCodeHL = ' ';
+        $this->languageCodeIso = ' ';
         $this->languageName = ' ';
         $this->languageEnglish = ' ';
-        $this->languageCodeIso = ' ';
-        $this->languageCodeDrupal = ' ';
         $this->idBibleGateway = ' ';
         $this->collectionCode = ' ';
-        $this->rightToLeft = ' ';
+        $this->format = '';
+        $this->audio = '';
+        $this->text = '';
+        $this->video = '';
         $this->numerals = ' ';
+        $this->rightToLeft = ' ';
         $this->spacePdf = NULL;
         $this->noBoldPdf = ' ';
-        $this->format = '';
-        $this->text = ' ';
-        $this->audio = NULL;
-        $this->video = ' ';
-
         $this->weight = ' ';
         $this->dateVerified = ' ';
     }
@@ -85,9 +82,10 @@ class Bible {
         }
 
     }
+  
 
     protected function addBibleBrainBible(){
-        echo ("external id is $this->externalId");
+        echo ("external id is $this->externalId<br>");
         $query = "SELECT bid  FROM bibles WHERE externalId = :externalId";
         $params = array(':externalId' => $this->externalId);
         $this->dbConnection = new DatabaseConnection();
@@ -95,17 +93,26 @@ class Bible {
         $bid = $statement->fetch(PDO::FETCH_COLUMN);
         if (!$bid){
             $query = "INSERT INTO bibles 
-            (source, externalId, volumeName, languageCodeIso, 
-            collectionCode,format, text, audio, video, dateVerified) 
-            VALUES (:source, :externalId, :volumeName,:languageCodeIso, 
-            :collectionCode,:format,:text,:audio,:video,:dateVerified)";
+            (source, externalId, volumeName, volumeNameAlt, languageCodeIso, 
+            languageName, languageEnglish,
+            collectionCode,format, audio, text, video, dateVerified) 
+            VALUES (:source, :externalId, :volumeName, :volumeNameAlt, 
+            :languageCodeIso, :languageName, :languageEnglish,
+            :collectionCode,:format,:audio,:text,:video,:dateVerified)";
             $params = array(
                 ':source' => $this->source , ':externalId' => $this->externalId , 
-                ':volumeName' => $this->volumeName ,':languageCodeIso' => $this->languageCodeIso ,
+                ':volumeName' => $this->volumeName ,
+                ':volumeNameAlt' => $this->volumeNameAlt, 
+                ':languageCodeIso' => $this->languageCodeIso ,
+                ':languageName' => $this->languageName,
+                ':languageEnglish' => $this->languageEnglish,
                 ':collectionCode' => $this->collectionCode ,':format' => $this->format ,
-                ':text' => $this->text ,':audio' => $this->audio ,':video' => $this->video ,
+                ':audio' => $this->audio, ':text' => $this->text ,':video' => $this->video ,
                 ':dateVerified' => $this->dateVerified);
             $this->dbConnection->executeQuery($query, $params);
+        }
+        else{
+            writeLogAppend('addBibleBrainBible-foundBid'," $bid  - $this->externalId");
         }
 
     }

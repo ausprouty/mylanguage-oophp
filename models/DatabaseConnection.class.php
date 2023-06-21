@@ -31,7 +31,11 @@ class DatabaseConnection{
     public function executeQuery(string $query, array $params = []) {
         try {
             $statement = $this->dbConnection->prepare($query);
-            $statement->execute($params);
+            if (empty($params)) {
+                $statement->execute();
+            } else {
+                $statement->execute($params);
+            }
             return $statement;
         } catch (PDOException $e) {
             throw new Exception("Error executing the query: " . $e->getMessage());
