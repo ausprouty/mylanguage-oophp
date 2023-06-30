@@ -33,8 +33,7 @@ class BibleGatewayController extends BiblePassage {
 */
 	    $reference_shaped = str_replace(' ' , '%20', $this->bibleReferenceInfo->entry);
         $this->passageUrl= 'https://biblegateway.com/passage/?search='. $reference_shaped . '&version='. $this->bible->idBibleGateway ;
-        $referer = $this->passageUrl;
-        $webpage = new WebsiteConnection($this->passageUrl, $referer);
+        $webpage = new WebsiteConnection($this->passageUrl);
         if ($webpage->response){
             $this->passageText =  $this->formatExternal($webpage->response);
         }

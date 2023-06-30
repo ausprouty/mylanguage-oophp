@@ -1,6 +1,6 @@
 <?php
 
 $url = 'https://hereslife.com';
-$referer = 'https://hereslife.com';
-$website = new WebsiteConnection($url, $referer);
+
+$website = new WebsiteConnection($url);
 echo ($website->response);

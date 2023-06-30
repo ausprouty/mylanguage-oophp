@@ -34,7 +34,6 @@ class Bible {
         $this->bid = ' ';
         $this->source = ' ';
         $this->externalId = NULL;
-        $this->abbreviation = NULL;
         $this->volumeName = ' ';
         $this->volumeNameAlt = NULL;
         $this->languageCodeHL = ' ';
@@ -100,7 +99,8 @@ class Bible {
             :languageCodeIso, :languageName, :languageEnglish,
             :collectionCode,:format,:audio,:text,:video,:dateVerified)";
             $params = array(
-                ':source' => $this->source , ':externalId' => $this->externalId , 
+                ':source' => $this->source , 
+                ':externalId' => $this->externalId , 
                 ':volumeName' => $this->volumeName ,
                 ':volumeNameAlt' => $this->volumeNameAlt, 
                 ':languageCodeIso' => $this->languageCodeIso ,
@@ -124,15 +124,12 @@ class Bible {
         $this->bid = $data->bid;
         $this->source = $data->source;
         $this->externalId = $data->externalId;
-        $this->abbreviation = $data->abbreviation;
         $this->volumeName = $data->volumeName;
         $this->volumeNameAlt = $data->volumeNameAlt;
-        $this->languageCode = $data->languageCode;
         $this->languageCodeHL = $data->languageCodeHL;
         $this->languageName = $data->languageName;
         $this->languageEnglish = $data->languageEnglish;
         $this->languageCodeIso = $data->languageCodeIso;
-        $this->languageCodeDrupal = $data->languageCodeDrupal;
         $this->idBibleGateway = $data->idBibleGateway;
         $this->collectionCode = $data->collectionCode;
         $this->rightToLeft = $data->rightToLeft;
@@ -143,7 +140,6 @@ class Bible {
         $this->text = $data->text;
         $this->audio = $data->audio;
         $this->video = $data->video;
-     
         $this->weight = $data->weight;
         $this->dateVerified = $data->dateVerified;
 

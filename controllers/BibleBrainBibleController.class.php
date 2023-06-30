@@ -19,7 +19,7 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
         $this->languageCodeIso = $languageCodeIso;
         $url = 'https://4.dbt.io/api/bibles?language_code=';
         $url .=  strtoupper($languageCodeIso) ;
-        $url .= '&media=text_plain&page=1&limit='. $limit;
+        $url .= '&page=1&limit='. $limit;
         $bibles =  new BibleBrainConnection($url);
         $this->response = $bibles->response;
         writeLogDebug ('getBiblesForLanguageIso',$this->response);
@@ -53,8 +53,8 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
     public function updateBibleDatabaseWithArray(){
         writeLogDebug('updateBibleDatabaseWithArray- ' . $this->languageCodeIso, $this->response);
         $count = 0;
-        $textTypes = array('text_plain', 'text_format', 'text_usx', 'text_html', 'text_json');
         $audioTypes = array('audio_drama', 'audio', 'audio_stream', 'audio_drama_stream');
+        $textTypes = array('text_plain', 'text_format', 'text_usx', 'text_html', 'text_json');
         $videoTypes = array('video_stream','video');
   
         foreach ($this->response as $translation){
