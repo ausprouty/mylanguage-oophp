@@ -7,7 +7,7 @@ class BibleBrainPassageController extends BiblePassage {
     private $dbConnection;
     private $bibleReferenceInfo;
     private $bible;
-    protected $response;
+    public $response;
 
 
     public function __construct( BibleReferenceInfo $bibleReferenceInfo, Bible $bible){

@@ -7,19 +7,24 @@ class DatabaseConnection{
     private $username;
     private $password;
     private $database;
+    private $port;
 
 
     public function __construct(){
-      $this->host = DBHOST;
+      $this->host = 'localhost:9080';
       $this->username = USERNAME;
       $this->password = PASSWORD;
       $this->database = DATABASE;
+      $this->port = 9306;
       $this->connect();
 
     }
     private function connect() {
       try {
-          $dsn = "mysql:host={$this->host};dbname={$this->database};charset=utf8mb4";
+        
+          $dsn = "mysql:host={$this->host};port= {$this->port};dbname={$this->database};charset=utf8mb4";
+          echo $dsn;
+          echo '<br>';
           $this->dbConnection = new PDO($dsn, $this->username, $this->password);
           // Set PDO error mode to exception
           $this->dbConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

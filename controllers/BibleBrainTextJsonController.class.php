@@ -40,9 +40,9 @@ class BibleBrainTextJsonController extends BibleBrainPassageController
 
     function showPassageText(){
         foreach ($this->response as $chapter){
-            echo "$chapter->path <br>";
-            $json =  new WebsiteConnection($chapter->path);
-            writeLogDebug('showPassageJson', $json->response);
+            $json =  new CloudFrontConnection($chapter->path);
+            print_r ($json);
+            writeLogDebug('showPassageJson', $json);
         }
 
     }

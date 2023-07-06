@@ -3,13 +3,12 @@
 */
 
 
-class WebsiteConnection
+class CloudFrontConnection
 {
     protected $url;
     public $response;
     
     public function __construct(string $url){
-      $this->url = $url;
       $this->connect();
     }
     protected function connect() {
@@ -30,19 +29,6 @@ class WebsiteConnection
         } catch (PDOException $e) {
                 throw new Exception("Failed to connect to the website: " . $e->getMessage());
         }
-    }
-    protected function decode(){
-        $decoded = json_decode($this->response);
-        if (isset($decoded->data)){
-            $this->response = $decoded->data;
-        }
-        else{
-            $this->response = $decoded;
-        }
-
-    }
-    public function getResponse(){
-        return $this->response;
     }
 
 }
