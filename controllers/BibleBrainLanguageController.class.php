@@ -41,12 +41,15 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
     {  
         $url = 'https://4.dbt.io/api/languages?language_code=' .$languageCodeIso ;
         $languageDetails =  new BibleBrainConnection($url);
-        writeLogDebug('getlanguageDetails-44', $languageDetails);
+        //writeLogDebug('getlanguageDetails-44', $languageDetails);
         if (isset($languageDetails->response)){
-            $this->LanguageCodeBibleBrain = $this->response->id;
-            $this->iso = $this->response->iso;
-            $this->name = $this->response->name;
-            $this->autonym = $this->response->autonym;
+            //writeLogDebug('getlanguageDetails-46', $languageDetails->response->data);
+            $data = $languageDetails->response->data[0];
+           // writeLogDebug('getlanguageDetails-48', $data);
+            $this->LanguageCodeBibleBrain = $data->id;
+            $this->iso = $data->iso;
+            $this->name = $data->name;
+            $this->autonym = $data->autonym;
         }
         
     }

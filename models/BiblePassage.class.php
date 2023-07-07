@@ -51,7 +51,7 @@ class BiblePassage
             return null;
         }
     }
-    public function getPassageText(){
+    public function showPassageText(){
         return $this->passageText;
     }
     protected function insertPassageRecord($bpid, $referenceLocal,  $passageText, $passageUrl){

@@ -15,9 +15,14 @@ get(ROOT . 'webpage', 'tests/webpage.php');
 
 // Bible Brain
 get(ROOT . 'test/biblebrain/language', 'tests/canGetBibleBrainLanguageDetails.php');
+get(ROOT . 'test/biblebrain/bible/default', 'tests/canGetBestBibleFromBibleBrain.php');
 
 // Bible Gateway
 get(ROOT . 'test/biblegateway', 'tests/canGetBibleGatewayPassage.php');
+
+// DBS
+//Bibles
+get (ROOT. 'test/bibles/best', 'tests/canGetBestBibleByLanguageCodeHL.php');
 
 get(ROOT . 'import/dbs/import', 'imports/canImportDBSReferenceDatabase.php');
 get(ROOT . 'bible/test', 'tests/biblePassageControllerTest.php');
@@ -27,7 +32,7 @@ get(ROOT . 'import/language/details/biblebrain', 'imports/updateBibleBrainLangua
 get(ROOT . 'import/passage/update/url', 'imports/canUpdatePassageDatabaseUrl.php');
 get(ROOT . 'import/passage/update/reference', 'imports/canUpdatePassageDatabaseReference.php');
 
-get(ROOT . 'test/biblebrain/bible/default', 'tests/canGetBestBibleFromBibleBrain.php');
+
 get(ROOT . 'test/biblebrain/bible/formats', 'tests/canGetBibleBrainBibleFormatTypes.php');
 
 get(ROOT . 'test/biblebrain/passage/plain','tests/canGetBibleBrainPassageTextPlain.php');

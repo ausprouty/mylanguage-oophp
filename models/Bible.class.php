@@ -54,7 +54,7 @@ class Bible {
         $this->dateVerified = ' ';
     }
 
-    public function setBestBibleByLanguageCodeHL($code){
+    public function getBestBibleByLanguageCodeHL($code){
         $query = "SELECT * FROM bibles WHERE languageCodeHL = :code ORDER BY weight DESC LIMIT 1";
         $params = array(':code'=>$code);
         try {
@@ -67,6 +67,9 @@ class Bible {
             return null;
         }
 
+    }
+    public function getVolumeName(){
+        return $this->volumeName;
     }
      public function selectBibleByBid($bid){
         $query = "SELECT * FROM bibles WHERE bid = :bid";

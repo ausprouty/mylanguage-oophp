@@ -25,6 +25,9 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
         writeLogDebug ('getBiblesForLanguageIso',$this->response);
 
     }
+    public function showResponse(){
+        return $this->response;
+    }
     public function getFormatTypes(){
 
         $url = 'https://4.dbt.io/api/bibles/filesets/media/types?v=4';

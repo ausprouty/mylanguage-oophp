@@ -2,7 +2,9 @@
 $languageCodeIso = 'spa';
 $language = new BibleBrainLanguageController();
 $language->getlanguageDetails($languageCodeIso);
-$language->updateBibleBrainLanguageDetails();
+echo ('You should see Spanish below <hr>');
+echo ("$language->name  =  $language->autonym  with ISO $language->iso");
+//$language->updateBibleBrainLanguageDetails();
 
 
 
