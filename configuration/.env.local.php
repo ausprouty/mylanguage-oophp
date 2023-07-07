@@ -5,12 +5,12 @@ define('DBHOST','localhost');
 define('DATABASE','mylanguage_api');
 define('USERNAME','mylanguageapi');
 define('PASSWORD','test2023!');
-define('WEBPORT','9080');
+define('WEBPORT','90');
 define('CHARSET','utf8_general_ci');
 define('COLLATION','utf8_general_ci');
 define('PREFIX','');
-define ('ROOT',  __DIR__. '../../');
-define ('ROOT_LOG',  ROOT .'/logs/');
+define ('ROOT',  '/mylanguage-oophp/');
+define ('ROOT_LOG', 'c:/ampp/htdocs/mylanguage-oophp/logs/');
 define ('LOG_MODE',  'write_log');
 
 define("DBT_KEY", '3d116e49d7d98c6e20bf0f4a9c88e4cc');

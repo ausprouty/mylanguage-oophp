@@ -41,8 +41,8 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
     {  
         $url = 'https://4.dbt.io/api/languages?language_code=' .$languageCodeIso ;
         $languageDetails =  new BibleBrainConnection($url);
-        if (isset($languageDetails->response[0])){
-            $this->response = $languageDetails->response[0];
+        writeLogDebug('getlanguageDetails-44', $languageDetails);
+        if (isset($languageDetails->response)){
             $this->LanguageCodeBibleBrain = $this->response->id;
             $this->iso = $this->response->iso;
             $this->name = $this->response->name;

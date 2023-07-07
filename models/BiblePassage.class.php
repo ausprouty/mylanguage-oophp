@@ -1,7 +1,5 @@
 <?php
 
-
-
 class BiblePassage
 {
     private    $dbConnection;
@@ -13,7 +11,7 @@ class BiblePassage
     protected  $dateChecked;
     protected  $timesUsed;
 
-   public function __construct(){
+    public function __construct(){
         $this->dbConnection = new DatabaseConnection();
         $this->bpid = '';
         $this->referenceLocal= '';
@@ -53,8 +51,10 @@ class BiblePassage
             return null;
         }
     }
-    protected function insertPassageRecord($bpid, $referenceLocal,  $passageText, $passageUrl)
-    {
+    public function getPassageText(){
+        return $this->passageText;
+    }
+    protected function insertPassageRecord($bpid, $referenceLocal,  $passageText, $passageUrl){
         if ($passageText) {
             $dateLastUsed = date("Y-m-d");
             $query = "INSERT INTO bible_passages (bpid, referenceLocal,  passageText, passageUrl, dateLastUsed, dateChecked, timesUsed)
@@ -100,12 +100,8 @@ class BiblePassage
         else{
            $this->insertPassageRecord($bpid, $referenceLocal,  $passageText, $passageUrl);
         }
-
     }
-
-
     protected function updateDateChecked(){
-
         $query = "UPDATE bible_passages
             SET  dateChecked = :today
             WHERE bpid = :bpid LIMIT 1";
@@ -116,8 +112,7 @@ class BiblePassage
         $this->dbConnection = new DatabaseConnection();
         $this->dbConnection->executeQuery($query, $params);
     }
-    protected function updatePassageUrl()
-    {
+    protected function updatePassageUrl(){
         $query = "UPDATE bible_passages
             SET  passageUrl = :passageUrl
             WHERE bpid = :bpid LIMIT 1";
@@ -129,8 +124,7 @@ class BiblePassage
         $this->dbConnection->executeQuery($query, $params);
     }
 
-    private function updatePassageUse()
-    {
+    private function updatePassageUse(){
         $this->dateLastUsed = date("Y-m-d");
         $this->timesUsed = $this->timesUsed + 1;
         $query = "UPDATE bible_passages
@@ -143,8 +137,8 @@ class BiblePassage
         );
         $this->dbConnection->executeQuery($query, $params);
     }
-    protected function updateReferenceLocal()
-    {   echo ("In updateReferenceLocal with value of $this->referenceLocal and bpid of $this->bpid");
+    protected function updateReferenceLocal(){ 
+        echo ("In updateReferenceLocal with value of $this->referenceLocal and bpid of $this->bpid");
         $query = "UPDATE bible_passages
             SET referenceLocal = :referenceLocal
             WHERE bpid = :bpid LIMIT 1";
@@ -155,8 +149,7 @@ class BiblePassage
         $this->dbConnection = new DatabaseConnection();
         $this->dbConnection->executeQuery($query, $params);
     }
-    protected function updatepassageText()
-    {
+    protected function updatepassageText(){
         $query = "UPDATE bible_passages
             SET  text = :text
             WHERE bpid = :bpid LIMIT 1";
@@ -167,6 +160,4 @@ class BiblePassage
         $this->dbConnection = new DatabaseConnection();
         $this->dbConnection->executeQuery($query, $params);
     }
-
-
 }

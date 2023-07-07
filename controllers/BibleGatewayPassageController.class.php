@@ -2,7 +2,7 @@
 
 
 
-class BibleGatewayController extends BiblePassage {
+class BibleGatewayPassageController extends BiblePassage {
 
     private $bibleReferenceInfo;
     private $bible;
@@ -45,6 +45,7 @@ class BibleGatewayController extends BiblePassage {
 
      private function formatExternal($webpage){
        // writeLogDebug('bibleGatewayFormat-42', $webpage);
+        require_once('./libraries/simplehtmldom_1_9_1/simple_html_dom.php');
         $html = str_get_html($webpage);
         $e = $html->find('.dropdown-display-text', 0);
         $this->createLocalReference($e->innertext);

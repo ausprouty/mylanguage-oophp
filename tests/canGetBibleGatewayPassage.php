@@ -1,10 +1,10 @@
 <?php
-
 $bible=new Bible();
 $bible->selectBibleByBid(1237);
 $bibleReferenceInfo = new BibleReferenceInfo();
 $bibleReferenceInfo->setFromPassage('Luke 1:1-80');
 
-$passage= new BibleGatewayController($bibleReferenceInfo, $bible);
+$passage= new BibleGatewayPassageController($bibleReferenceInfo, $bible);
 $passage->getExternal();
-print_r ($passage->passageText);
+echo ('You should see Bible passage for Luke 1:1-80<hr>');
+print_r ($passage->getPassageText());
