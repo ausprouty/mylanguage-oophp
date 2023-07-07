@@ -29,10 +29,10 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
         return $this->response;
     }
     public function getFormatTypes(){
-
-        $url = 'https://4.dbt.io/api/bibles/filesets/media/types?v=4';
+        $url = 'https://4.dbt.io/api/bibles/filesets/media/types?';
         $formatTypes =  new BibleBrainConnection($url);
         $this->response = $formatTypes->response;
+        return $formatTypes->response;;
 
     }
     public function getDefaultBible($languageCodeIso){

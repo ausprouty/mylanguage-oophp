@@ -33,7 +33,6 @@ class BibleBrainPassageController extends BiblePassage {
         $url .= '?verse_start=' . $this->bibleReferenceInfo->verseStart . '&verse_end=' .$this->bibleReferenceInfo->verseEnd;
         $bibles =  new BibleBrainConnection($url);
         $this->response = $bibles->response;
-        writeLogDebug('getExternal', $bibles->response);
     }
     public function showPassageText(){
         return $this->passageText;

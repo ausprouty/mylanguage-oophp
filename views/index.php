@@ -8,6 +8,10 @@ echo "<h1> Tests for MyLanguage OOPHP</h1>
 
 <h2>Bible Brain</h2>
 <p> <a href= '/mylanguage-oophp/test/biblebrain/language'>BibleBrain Language</a></p>
+<p><a href = '/mylanguage-oophp/test/biblebrain/bible/default'>Default Bible for Language</a></p>
+<p><a href = '/mylanguage-oophp/test/biblebrain/bible/formats'>Format Types</a></p>
+<p><a href = '/mylanguage-oophp/test/biblebrain/passage/json'>Bible Text Json</a></p>
+
 
 
 <h2>Bible Gateway</h2>
@@ -15,5 +19,6 @@ echo "<h1> Tests for MyLanguage OOPHP</h1>
 
 <h2>Bibles</h2>
 <p><a href = '/mylanguage-oophp/test/bibles/best'> Best Bible for Language</a></p>
+<p><a href = '/mylanguage-oophp/test/passage/select'> Select Passage</a></p>
 
 ";

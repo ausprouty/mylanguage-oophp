@@ -4,6 +4,8 @@
 
 class BibleBrainTextJsonController extends BibleBrainPassageController
 {
+
+  public $json;
     /*array(1) {
   [0]=>
   object(stdClass)#11 (14) {
@@ -37,14 +39,20 @@ class BibleBrainTextJsonController extends BibleBrainPassageController
     NULL
   }
 }*/
+  public function getExternal(){
+    parent::getExternal();
+    $response = $this->response->data[0];
+    writeLogDebug ('BibleBrainTextJsonController-43', $response);
+    $this->getPassageJson($response->path);  
+  }
 
-    function showPassageText(){
-        foreach ($this->response as $chapter){
-            $json =  new CloudFrontConnection($chapter->path);
-            print_r ($json);
-            writeLogDebug('showPassageJson', $json);
-        }
-
-    }
+  private function getPassageJson($url){
+      $json =  new CloudFrontConnection($url);
+      $this->json = $json->response;
+      writeLogDebug('showPassageJson-52', $json);
+  }
+  public function getJson(){
+    return $this->json;
+  }
     
 }

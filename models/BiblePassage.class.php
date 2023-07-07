@@ -51,8 +51,11 @@ class BiblePassage
             return null;
         }
     }
-    public function showPassageText(){
+    public function getPassageText(){
         return $this->passageText;
+    }
+    public function getPassageUrl(){
+        return $this->passageUrl;
     }
     protected function insertPassageRecord($bpid, $referenceLocal,  $passageText, $passageUrl){
         if ($passageText) {
@@ -78,7 +81,7 @@ class BiblePassage
         $params = array(':bpid'=> $bpid);
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
-            $data = $statement->fetchAll(PDO::FETCH_OBJ);
+            $data = $statement->fetch(PDO::FETCH_OBJ);
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return null;
