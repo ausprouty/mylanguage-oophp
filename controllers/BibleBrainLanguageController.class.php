@@ -35,6 +35,65 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
         $this->response = $languages->response;
         
     }
+    public function clearCheckedBBBibles() {
+        $query = 'UPDATE hl_languages SET CheckedBBBibles = NULL';
+        try {
+            $this->dbConnection->executeQuery($query);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+    }
+    public function getNextLanguageforLanguageDetails(){
+        $query = "SELECT languageCodeIso FROM hl_languages 
+            WHERE languageCodeBibleBrain IS NULL
+            AND checkedBBBibles IS NOT NULL LIMIT 1";
+        $this->dbConnection = new DatabaseConnection();
+        $statement = $this->dbConnection->executeQuery($query);
+        $languageCodeIso = $statement->fetch(PDO::FETCH_COLUMN);
+        $this->languageCodeIso = $languageCodeIso;
+        return $languageCodeIso;
+    }
+    public function setLanguageDetailsComplete($languageCodeIso){
+        $query = "UPDATE  hl_languages 
+            SET checkedBBBibles = NULL 
+            WHERE languageCodeIso = :languageCodeIso
+            LIMIT 1";
+        $params = array(':languageCodeIso' => $languageCodeIso);
+        try {
+            $statement = $this->dbConnection->executeQuery($query, $params);
+            $statement->fetch(PDO::FETCH_COLUMN);
+            
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            
+        }
+    }
+
+    public function updateFromLanguageCodeIso($languageCodeIso, $name){
+        $query = 'SELECT languageCodeHL, languageCodeBibleBrain  FROM hl_languages 
+            WHERE languageCodeIso = :languageCodeIso LIMIT 1';
+        $params = array(':languageCodeIso' => $languageCodeIso);
+        $statement = $this->dbConnection->executeQuery($query, $params);
+        $data= $statement->fetch(PDO::FETCH_OBJ);
+        if (!$data->languageCodeHL){
+            $languageCodeHL = $languageCodeIso . date('y');
+            $query = 'INSERT INTO hl_languages (languageCodeIso, languageCodeHL, name)
+                 VALUES (:languageCodeIso, :languageCodeHL, :name)';
+            $params = array(':languageCodeIso' => $languageCodeIso, 
+                ':languageCodeHL' => $languageCodeHL,
+                ':name'=> $name) ;
+            $this->dbConnection->executeQuery($query, $params);
+        }
+        if (!$data->languageCodeBibleBrain){
+           $response = $this->getlanguageDetails($languageCodeIso);
+           echo ("getting Language Details for $languageCodeIso<br>");
+           if ($response){
+              $this->updateBibleBrainLanguageDetails();
+           }
+        }
+        
+    }
 
 
     public function getlanguageDetails($languageCodeIso)
@@ -43,14 +102,22 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
         $languageDetails =  new BibleBrainConnection($url);
         //writeLogDebug('getlanguageDetails-44', $languageDetails);
         if (isset($languageDetails->response)){
-            //writeLogDebug('getlanguageDetails-46', $languageDetails->response->data);
+            if (isset($languageDetails->response->data[0])){ 
+            writeLogDebug('getlanguageDetails-46', $languageDetails->response->data);
             $data = $languageDetails->response->data[0];
-           // writeLogDebug('getlanguageDetails-48', $data);
-            $this->LanguageCodeBibleBrain = $data->id;
-            $this->iso = $data->iso;
-            $this->name = $data->name;
-            $this->autonym = $data->autonym;
+            // writeLogDebug('getlanguageDetails-48', $data);
+                $this->LanguageCodeBibleBrain = $data->id;
+                $this->iso = $data->iso;
+                $this->name = $data->name;
+                $this->autonym = $data->autonym;
+                return true;
+            }
+            else{
+                return false;
+            }
+          
         }
+        return false;
         
     }
 
@@ -75,6 +142,7 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
   }*/
     function  updateBibleBrainLanguageDetails(){
         if(!$this->LanguageCodeBibleBrain){
+            return;
             
         }
         $bibleBrainRecordExists = $this->BibleBrainLanguageRecordExists($this->LanguageCodeBibleBrain);

@@ -11,10 +11,13 @@ require_once __DIR__.'/includes/writeLog.php';
 get('/mylanguage-oophp', 'views/index.php');
 
 // Imports
-get(ROOT . 'import/bibles/biblebrain', 'imports/addBibleBrainBibles.php');
+get(ROOT . 'import/biblebrain/setup', 'imports/clearBibleBrainCheckDate.php');
+get(ROOT . 'import/biblebrain/bibles', 'imports/addBibleBrainBibles.php');
+get(ROOT . 'import/biblebrain/languages','imports/addBibleBrainLanguages.php');
+get(ROOT . 'import/biblebrain/language/details','imports/updateBibleBrainLanguageDetails.php');
 
 // TESTS
-
+get(ROOT . 'test', 'tests/test.php');
 //  Web Access
 get(ROOT . 'webpage', 'tests/webpage.php');
 
@@ -36,7 +39,6 @@ get(ROOT . 'import/dbs/import', 'imports/canImportDBSReferenceDatabase.php');
 get(ROOT . 'bible/test', 'tests/biblePassageControllerTest.php');
 
 get(ROOT . 'import/languages/biblebrain','imports/addBibleBrainLanguages.php');
-get(ROOT . 'import/language/details/biblebrain', 'imports/updateBibleBrainLanguageDetails.php');
 get(ROOT . 'import/passage/update/url', 'imports/canUpdatePassageDatabaseUrl.php');
 get(ROOT . 'import/passage/update/reference', 'imports/canUpdatePassageDatabaseReference.php');
 

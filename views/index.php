@@ -4,12 +4,18 @@
 echo "
 
 <h1> Import Routines for MyLanguage OOPHP</h1>
-<p><a href = '/mylanguage-oophp/import/bibles/biblebrain'>Import Languages from BibleBrain</a></p>
+<p><a href = '/mylanguage-oophp/import/biblebrain/languages'>Import Languages from BibleBrain</a></p>
+<p><a href = '/mylanguage-oophp/import/biblebrain/language/details'>Update Language Details from BibleBrain</a></p>
+<br>
+<p><a href = '/mylanguage-oophp/import/biblebrain/setup'>Reset Bible Brain Check Date for below</a></p>
+<p><a href = '/mylanguage-oophp/import/biblebrain/bibles'>Import Bibles from BibleBrain</a></p>
+
 
 
 
 
 <h1> Tests for MyLanguage OOPHP</h1>
+<p><a href= '/mylanguage-oophp/test'>Variable Test</a></p>
 
 <h2>Web Access</h2>
 <p><a href= '/mylanguage-oophp/webpage'>Access Webpage</a></p>

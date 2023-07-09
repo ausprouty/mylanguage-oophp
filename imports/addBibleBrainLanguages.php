@@ -8,28 +8,35 @@ Save in /imports/data as tab delimited
 
 In Feb 2023 this added 454 languages
 */
-$filename = ROOT . 'imports/data/BibleBrainLanguageUTF8.txt';
-$datafile = file_get_contents($filename);
+$filename = ROOT_IMPORT_DATA . 'BibleBrainLanguageUTF8A.txt';
 
+if (!file_exists($filename)){
+    echo $filename;
+    echo ('<ul><li>Get <a href="https://www.faithcomesbyhearing.com/bible-brain-available-content">list of languages</a></li>
+    <li>Download</li>
+    <li>Open up Excell and then import as UTF-8 text</li>
+    <li>Save in /imports/data/BibleBrainLanguageUTF8.txtas tab delimited</li>
+    <li>Reset Bible Brain Check Date</li>
+    <li>Then run this routine again</li>
+    <li>I will then fill in the Bible Brain Check Date so that you can update the Language Details</li>
+    </ul>');
+    return;
+
+}
+$datafile = file_get_contents($filename);
+$count = 0;
 $records = explode("\n", $datafile);
 foreach ($records as $record){
     $items = explode ("\t", $record);
-    $languageCodeIso = $items[0];
-    $name = str_replace('"', '', $items[1]);
-    $dbConnection = new DatabaseConnection();
-    $query = 'SELECT id FROM hl_languages 
-        WHERE languageCodeIso = :languageCodeIso LIMIT 1';
-    $params = array(':languageCodeIso' => $languageCodeIso);
-    $statement = $dbConnection->executeQuery($query, $params);
-    $id = $statement->fetch(PDO::FETCH_COLUMN);
-    if (!$id){
-        $languageCodeHL = $languageCodeIso . '23';
-        $query = 'INSERT INTO hl_languages (languageCodeHL,  languageCodeIso, name) 
-        VALUES (:languageCodeHL, :languageCodeIso, :name)';
-        $params = array(':languageCodeHL' => $languageCodeHL,
-                        ':languageCodeIso' => $languageCodeIso,
-                        'name' => $name);
-        $statement = $dbConnection->executeQuery($query, $params);
-        
+    if (!isset($items[1])){
+        echo ("finished checking $count languages");
+        return;
     }
+    $count++;
+    $languageCodeIso = $items[0];
+    $name = $items[1];
+    $language = new BibleBrainLanguageController();
+    $language->updateFromLanguageCodeIso($languageCodeIso, $name);
+
+    
 }
