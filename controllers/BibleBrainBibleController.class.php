@@ -21,7 +21,7 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
         $url .=  strtoupper($languageCodeIso) ;
         $url .= '&page=1&limit='. $limit;
         $bibles =  new BibleBrainConnection($url);
-        $this->response = $bibles->response;
+        $this->response = $bibles->response->data;
         writeLogDebug ('getBiblesForLanguageIso',$this->response);
 
     }
