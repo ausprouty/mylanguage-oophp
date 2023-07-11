@@ -22,7 +22,10 @@ echo "
 <p><a href = '/mylanguage-oophp/test/biblebrain/bible/default'>Default Bible for Language</a></p>
 <p><a href = '/mylanguage-oophp/test/biblebrain/bible/formats'>Format Types</a></p>
 <p><a href = '/mylanguage-oophp/test/biblebrain/passage/json'>Bible Text Json</a></p>
-<p><a href = '/mylanguage-oophp/test/biblebrain/passage/plain'>Bible PlainText</a></p>
+<p><a href = '/mylanguage-oophp/test/biblebrain/passage/plain'>Bible Text Plain</a></p>
+<p><a href = '/mylanguage-oophp/test/biblebrain/passage/formatted'>Bible Text Formatted</a></p>
+<p><a href = '/mylanguage-oophp/test/biblebrain/passage/usx'>Bible Text USX</a></p>
+
 
 
 

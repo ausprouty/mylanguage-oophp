@@ -28,6 +28,8 @@ get(ROOT . 'test/biblebrain/bible/default', 'tests/canGetBestBibleFromBibleBrain
 get(ROOT . 'test/biblebrain/bible/formats', 'tests/canGetBibleBrainBibleFormatTypes.php');
 get(ROOT . 'test/biblebrain/passage/json', 'tests/canGetBibleBrainPassageTextJson.php');
 get(ROOT . 'test/biblebrain/passage/plain','tests/canGetBibleBrainPassageTextPlain.php');
+get(ROOT . 'test/biblebrain/passage/formatted','tests/canGetBibleBrainPassageTextFormatted.php');
+get(ROOT . 'test/biblebrain/passage/usx','tests/canGetBibleBrainPassageTextUsx.php');
 get(ROOT . 'test/biblebrain/languages/country', 'tests/canGetLanguagesForCountryCode.php');
 
 // Bible Gateway
