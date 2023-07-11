@@ -1,5 +1,5 @@
 <?php
-
+echo ('This should show the ethnic name of French<hr>');
 $language = new Language();
-$language->findOneByCode('HL', 'eng00');
-print_r($language);
+$language->findOneByCode('HL', 'frn00');
+print_r($language->getEthnicName());

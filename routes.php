@@ -41,19 +41,19 @@ get(ROOT . 'test/dbs/bilingual', 'tests/canMakeStandardBilingualDBS.php');
 //Bibles
 get (ROOT. 'test/bibles/best', 'tests/canGetBestBibleByLanguageCodeHL.php');
 get (ROOT. 'test/passage/select', 'tests/passageSelectControllerTest.php');
+get(ROOT . 'test/bible', 'tests/biblePassageControllerTest.php');
 
-get(ROOT . 'bible/test', 'tests/biblePassageControllerTest.php');
+//Database
+get(ROOT . 'test/language/hl', 'tests/canGetLanguageFromHL.php');
 
 
 
 
-
-get(ROOT . 'language/hl', 'tests/canGetLanguageFromHL.php');
 
 get(ROOT . 'test/bible/reference/info', 'tests/CanCreateBibleReferenceInfo.php');
 get(ROOT . 'test/passage/select', 'tests/canSelectBiblePassageFromDatabaseOrExternal.php');
 
-get(ROOT . 'passage/stored', 'tests/canSeePassageStored.php');
+get(ROOT . 'test/passage/stored', 'tests/canSeePassageStored.php');
 
 
 

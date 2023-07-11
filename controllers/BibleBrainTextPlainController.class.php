@@ -35,7 +35,8 @@ class BibleBrainTextPlainController extends BibleBrainPassageController
     {   $text = null;
         $multiVerseLine = false;
         $startVerseNumber = null;
-        foreach ($this->response as $verse){
+        writeLogDebug ('BibleBrainTextPlainController-38', $this->response);
+        foreach ($this->response->data as $verse){
             $verseNum = $verse->verse_start_alt;
             if ($multiVerseLine){
                 $multiVerseLine = false;

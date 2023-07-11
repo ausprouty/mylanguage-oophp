@@ -4,23 +4,20 @@
 
 class Language
 {
-    private $dbConnection;
-    public $id;
-    public $name;
-    public $ethnicName;
-    public $languageCodeBibleBrain;
-    public $languageCodeDrupal;
-    public $languageCodeHL;
-    public $languageCodeIso;
-    public $languageCodeBing;
-    public $languageCodeBrowser;
-    public $languageCodeGoogle;
-
-    public $direction;
-    public $numeralSet;
-
-    public $isChinese;
-    public $font;
+    private $id;
+    private $name;
+    private $ethnicName;
+    private $languageCodeBibleBrain;
+    private $languageCodeDrupal;
+    private $languageCodeHL;
+    private $languageCodeIso;
+    private $languageCodeBing;
+    private $languageCodeBrowser;
+    private $languageCodeGoogle;
+    private $direction;
+    private $numeralSet;
+    private $isChinese;
+    private $font;
 
     public function __construct(){
             $this->dbConnection = new DatabaseConnection();
@@ -41,7 +38,7 @@ class Language
             $this->languageCodeIso = $data->languageCodeIso  ;
             $this->languageCodeBing = $data->languageCodeBing  ;
             $this->languageCodeBrowser = $data->languageCodeBrowser  ;
-            $this->languageCodeBrowser = $data->languageCodeDrupal  ;
+            $this->languageCodeDrupal = $data->languageCodeDrupal  ;
             $this->languageCodeGoogle = $data->languageCodeGoogle  ;
             $this->direction = $data->direction  ;
             $this->numeralSet = $data->numeralSet  ;
@@ -53,6 +50,57 @@ class Language
             return null;
         }
 
+    }
+    public function getName() {
+        return $this->name;
+    }
+
+    public function getEthnicName() {
+        return $this->ethnicName;
+    }
+
+    public function getLanguageCodeBibleBrain() {
+        return $this->languageCodeBibleBrain;
+    }
+
+    public function getLanguageCodeHL() {
+        return $this->languageCodeHL;
+    }
+
+    public function getLanguageCodeIso() {
+        return $this->languageCodeIso;
+    }
+
+    public function getLanguageCodeBing() {
+        return $this->languageCodeBing;
+    }
+
+    public function getLanguageCodeBrowser() {
+        return $this->languageCodeBrowser;
+    }
+
+    public function getLanguageCodeDrupal() {
+        return $this->languageCodeDrupal;
+    }
+
+    public function getLanguageCodeGoogle() {
+        return $this->languageCodeGoogle;
+    }
+
+    public function getDirection() {
+        return $this->direction;
+    }
+
+    public function getNumeralSet() {
+        return $this->numeralSet;
+    }
+
+    public function getIsChinese() {
+        return $this->isChinese;
+    }
+
+    public function getFont() {
+        return $this->font;
     }
     protected function CreateLanguageFromBibleBrainRecord($record){
         $languageCodeHL = $record->iso . '23';
