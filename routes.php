@@ -7,6 +7,11 @@ require_once  __DIR__.'/configuration/class-autoload.inc.php';
 require_once __DIR__.'/includes/writeLog.php';
 
 
+//API
+
+get(ROOT . 'dbs/$lang1/$lang2/$lesson', 'api/dbsBilingual.php');
+get(ROOT . 'dbs/$lang1/$session', 'api/dbs.php');
+
 // Index
 get('/mylanguage-oophp', 'views/index.php');
 

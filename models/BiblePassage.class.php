@@ -86,12 +86,12 @@ class BiblePassage
             echo "Error: " . $e->getMessage();
             return null;
         }
-        if ($data->bpid){
+        if ($data){
             $query = "UPDATE bible_passages
-            SET  referenceLocal = :referenceLocal,
-            passageText = :passageText,
-            passageUrl = :passageUrl
-            WHERE bpid = :bpid LIMIT 1";
+                SET  referenceLocal = :referenceLocal,
+                passageText = :passageText,
+                passageUrl = :passageUrl
+                WHERE bpid = :bpid LIMIT 1";
             $params = array(
                 ':referenceLocal' => $referenceLocal,
                 ':passageText'=> $passageText,

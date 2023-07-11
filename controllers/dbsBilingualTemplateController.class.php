@@ -8,13 +8,25 @@ class DbsBilingualTemplateController
     private  $bible1;
     private  $bible2;
     private  $bibleReferenceInfo;
+    private  $title;
+    private  $language1;
+    private  $language2;
 
-    public function __construct( string $languageCodeHL1, string $languageCodeHL2)
+    public function __construct( string $languageCodeHL1, string $languageCodeHL2, $lesson)
     {   $translation1 = new Translation($languageCodeHL1, 'dbs');
         $this->translation1=  $translation1->translation;
         $translation2 = new Translation($languageCodeHL2, 'dbs');
         $this->translation2= $translation2->translation;
         $this->template= ' ';
+        $language1 = new Language;
+        $language1-> findOneByCode('HL' , $languageCodeHL1);
+        $this->language1 = $language1->getName();
+        $language2 = new Language;
+        $language2-> findOneByCode('HL' , $languageCodeHL2);
+        $this->language2 = $language2->getName();
+        $title = new DbsReference();
+        $title->getLesson($lesson);
+        $this->title = $title->description;
 
     }
 
@@ -48,12 +60,18 @@ class DbsBilingualTemplateController
             $template= str_replace ($find, $value, $template);
         }
 
+        $template = str_replace('{{language}}', $this->language1, $template);
+        $template = str_replace('||language||', $this->language2, $template);
+
         $biblePassage1= new PassageSelectController ($this->bibleReferenceInfo, $this->bible1);
         $biblePassage2= new PassageSelectController ($this->bibleReferenceInfo, $this->bible2);
         $template = str_replace('{{Bible Reference}}', $biblePassage1->referenceLocal, $template);
         $template = str_replace('||Bible Reference||', $biblePassage2->referenceLocal, $template);
         $template = str_replace('{{url}}', $biblePassage1->passageUrl, $template);
         $template = str_replace('||url||', $biblePassage2->passageUrl, $template);
+
+        $template = str_replace('{{Title}}', $this->title, $template);
+     
 
         $template= str_replace ('{{Bible Block}}', $biblePassage1->passageText, $template);
         $template = str_replace ('||Bible Block||', $biblePassage2->passageText, $template);

@@ -1,8 +1,20 @@
 .bible{
 color:green;
 }
+body{
+    background-color: lightgrey;
+    
+}
+.content{
+    max-width: 600px;
+    margin:auto;
+    background-color: white;
+    padding: 10px;
+
+}
 table{
     width:100%;
+    max-width: 600px;
 }
 td {
     width:50%;
@@ -20,5 +32,11 @@ h2{
 }
 
 .ltr.dbs.link {
+    text-align: center;
+}
+.languages{
+    text-align: center;
+}
+.title{
     text-align: center;
 }
