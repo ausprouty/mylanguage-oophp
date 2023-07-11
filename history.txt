@@ -1,3 +1,4 @@
-about to run 
+
+installed composer to ampp/php
 
 composer require mpdf/mpdf
