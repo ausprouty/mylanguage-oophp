@@ -11,9 +11,19 @@ English must be the first column
 
 $file = __DIR__ . '/../sourceFiles/dbs.txt';
 if (!file_exists($file)){
-    $message = "$file not found in importDbsTranslationFromGoogle";
-        echo ($message);
-    trigger_error($message , E_USER_ERROR);
+    $message = "<p>You are seeing this message because /translation/sourceFiles/dbs.txt was not found </p>";
+    $message .=  '
+    <p>Data needs to be:</p>
+    <ol>
+    <li>Prepared on a <a href="https://docs.google.com/spreadsheets/d/1PlTEb4Q4JiHeYPoKw9WsqVq3dqCCnunPRzvBPnvxb20/edit#gid=0">Google Spread Sheet</a> which is controlled by bob.prouty@powertochange.org.au</li>
+    <li>Copy and Paste the values into Excell on a local computer</li>
+    </i>The values were then copied again into a new file and pasted using the transpose functon</li>
+    <li>They are then copied into sourceFiles/dbs.text</li>
+    </ol>
+    
+    <p>This function will then read that file and place them as json objects inside the languages folder</p>
+    
+    <p>English must be the first column</p>';
     echo ($message);
     return;
 }
