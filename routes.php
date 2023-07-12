@@ -9,8 +9,8 @@ require_once __DIR__.'/includes/writeLog.php';
 
 //API
 
-get(ROOT . 'dbs/$lang1/$lang2/$lesson', 'api/dbsBilingual.php');
-get(ROOT . 'dbs/$lang1/$session', 'api/dbs.php');
+get(ROOT . 'api/dbs/$lang1/$lang2/$lesson', 'api/dbsBilingual.php');
+get(ROOT . 'api/dbs/$lang1/$session', 'api/dbs.php');
 
 // Index
 get('/mylanguage-oophp', 'views/index.php');
@@ -43,6 +43,7 @@ get(ROOT . 'test/biblegateway', 'tests/canGetBibleGatewayPassage.php');
 // DBS
 get(ROOT . 'test/dbs/translation', 'tests/canGetDBSTranslation.php');
 get(ROOT . 'test/dbs/bilingual', 'tests/canMakeStandardBilingualDBS.php');
+get(ROOT . 'test/dbs/pdf', 'tests/canPrintPdf.php');
 
 
 //Bibles

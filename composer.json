@@ -2,4 +2,12 @@
     "require": {
         "mpdf/mpdf": "^8.1"
     }
+    {
+        "autoload": {
+          "psr-4": {
+            "MyLanguageControllers\\": "controllers/",
+            "MyLanguageModels\\": "models/",
+          }
+        }
+      }
 }
