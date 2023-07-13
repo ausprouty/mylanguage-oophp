@@ -47,7 +47,7 @@ class DbsBilingualTemplateController2
     }
     public function getBilingualTemplate()
     {
-        $file = __DIR__ .'/../templates/bilingualdbs.template2.html';
+        $file = ROOT_TEMPLATES . 'bilingualdbs.template2.html';
         if (!file_exists($file)){
             return null;
         }

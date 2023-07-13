@@ -17,5 +17,6 @@ $bibleReferenceInfo->importPublic($dbsReference->bibleReferenceInfo);
 
 $dbs->setPassage($bibleReferenceInfo);
 $dbs->getBilingualTemplate();
-$pdf = new PdfController();
-$pdf->writeToBrowser($dbs->template);
+echo ($dbs->template);
+//$pdf = new PdfController();
+//$pdf->writeToBrowser($dbs->template);

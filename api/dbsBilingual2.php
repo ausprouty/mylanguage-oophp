@@ -20,4 +20,4 @@ $dbs->setPassage($bibleReferenceInfo);
 $dbs->getBilingualTemplate();
 echo ($dbs->template);
 //$pdf = new PdfController();
-//$pdf->writeToBrowser($dbs->template);
+//$pdf->writeToBrowser($dbs->template, 'dbs.css') ;

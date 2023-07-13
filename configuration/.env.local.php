@@ -10,8 +10,10 @@ define('CHARSET','utf8_general_ci');
 define('COLLATION','utf8_general_ci');
 define('PREFIX','');
 define ('ROOT',  '/mylanguage-oophp/');
-define ('ROOT_LOG', 'c:/ampp/htdocs/mylanguage-oophp/logs/');
 define ('ROOT_IMPORT_DATA', 'c:/ampp/htdocs/mylanguage-oophp/imports/data/');
+define ('ROOT_LOG', 'c:/ampp/htdocs/mylanguage-oophp/logs/');
+define ('ROOT_STYLES', 'c:/ampp/htdocs/mylanguage-oophp/styles/');
+define ('ROOT_TEMPLATES', 'c:/ampp/htdocs/mylanguage-oophp/templates/');
 define ('ROOT_VENDOR', 'c:/ampp/htdocs/mylanguage-oophp/vendor/');
 define ('LOG_MODE',  'write_log');
 
