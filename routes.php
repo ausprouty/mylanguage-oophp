@@ -8,6 +8,8 @@ require_once __DIR__.'/includes/writeLog.php';
 
 
 //API
+get(ROOT . 'api/bibles/$languageCodeIso', 'api/biblesForLanguage.php');
+
 
 get(ROOT . 'api/dbs/$lesson/$lang1/$lang2/', 'api/dbsBilingual.php');
 get(ROOT . 'api/dbs2/$lesson/$lang1/$lang2/', 'api/dbsBilingual2.php');

@@ -53,9 +53,23 @@ class Bible {
         $this->weight = ' ';
         $this->dateVerified = ' ';
     }
+    static function getAllBiblesByLanguageCodeIso($languageCodeIso){
+        $dbConnection = new DatabaseConnection();
+        $query = "SELECT * FROM bibles WHERE languageCodeIso = :code 
+        ORDER BY volumeName";
+        $params = array(':code'=>$languageCodeIso);
+        try {
+            $statement = $dbConnection->executeQuery($query, $params);
+            $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
 
-    public function getBestBibleByLanguageCodeHL($code){
-        $query = "SELECT * FROM bibles WHERE languageCodeHL = :code ORDER BY weight DESC LIMIT 1";
+    }
+    public function getBestBibleByLanguageCodeIso($code){
+        $query = "SELECT * FROM bibles WHERE languageCodeIso = :code ORDER BY weight DESC LIMIT 1";
         $params = array(':code'=>$code);
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
