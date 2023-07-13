@@ -10,6 +10,7 @@ require_once __DIR__.'/includes/writeLog.php';
 //API
 
 get(ROOT . 'api/dbs/$lang1/$lang2/$lesson', 'api/dbsBilingual.php');
+get(ROOT . 'api/dbs2/$lang1/$lang2/$lesson', 'api/dbsBilingual2.php');
 get(ROOT . 'api/dbs/$lang1/$session', 'api/dbs.php');
 
 // Index

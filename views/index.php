@@ -4,6 +4,7 @@
 echo "
 <h1>API</h1>
 <p><a href = '/mylanguage-oophp/api/dbs/eng00/frn00/2'>DBS 2 French-English</a></p>
+<p><a href = '/mylanguage-oophp/api/dbs2/eng00/frn00/2'>New DBS 2 French-English</a></p>
 
 <h1> Import Routines for MyLanguage OOPHP</h1>
 <p><a href = '/mylanguage-oophp/import/biblebrain/languages'>Import Languages from BibleBrain</a></p>

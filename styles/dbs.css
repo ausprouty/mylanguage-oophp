@@ -40,3 +40,19 @@ h2{
 .title{
     text-align: center;
 }
+
+.bible-container {
+    border: 3px solid #fff;
+    padding: 20px;
+}
+
+.bible-text {
+    width: 40%;
+    float: left;
+    padding: 20px;
+    border: 2px solid red;
+}  
+div #post-bible{
+    display:block;
+
+}
