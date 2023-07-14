@@ -5,10 +5,20 @@ require_once __DIR__.'/configuration/.env.local.php';
 require_once  __DIR__.'/configuration/class-autoload.inc.php';
 ##################################################
 require_once __DIR__.'/includes/writeLog.php';
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Methods: POST, GET");
+header("Content-type: application/json");
+writeLogDebug('routes', "I made it");
+if (isset($_POST)){
+    writeLogDebug('post', json_decode($_POST));
+}
+
 
 
 //API
 get(ROOT . 'api/bibles/$languageCodeIso', 'api/biblesForLanguage.php');
+get(ROOT . 'api/bibles/text/$languageCodeIso', 'api/biblesForLanguageTextOnly.php');
+get(ROOT . 'api/secure/bibles/weight/change', 'api/secure/bibleWeightChange.php');
 
 
 get(ROOT . 'api/dbs/$lesson/$lang1/$lang2/', 'api/dbsBilingual.php');

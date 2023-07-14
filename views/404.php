@@ -1,2 +1,2 @@
 <?php
-echo "Why are you here?";
+echo "This is 404"

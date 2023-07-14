@@ -68,6 +68,27 @@ class Bible {
         }
 
     }
+    static function getTextBiblesByLanguageCodeIso($languageCodeIso){
+        $dbConnection = new DatabaseConnection();
+        $query = "SELECT * FROM bibles 
+        WHERE languageCodeIso = :code 
+        AND format NOT LIKE :audio AND format NOT LIKE :video AND format != :usx AND format IS NOT NULL
+        ORDER BY volumeName";
+        $params = array(':code'=>$languageCodeIso, 
+            ':audio' => 'audio%', 
+            ':video' => 'video%',
+            ':usx'=> 'text_usx',
+        );
+        try {
+            $statement = $dbConnection->executeQuery($query, $params);
+            $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+
+    }
     public function getBestBibleByLanguageCodeIso($code){
         $query = "SELECT * FROM bibles WHERE languageCodeIso = :code ORDER BY weight DESC LIMIT 1";
         $params = array(':code'=>$code);
