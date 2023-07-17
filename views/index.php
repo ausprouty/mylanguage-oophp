@@ -12,6 +12,7 @@ echo "
 <br>
 <p><a href = '/mylanguage-oophp/import/biblebrain/setup'>Reset Bible Brain Check Date for below</a></p>
 <p><a href = '/mylanguage-oophp/import/biblebrain/bibles'>Import Bibles from BibleBrain</a></p>
+<p><a href = '/mylanguage-oophp/import/biblegateway/bibles'>Import Bibles from BibleGateway</a></p>
 <p><a href = '/mylanguage-oophp/import/dbswords'>Import DBS Words from local file</a></p>
 
 <h1> Tests for MyLanguage OOPHP</h1>

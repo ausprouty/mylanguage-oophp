@@ -68,6 +68,25 @@ class Bible {
         }
 
     }
+    static function updateWeight($bid, $weight){
+        $dbConnection = new DatabaseConnection();
+        $query = "UPDATE bibles 
+            SET weight = :weight
+            WHERE bid = :bid
+            LIMIT 1";
+        $params = array(':weight'=>$weight, 
+            ':bid' => $bid, 
+        );
+        try {
+            $dbConnection->executeQuery($query, $params);
+            return 'success';
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+
+
+    }
     static function getTextBiblesByLanguageCodeIso($languageCodeIso){
         $dbConnection = new DatabaseConnection();
         $query = "SELECT * FROM bibles 
@@ -107,7 +126,7 @@ class Bible {
         return $this->volumeName;
     }
      public function selectBibleByBid($bid){
-        $query = "SELECT * FROM bibles WHERE bid = :bid";
+        $query = "SELECT * FROM bibles WHERE bid = :bid LIMIT 1";
         $params = array(':bid'=>$bid);
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);

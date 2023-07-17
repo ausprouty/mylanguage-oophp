@@ -1,2 +1,2 @@
 <?php
-echo "This is 404"
+return 'This means you did not come though the router';
