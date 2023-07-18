@@ -5,12 +5,12 @@ $entry =strip_tags($_POST['entry']);
 $bibleInfo = new Bible();
 $bibleInfo->selectBibleByBid($bid);
 writeLogDebug('bibleInfo',$bibleInfo);
-$referenceInfo = new  BibleReferenceInfo();
-$referenceInfo->setFromPassage($entry);
-writeLogDebug('referenceInfo',$referenceInfo);
+//
+$referenceInfo = (new  BibleReferenceInfo())->setFromPassage($entry);
+//
 $passage = new PassageSelectController($referenceInfo, $bibleInfo);
-writeLogDebug('passage',$passage->getBibleText);
-$response = new stdObj();
+writeLogDebug('passage',$passage);
+$response = new stdClass();
 $response->url = $passage->getPassageUrl();
 $response->text = $passage->getPassageText();
 writeLogDebug('response', $response);

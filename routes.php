@@ -7,8 +7,8 @@ require_once  __DIR__.'/configuration/class-autoload.inc.php';
 require_once __DIR__.'/includes/writeLog.php';
 
 //API
-get(ROOT . 'api/bibles/$languageCodeIso', 'api/biblesForLanguage.php');
-get(ROOT . 'api/bibles/text/$languageCodeIso', 'api/biblesForLanguageTextOnly.php');
+get(ROOT . 'api/bibles/$languageCodeHL', 'api/biblesForLanguage.php');
+get(ROOT . 'api/bibles/text/$languageCodeHL', 'api/biblesForLanguageTextOnly.php');
 post(ROOT . 'api/passage/text', 'api/passageForBible.php');
 
 post(ROOT . 'api/secure/bibles/weight/change', 'api/secure/bibleWeightChange.php');

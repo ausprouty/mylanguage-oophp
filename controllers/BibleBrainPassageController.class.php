@@ -31,8 +31,10 @@ class BibleBrainPassageController extends BiblePassage {
         $url = 'https://4.dbt.io/api/bibles/filesets/' . $this->bible->externalId;
         $url .= '/'. $this->bibleReferenceInfo->bookID . '/'. $this->bibleReferenceInfo->chapterStart;
         $url .= '?verse_start=' . $this->bibleReferenceInfo->verseStart . '&verse_end=' .$this->bibleReferenceInfo->verseEnd;
-        $bibles =  new BibleBrainConnection($url);
-        $this->response = $bibles->response;
+        writeLogDebug('url', $url);
+        $passage =  new BibleBrainConnection($url);
+        writeLogDebug('passage', $passage);
+        $this->response = $passage->response;
     }
     public function showPassageText(){
         return $this->passageText;

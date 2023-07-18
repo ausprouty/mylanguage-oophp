@@ -1,7 +1,7 @@
 <?php
 echo ("You should see a nicely formatted text below with verse numbers.<hr>");
 $bible = new Bible();
-$bible->selectBibleByBid(1785);
+$bible->selectBibleByBid(1782);
 $bibleReferenceInfo = new BibleReferenceInfo();
 $bibleReferenceInfo->setFromPassage('Luke 1:1-6');
 writeLogDebug('bibleReferenceInfo', $bibleReferenceInfo);

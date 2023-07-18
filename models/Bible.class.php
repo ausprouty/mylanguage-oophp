@@ -10,7 +10,6 @@ class Bible {
   public $volumeName;
   public $volumeNameAlt;
   public $languageCode;
-  public $languageCodeHL;
   public $languageName;
   public $languageEnglish;
   public $languageCodeIso;
@@ -36,7 +35,6 @@ class Bible {
         $this->externalId = NULL;
         $this->volumeName = ' ';
         $this->volumeNameAlt = NULL;
-        $this->languageCodeHL = ' ';
         $this->languageCodeIso = ' ';
         $this->languageName = ' ';
         $this->languageEnglish = ' ';
@@ -125,7 +123,7 @@ class Bible {
     public function getVolumeName(){
         return $this->volumeName;
     }
-     public function selectBibleByBid($bid){
+    public function selectBibleByBid($bid){
         $query = "SELECT * FROM bibles WHERE bid = :bid LIMIT 1";
         $params = array(':bid'=>$bid);
         try {
@@ -183,7 +181,6 @@ class Bible {
         $this->externalId = $data->externalId;
         $this->volumeName = $data->volumeName;
         $this->volumeNameAlt = $data->volumeNameAlt;
-        $this->languageCodeHL = $data->languageCodeHL;
         $this->languageName = $data->languageName;
         $this->languageEnglish = $data->languageEnglish;
         $this->languageCodeIso = $data->languageCodeIso;

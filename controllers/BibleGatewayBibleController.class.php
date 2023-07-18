@@ -8,7 +8,17 @@ class BibleGatewayBibleController{
     */
     private  $languageCodeIso;
     private  $externalId;
-    private  $bibleName;
+    private  $volumeName;
+    private  $languageName;
+    private  $defaultBible;
+
+    public function __construct(){
+        $this->languageCodeIso = 'notSet';
+        $this->externalId = '';
+        $this->volumeName = '';
+        $this->languageName = '';
+        $this->defaultBible = '';
+    }
 
     public function import(){
         $filename = ROOT_IMPORT_DATA . 'BibleGatewayBibles.txt';
@@ -35,24 +45,100 @@ class BibleGatewayBibleController{
         $lines = explode("\n", $datafile);
         foreach ($lines as $line){
             if (strpos($line, 'class="lang"') !== FALSE){
-                $languageCodeIso = $this->setLanguageCodeIso($line);
+                $this->setLanguageName($line);
+                $this->setLanguageCodeIso($line);
+                $this->setDefaultBible($line);
             }
             elseif  (strpos($line, 'class="spacer"') == FALSE){
                 $this->setExternalId($line);
-                $new = $this->updateDatabase($line);
-                if ($new){
+                $bid = $this->recordExists();
+                if ($bid){
+                    $this->updateVerified($bid);
+                    //Todo: remove the following two lines after setting my own defaults
+                    $this->updateLanguage($bid);
+                    $this->updateWeight($bid);
+                }
+                else{
+                    $this->insertRecord();
                     $count++;
                 }
             }
         }
         return $count;
     }
+
+    private function setLanguageName($line){
+        // <option class="lang" value="BG1940">---Български (BG)---</option>
+        $pos = strpos($line, '>-') + 2;
+        $new = substr ($line, $pos);
+        $pos = strpos($new, '(') -1;
+        $new = substr($new, 0, $pos);
+        $new = str_replace('-', '', $new);
+        $new = trim ($new);
+        $this->languageName = $new;
+    }
+    private function setDefaultBible($line){
+        // <option class="lang" value="BG1940">---Български (BG)---</option>
+        $pos = strpos($line, 'value="') + 7;
+        $new = substr ($line, $pos);
+        $pos = strpos($new, '"');
+        $new = substr($new, 0, $pos);
+        $this->defaultBible = $new;
+    }
     private function setLanguageCodeIso($line){
         $pos_last = strrpos($line, '(');
         $new = substr($line, $pos_last);
         $pos_last = strpos($new, ')')-1;
         $new = substr($new, 1, $pos_last);
-        $this->langugeIsoCode= strtolower($new);
+        $try= strtolower($new);
+        if ($this->tryLanguageCodeIso($try)){
+            $this->languageCodeIso = $try;
+        }
+        else {
+            $languageCode = $this->tryLanguageCodeGoogle($try);
+            if ($languageCode ){
+                 $this->languageCodeIso = $languageCode ;
+            }
+            else {
+                $languageCode = $this->tryLanguageCodeBrowser($try);
+                if ($languageCode ){
+                    $this->languageCodeIso = $languageCode ;
+                }
+                else{
+                    $this->addNewLanguage($try);
+                }
+            }
+        }
+    }
+    private function tryLanguageCodeIso($try){
+        $dbConnection = new DatabaseConnection();
+        $query = "SELECT languageCodeIso FROM hl_languages
+            WHERE languageCodeIso = :languageCodeIso LIMIT 1";
+        $params = array(':languageCodeIso'=> $try, 
+        );
+        $statement = $dbConnection->executeQuery($query, $params);
+        $languageCodeIso = $statement->fetch(PDO::FETCH_COLUMN);
+       return $languageCodeIso;
+    }
+    private function tryLanguageCodeGoogle($try){
+        $dbConnection = new DatabaseConnection();
+        $query = "SELECT languageCodeIso FROM hl_languages
+            WHERE languageCodeGoogle = :languageCode LIMIT 1";
+        $params = array(':languageCode'=> $try, 
+        );
+        $statement = $dbConnection->executeQuery($query, $params);
+        $languageCodeIso = $statement->fetch(PDO::FETCH_COLUMN);
+       return $languageCodeIso;
+    }
+    private function tryLanguageCodeBrowser($try){
+        $dbConnection = new DatabaseConnection();
+        $query = "SELECT languageCodeIso FROM hl_languages
+            WHERE languageCodeBrowser = :languageCode LIMIT 1";
+        $params = array(':languageCode'=> $try, 
+        );
+        $statement = $dbConnection->executeQuery($query, $params);
+        $languageCodeIso = $statement->fetch(PDO::FETCH_COLUMN);
+       return $languageCodeIso;
     }
     private function setExternalId($line){
         $pos = strpos($line, '>') +1;
@@ -60,11 +146,11 @@ class BibleGatewayBibleController{
         $pos = strpos($new, '<') -1;
         $new = substr($new, 0, $pos);
         $pos = strrpos($new, '(');
-        $this->bibleName = trim(substr($new, 0, $pos-1));
+        $this->volumeName = trim(substr($new, 0, $pos-1));
         $this->externalId = substr($new, $pos +1);
 
     }
-    private function updateDatabase(){
+    private function recordExists(){
         $dbConnection = new DatabaseConnection();
         $query = "SELECT bid FROM bibles 
             WHERE source = :biblegateway AND
@@ -75,17 +161,96 @@ class BibleGatewayBibleController{
         try {
             $statement = $dbConnection->executeQuery($query, $params);
             $bid = $statement->fetch(PDO::FETCH_COLUMN);
-            if ($bid){
-                writeLogAppend('found', $this->externalId);
-            }
-            else{
-                writeLogAppend('notfound', $this->externalId);
-            }
+            return $bid;
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return null;
         }
+    }
+    private function updateVerified($bid){
+        $verified = date('Y-m-d');
+        $dbConnection = new DatabaseConnection();
+        $query = "UPDATE bibles 
+            SET dateVerified = :verified
+            WHERE bid = :bid 
+            LIMIT 1";
+        $params = array(':verified'=>$verified, 
+            ':bid' => $bid, 
+        );
+        $statement = $dbConnection->executeQuery($query, $params);
+    }
+    private function updateLanguage($bid){
+        $dbConnection = new DatabaseConnection();
+        $query = "UPDATE bibles 
+            SET languageCodeIso = :languageCodeIso,
+            languageName = :languageName
+            WHERE bid = :bid 
+            LIMIT 1";
+        $params = array(
+            ':languageCodeIso'=> $this->languageCodeIso, 
+            ':languageName' => $this->languageName,
+            ':bid' => $bid, 
+        );
+        $statement = $dbConnection->executeQuery($query, $params);
+    }
 
 
+    private function insertRecord(){
+        $verified = date('Y-m-d');
+        $weight = 0;
+        if ($this->externalId == $this->defaultBible){
+            $weight = 9;
+        }
+        $dbConnection = new DatabaseConnection();
+        $query = "INSERT INTO bibles 
+        (source, externalId, volumeName, languageName, languageCodeIso, 
+        collectionCode, format, text, weight , dateVerified) 
+        VALUES 
+        (:source, :externalId, :volumeName, :languageCodeIso, 
+        :collectionCode, :format, :text, :weight, :dateVerified)";
+        $params = array(
+            ':source' => 'bible_gateway', 
+            ':externalId' => $this->externalId, 
+            ':volumeName' => $this->volumeName,
+            ':languageName' => $this->languageName, 
+            ':languageCodeIso' => $this->languageCodeIso, 
+            ':collectionCode' => 'C', 
+            ':format' =>'text', 
+            ':text' => 'Y', 
+            ':weight' => $weight, 
+            ':dateVerified' => $verified
+        );
+        $statement = $dbConnection->executeQuery($query, $params);
+
+    }
+    private function addNewLanguage($try){
+        writeLogAppend('newLanguages',  $this->languageName  . " --' . $try");
+        $dbConnection = new DatabaseConnection();
+        $query = "INSERT INTO hl_languages 
+        (languageCodeHL, languageCodeIso, ethnicName ) 
+        VALUES 
+        (:languageCodeHL, :languageCodeIso, :ethnicName) ";
+        $params = array(
+            ':languageCodeHL' => $try . date('y'), 
+            ':languageCodeIso' => $try, 
+            ':ethnicName' => $this->languageName,
+        );
+        $statement = $dbConnection->executeQuery($query, $params);
+    }
+    private function updateWeight($bid){
+        $weight = 0;
+        if ($this->externalId == $this->defaultBible){
+            $weight = 9;
+        }
+        $dbConnection = new DatabaseConnection();
+        $query = "UPDATE bibles 
+            SET weight = :weight
+            WHERE bid = :bid 
+            LIMIT 1";
+        $params = array(
+            ':weight'=> $weight,
+            ':bid' => $bid, 
+        );
+        $statement = $dbConnection->executeQuery($query, $params);
     }
 }

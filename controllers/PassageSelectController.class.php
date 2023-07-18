@@ -37,12 +37,17 @@ class PassageSelectController extends BiblePassage
     }
     private function getExternal(){
         switch($this->bible->source){
+            case 'bible_brain':
+                $external = new BibleBrainPassageController($this->bibleReferenceInfo, $this->bible);
+                $this->passageText = $external->passageText;
+                $this->passageUrl = $external->passageUrl;
+                $this->referenceLocal = $external->referenceLocal;
+                break;
             case 'bible_gateway':
                 $external = new BibleGatewayPassageController($this->bibleReferenceInfo, $this->bible);
                 $this->passageText = $external->passageText;
                 $this->passageUrl = $external->passageUrl;
                 $this->referenceLocal = $external->referenceLocal;
-
                 break;
             default:
             break;
