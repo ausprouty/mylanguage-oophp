@@ -21,7 +21,7 @@ class PassageSelectController extends BiblePassage
             $this->passageUrl= null;
             $this->checkDatabase();
     }
-    private function checkDatabase(){
+    private  function checkDatabase(){
         $this->passageId = BiblePassage::createBiblePassageId($this->bible->bid,  $this->bibleReferenceInfo);
         $passage = new BiblePassage();
         $passage->findStoredById($this->passageId);

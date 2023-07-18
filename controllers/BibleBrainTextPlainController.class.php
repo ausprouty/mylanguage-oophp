@@ -52,6 +52,7 @@ class BibleBrainTextPlainController extends BibleBrainPassageController
             }
 
         }
+        writeLogDebug ('BibleBrainTextPlainController-55', $text);
          $this->passageText = $text;
         return $this->passageText;
     }

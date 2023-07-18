@@ -2,16 +2,20 @@
 
 $bid =intval($_POST['bid']);
 $entry =strip_tags($_POST['entry']);
-$bibleInfo = new Bible();
-$bibleInfo->selectBibleByBid($bid);
-writeLogDebug('bibleInfo',$bibleInfo);
+$bible = new Bible();
+$bible->selectBibleByBid($bid);
+writeLogDebug('PassageForBible-7- bibleInfo',$bible);
 //
-$referenceInfo = (new  BibleReferenceInfo())->setFromPassage($entry);
+$bibleReferenceInfo = new  BibleReferenceInfo();
+$bibleReferenceInfo->setFromPassage($entry);
+
 //
-$passage = new PassageSelectController($referenceInfo, $bibleInfo);
-writeLogDebug('passage',$passage);
+$passage = new PassageSelectController($bibleReferenceInfo, $bible);
+writeLogDebug('PassageForBible-14 - passage',$passage);
 $response = new stdClass();
 $response->url = $passage->getPassageUrl();
 $response->text = $passage->getPassageText();
-writeLogDebug('response', $response);
+writeLogDebug('PassageForBible-16 - response', $response);
 ReturnDataController::returnData($response);
+
+
