@@ -1,5 +1,4 @@
 <?php
-$languageCodeIso = Language::getCodeIsoFromCodeHL($languageCodeHL);
-$data = Bible::getTextBiblesByLanguageCodeIso($languageCodeIso );
+$data = Bible::getTextBiblesByLanguageCodeHL($languageCodeHL );
 ReturnDataController::returnData($data);
 die;

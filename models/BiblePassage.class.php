@@ -52,6 +52,7 @@ class BiblePassage
         }
     }
     public function getPassageText(){
+        writeLogDebug('getPassageText', $this->passageText);
         return $this->passageText;
     }
     public function getPassageUrl(){

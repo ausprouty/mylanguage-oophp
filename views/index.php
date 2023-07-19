@@ -8,6 +8,8 @@ echo "
 <p><a href = '/mylanguage-oophp/api/dbs2/eng00/frn00/2'>New DBS 2 French-English</a></p>
 
 <h1> Import Routines for MyLanguage OOPHP</h1>
+
+<p><a href = '/mylanguage-oophp/import/bible/languages''>Import HL Language Codes into Bibles</a></p>
 <p><a href = '/mylanguage-oophp/import/biblebrain/languages'>Import Languages from BibleBrain</a></p>
 <br>
 <p><a href = '/mylanguage-oophp/import/biblebrain/setup'>Reset Bible Brain Check Date for below</a></p>

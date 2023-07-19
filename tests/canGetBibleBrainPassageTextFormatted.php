@@ -6,6 +6,6 @@ $bibleReferenceInfo = new BibleReferenceInfo();
 $bibleReferenceInfo->setFromPassage('Luke 1:1-6');
 writeLogDebug('bibleReferenceInfo', $bibleReferenceInfo);
 
-$passage = new BibleBrainPlainController($bibleReferenceInfo, $bible);
+$passage = new BibleBrainTextPlainController($bibleReferenceInfo, $bible);
 $passage->getExternal();
 echo ($passage->showPassageText());

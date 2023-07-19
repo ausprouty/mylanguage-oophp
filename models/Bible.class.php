@@ -12,7 +12,7 @@ class Bible {
   public $languageCode;
   public $languageName;
   public $languageEnglish;
-  public $languageCodeIso;
+  public $languageCodeHL;
   public $languageCodeDrupal;
   public $idBibleGateway;
   public $collectionCode;
@@ -35,7 +35,7 @@ class Bible {
         $this->externalId = NULL;
         $this->volumeName = ' ';
         $this->volumeNameAlt = NULL;
-        $this->languageCodeIso = ' ';
+        $this->languageCodeHL = ' ';
         $this->languageName = ' ';
         $this->languageEnglish = ' ';
         $this->idBibleGateway = ' ';
@@ -51,11 +51,11 @@ class Bible {
         $this->weight = ' ';
         $this->dateVerified = ' ';
     }
-    static function getAllBiblesByLanguageCodeIso($languageCodeIso){
+    static function getAllBiblesByLanguageCodeHL($anguageCodeHL){
         $dbConnection = new DatabaseConnection();
-        $query = "SELECT * FROM bibles WHERE languageCodeIso = :code 
+        $query = "SELECT * FROM bibles WHERE languageCodeHL = :code 
         ORDER BY volumeName";
-        $params = array(':code'=>$languageCodeIso);
+        $params = array(':code'=>$languageCodeHL);
         try {
             $statement = $dbConnection->executeQuery($query, $params);
             $data = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -85,16 +85,18 @@ class Bible {
 
 
     }
-    static function getTextBiblesByLanguageCodeIso($languageCodeIso){
+    static function getTextBiblesByLanguageCodeHL($languageCodeHL){
         $dbConnection = new DatabaseConnection();
         $query = "SELECT * FROM bibles 
-        WHERE languageCodeIso = :code 
+        WHERE languageCodeHL = :code 
         AND format NOT LIKE :audio AND format NOT LIKE :video AND format != :usx AND format IS NOT NULL
+        AND source != :dbt
         ORDER BY volumeName";
-        $params = array(':code'=>$languageCodeIso, 
+        $params = array(':code'=>$languageCodeHL, 
             ':audio' => 'audio%', 
             ':video' => 'video%',
             ':usx'=> 'text_usx',
+            ':dbt' => 'dbt'
         );
         try {
             $statement = $dbConnection->executeQuery($query, $params);
@@ -106,8 +108,8 @@ class Bible {
         }
 
     }
-    public function getBestBibleByLanguageCodeIso($code){
-        $query = "SELECT * FROM bibles WHERE languageCodeIso = :code ORDER BY weight DESC LIMIT 1";
+    public function getBestBibleByLanguageCodeHL($code){
+        $query = "SELECT * FROM bibles WHERE languageCodeHL = :code ORDER BY weight DESC LIMIT 1";
         $params = array(':code'=>$code);
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
@@ -147,18 +149,18 @@ class Bible {
         $bid = $statement->fetch(PDO::FETCH_COLUMN);
         if (!$bid){
             $query = "INSERT INTO bibles 
-            (source, externalId, volumeName, volumeNameAlt, languageCodeIso, 
+            (source, externalId, volumeName, volumeNameAlt, languageCodeHL, 
             languageName, languageEnglish,
             collectionCode,format, audio, text, video, dateVerified) 
             VALUES (:source, :externalId, :volumeName, :volumeNameAlt, 
-            :languageCodeIso, :languageName, :languageEnglish,
+            :languageCodeHL, :languageName, :languageEnglish,
             :collectionCode,:format,:audio,:text,:video,:dateVerified)";
             $params = array(
                 ':source' => $this->source , 
                 ':externalId' => $this->externalId , 
                 ':volumeName' => $this->volumeName ,
                 ':volumeNameAlt' => $this->volumeNameAlt, 
-                ':languageCodeIso' => $this->languageCodeIso ,
+                ':languageCodeHL' => $this->languageCodeHL ,
                 ':languageName' => $this->languageName,
                 ':languageEnglish' => $this->languageEnglish,
                 ':collectionCode' => $this->collectionCode ,':format' => $this->format ,
@@ -183,7 +185,7 @@ class Bible {
         $this->volumeNameAlt = $data->volumeNameAlt;
         $this->languageName = $data->languageName;
         $this->languageEnglish = $data->languageEnglish;
-        $this->languageCodeIso = $data->languageCodeIso;
+        $this->languageCodeHL = $data->languageCodeHL;
         $this->idBibleGateway = $data->idBibleGateway;
         $this->collectionCode = $data->collectionCode;
         $this->rightToLeft = $data->rightToLeft;

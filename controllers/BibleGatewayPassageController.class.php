@@ -45,7 +45,6 @@ class BibleGatewayPassageController extends BiblePassage {
    
 
      private function formatExternal($webpage){
-       // writeLogDebug('bibleGatewayFormat-42', $webpage);
         require_once('./libraries/simplehtmldom_1_9_1/simple_html_dom.php');
         $html = str_get_html($webpage);
         $e = $html->find('.dropdown-display-text', 0);
@@ -129,8 +128,9 @@ class BibleGatewayPassageController extends BiblePassage {
             $bible= str_ireplace('</div>', '', $bible);
             $bible= str_ireplace('<div class="passage-other-trans">', '', $bible);
         }
-        $output =   "\n" . '<!-- begin bible -->'. $bible   ;
-        $output.=  "\n" . '<!-- end bible -->' . "\n";
+        $output =   "\n" . '<!-- begin bible -->'; 
+        $output .= $bible  ."\n" . '<!-- end bible -->' . "\n" ;
+
         return $output;
     }
     private function createLocalReference($websiteReference){
