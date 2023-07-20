@@ -37,12 +37,15 @@ get(ROOT . 'test', 'tests/test.php');
 //  Web Access
 get(ROOT . 'webpage', 'tests/webpage.php');
 
+// word
+get(ROOT . 'test/word/passage/','tests/canGetBibleWordPassage.php');
+
 // Bible Brain
 get(ROOT . 'test/biblebrain/language', 'tests/canGetBibleBrainLanguageDetails.php');
 get(ROOT . 'test/biblebrain/bible/default', 'tests/canGetBestBibleFromBibleBrain.php');
 get(ROOT . 'test/biblebrain/bible/formats', 'tests/canGetBibleBrainBibleFormatTypes.php');
 get(ROOT . 'test/biblebrain/passage/json', 'tests/canGetBibleBrainPassageTextJson.php');
-get(ROOT . 'test/biblebrain/passage/plain','tests/canGetBibleBrainPassageTextPlain.php');
+
 get(ROOT . 'test/biblebrain/passage/formatted','tests/canGetBibleBrainPassageTextFormatted.php');
 get(ROOT . 'test/biblebrain/passage/usx','tests/canGetBibleBrainPassageTextUsx.php');
 get(ROOT . 'test/biblebrain/languages/country', 'tests/canGetLanguagesForCountryCode.php');

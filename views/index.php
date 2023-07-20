@@ -2,6 +2,11 @@
 
 
 echo "
+
+<h2>Word(local)</h2>
+<p> <a href= '/mylanguage-oophp/test/word/passage'>Get Passage</a></p>
+
+
 <h1>API</h1>
 <p><a href = '/mylanguage-oophp/api/bibles/eng'>Bibles for Language</a></p>
 <p><a href = '/mylanguage-oophp/api/dbs/eng00/frn00/2'>DBS 2 French-English</a></p>
@@ -33,11 +38,9 @@ echo "
 <p><a href = '/mylanguage-oophp/test/biblebrain/passage/formatted'>Bible Text Formatted</a></p>
 <p><a href = '/mylanguage-oophp/test/biblebrain/passage/usx'>Bible Text USX</a></p>
 
-
-
-
 <h2>Bible Gateway</h2>
 <p> <a href= '/mylanguage-oophp/test/biblegateway'>Get Passage</a></p>
+
 
 <h2>Bibles</h2>
 <p><a href = '/mylanguage-oophp/test/bibles/best'> Best Bible for Language</a></p>
