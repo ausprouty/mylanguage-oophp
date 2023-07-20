@@ -35,8 +35,16 @@ class BibleBrainTextPlainController extends BibleBrainPassageController
     {   $text = null;
         $multiVerseLine = false;
         $startVerseNumber = null;
+        if (!isset($this->response->data)){
+            $this->passageText = 'Text not found';
+            return $this->passageText;
+        }
         writeLogDebug ('BibleBrainTextPlainController-38', $this->response);
         foreach ($this->response->data as $verse){
+            if (!isset($verse->verse_text)){
+                $text = 'Text Not Found';
+                break;
+            }
             $verseNum = $verse->verse_start_alt;
             if ($multiVerseLine){
                 $multiVerseLine = false;

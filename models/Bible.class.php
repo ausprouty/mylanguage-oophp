@@ -16,7 +16,7 @@ class Bible {
   public $languageCodeDrupal;
   public $idBibleGateway;
   public $collectionCode;
-  public $rightToLeft;
+  public $direction;
   public $numerals;
   public $spacePdf;
   public $noBoldPdf;
@@ -45,7 +45,7 @@ class Bible {
         $this->text = '';
         $this->video = '';
         $this->numerals = ' ';
-        $this->rightToLeft = ' ';
+        $this->direction = ' ';
         $this->spacePdf = NULL;
         $this->noBoldPdf = ' ';
         $this->weight = ' ';
@@ -188,7 +188,7 @@ class Bible {
         $this->languageCodeHL = $data->languageCodeHL;
         $this->idBibleGateway = $data->idBibleGateway;
         $this->collectionCode = $data->collectionCode;
-        $this->rightToLeft = $data->rightToLeft;
+        $this->direction = $data->direction;
         $this->numerals = $data->numerals;
         $this->spacePdf = $data->spacePdf;
         $this->noBoldPdf = $data->noBoldPdf;

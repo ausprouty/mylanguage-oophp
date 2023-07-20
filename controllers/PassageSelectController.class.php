@@ -65,14 +65,40 @@ class PassageSelectController extends BiblePassage
         
     }
     private function wrapTextDir(){
-        $dir = 'ltr';
-        if ($this->bible->rightToLeft == 'Y'){
+        
+        if ($this->bible->direction == 'rtl'){
             $dir = 'rtl';
+        }
+        elseif ($this->bible->direction == 'ltr'){
+            $dir = 'ltr';
+        }
+        else{
+            $dir = $this->updateDirection();
         }
         $text = '<div dir="' . $dir . '">' ;
         $text .=  $this->passageText;
         $text .=  '</div>';
         $this->passageText = $text;
+    }
+    function updateDirection(){
+        $languageCodeHL = $this->bible->languageCodeHL;
+        $language = new Language();
+        $language->findOneByCode('HL', $languageCodeHL);
+        $direction = $language->getDirection();
+        $dir = 'ltr';
+        if ($direction == 'rtl'){
+            $dir = 'rtl';
+        }
+        $dbConnection = new DatabaseConnection();
+        $query = "UPDATE bibles
+            SET direction = :dir
+            WHERE languageCodeHL = :languageCodeHL";
+        $params = array(
+            ':languageCodeHL'=>  $languageCodeHL,
+            ':dir'=> $dir
+        );
+        $statement = $dbConnection->executeQuery($query, $params);
+        return $dir;
     }
 
 }

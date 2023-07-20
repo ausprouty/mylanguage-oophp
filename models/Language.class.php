@@ -30,20 +30,24 @@ class Language
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
             $data = $statement->fetch(PDO::FETCH_OBJ);
-            $this->id = $data->id  ;
-            $this->name = $data->name  ;
-            $this->ethnicName = $data->ethnicName  ;
-            $this->languageCodeBibleBrain = $data->languageCodeBibleBrain  ;
-            $this->languageCodeHL = $data->languageCodeHL  ;
-            $this->languageCodeIso = $data->languageCodeIso  ;
-            $this->languageCodeBing = $data->languageCodeBing  ;
-            $this->languageCodeBrowser = $data->languageCodeBrowser  ;
-            $this->languageCodeDrupal = $data->languageCodeDrupal  ;
-            $this->languageCodeGoogle = $data->languageCodeGoogle  ;
-            $this->direction = $data->direction  ;
-            $this->numeralSet = $data->numeralSet  ;
-            $this->isChinese = $data->isChinese  ;
-            $this->font = $data->font  ;
+            if ($data) {
+                $this->id = $data->id  ;
+                $this->name = $data->name  ;
+                $this->ethnicName = $data->ethnicName  ;
+                $this->languageCodeBibleBrain = $data->languageCodeBibleBrain  ;
+                $this->languageCodeHL = $data->languageCodeHL  ;
+                $this->languageCodeIso = $data->languageCodeIso  ;
+                $this->languageCodeBing = $data->languageCodeBing  ;
+                $this->languageCodeBrowser = $data->languageCodeBrowser  ;
+                $this->languageCodeDrupal = $data->languageCodeDrupal  ;
+                $this->languageCodeGoogle = $data->languageCodeGoogle  ;
+                $this->direction = $data->direction  ;
+                $this->numeralSet = $data->numeralSet  ;
+                $this->isChinese = $data->isChinese  ;
+                $this->font = $data->font  ;
+            }
+            
+            return $data;
 
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
@@ -51,6 +55,7 @@ class Language
         }
 
     }
+   
 
    
     static function getCodeIsoFromCodeHL ($languageCodeHL){

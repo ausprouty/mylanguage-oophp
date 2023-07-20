@@ -12,6 +12,7 @@ define('PREFIX','');
 define ('ROOT',  '/mylanguage-oophp/');
 define ('ROOT_IMPORT_DATA', 'c:/ampp/htdocs/mylanguage-oophp/imports/data/');
 define ('ROOT_LOG', 'c:/ampp/htdocs/mylanguage-oophp/logs/');
+define ('ROOT_RESOURCES', 'c:/ampp/htdocs/mylanguage-oophp/resources/');
 define ('ROOT_STYLES', 'c:/ampp/htdocs/mylanguage-oophp/styles/');
 define ('ROOT_TEMPLATES', 'c:/ampp/htdocs/mylanguage-oophp/templates/');
 define ('ROOT_VENDOR', 'c:/ampp/htdocs/mylanguage-oophp/vendor/');
