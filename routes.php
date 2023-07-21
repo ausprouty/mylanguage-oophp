@@ -38,7 +38,7 @@ get(ROOT . 'test', 'tests/test.php');
 get(ROOT . 'webpage', 'tests/webpage.php');
 
 // word
-get(ROOT . 'test/word/passage/','tests/canGetBibleWordPassage.php');
+get(ROOT . 'test/word/passage/$externalId','tests/canGetBibleWordPassageFromExternalId.php');
 
 // Bible Brain
 get(ROOT . 'test/biblebrain/language', 'tests/canGetBibleBrainLanguageDetails.php');

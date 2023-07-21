@@ -18,9 +18,10 @@ class BibleReferenceInfo
 
     private  $dbConnection;
     public   $entry;
-    private  $language_iso;
+    private  $languageCodeIso;
     public   $bookName;
     public   $bookID;
+    public   $bookNumber;
     public   $testament;
     public   $chapterStart;
     public   $verseStart;
@@ -31,9 +32,10 @@ class BibleReferenceInfo
    public function __construct(){
         $this->dbConnection = new DatabaseConnection();
         $this->entry= ' ';
-        $this->language_iso= null;
+        $this->languageCodeIso= null;
         $this->bookName= ' ';
         $this->bookID= null;
+        $this->bookNumber = null;
         $this->testament= null;
         $this->chapterStart= null;
         $this->verseStart= null;
@@ -41,10 +43,11 @@ class BibleReferenceInfo
         $this->verseEnd= null;
     }
 
-    public function setFromPassage(string $entry, string $language_iso = 'eng'){
+    public function setFromPassage(string $entry, string $languageCodeIso = 'eng'){
         $this->checkEntrySpacing($entry);
         $this->findBookName();
         $this->findBookID();
+        $this->findBookNumber();
         $this->getTestament();
         $this->findChapterAndVerses();
         return $this;// this should give us   $this->entry;
@@ -54,7 +57,7 @@ class BibleReferenceInfo
         print_r ($dbtArray);
         $entry =$this->checkEntrySpacing ($dbtArray['entry']);
         $this->entry= $entry;
-        $this->language_iso=null;
+        $this->languageCodeIso=null;
         $this->bookName= $this->findBookName();
         $this->bookID= $dbtArray['bookId'];
         $this->testament= $dbtArray['collection_code'];
@@ -96,10 +99,10 @@ class BibleReferenceInfo
 
     }
     protected function findBookID(){
-        $query = 'SELECT book_id FROM bible_book_names
-            WHERE (language_iso = :language_iso OR language_iso = :english)
+        $query = 'SELECT bookId FROM bible_book_names
+            WHERE (languageCodeIso = :languageCodeIso OR languageCodeIso = :english)
             AND name = :book_lookup LIMIT 1';
-        $params = array(':language_iso'=>$this->language_iso, ':english' => 'eng', ':book_lookup'=>$this->bookName );
+        $params = array(':languageCodeIso'=>$this->languageCodeIso, ':english' => 'eng', ':book_lookup'=>$this->bookName );
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
             $data = $statement->fetch(PDO::FETCH_COLUMN);
@@ -109,11 +112,25 @@ class BibleReferenceInfo
             return null;
         }
     }
+    protected function findBookNumber(){
+        $query = 'SELECT bid FROM bible_books
+            WHERE bookId = :bookId
+            LIMIT 1';
+        $params = array(':bookId'=> $this->bookID);
+        try {
+            $statement = $this->dbConnection->executeQuery($query, $params);
+            $data = $statement->fetch(PDO::FETCH_COLUMN);
+            $this->bookNumber = $data;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+    }
 
     private function getTestament(){
         $query = 'SELECT testament FROM bible_books
-            WHERE book_id = :book_id  LIMIT 1';
-        $params = array(':book_id'=>$this->bookID );
+            WHERE bookId = :bookId  LIMIT 1';
+        $params = array(':bookId'=>$this->bookID );
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
             $data = $statement->fetch(PDO::FETCH_COLUMN);

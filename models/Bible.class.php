@@ -51,6 +51,13 @@ class Bible {
         $this->weight = ' ';
         $this->dateVerified = ' ';
     }
+
+    public function getVolumeName(){
+        return $this->volumeName;
+    }
+    public function getBid(){
+        return $this->bid;
+    }
     static function getAllBiblesByLanguageCodeHL($anguageCodeHL){
         $dbConnection = new DatabaseConnection();
         $query = "SELECT * FROM bibles WHERE languageCodeHL = :code 
@@ -122,9 +129,7 @@ class Bible {
         }
 
     }
-    public function getVolumeName(){
-        return $this->volumeName;
-    }
+   
     public function selectBibleByBid($bid){
         $query = "SELECT * FROM bibles WHERE bid = :bid LIMIT 1";
         $params = array(':bid'=>$bid);
@@ -137,6 +142,19 @@ class Bible {
             return null;
         }
 
+    }
+    public function  selectBibleByExternalId($externalId) {
+        $query = "SELECT * FROM bibles 
+            WHERE externalId = :externalId LIMIT 1";
+        $params = array(':externalId'=>$externalId);
+        try {
+            $statement = $this->dbConnection->executeQuery($query, $params);
+            $data = $statement->fetch(PDO::FETCH_OBJ);
+            $this->setBibleValues($data);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
     }
   
 

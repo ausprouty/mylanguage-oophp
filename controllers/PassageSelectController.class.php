@@ -42,14 +42,20 @@ class PassageSelectController extends BiblePassage
                 $passage = new BibleBrainTextPlainController($this->bibleReferenceInfo, $this->bible);
                 $passage->getExternal();
                 $passage->showPassageText();
-                writeLogDebug('PassageSelectController-42', $passage);
+               // writeLogDebug('PassageSelectController-42', $passage);
                 $this->passageText = $passage->passageText;
-                writeLogDebug('PassageSelectController-45', $passage->passageText);
+                //writeLogDebug('PassageSelectController-45', $passage->passageText);
                 $this->passageUrl = $passage->passageUrl;
                 $this->referenceLocal = $passage->referenceLocal;
                 break;
             case 'bible_gateway':
                 $external = new BibleGatewayPassageController($this->bibleReferenceInfo, $this->bible);
+                $this->passageText = $external->passageText;
+                $this->passageUrl = $external->passageUrl;
+                $this->referenceLocal = $external->referenceLocal;
+                break;
+            case 'word':
+                $external = new BibleWordPassageController($this->bibleReferenceInfo, $this->bible);
                 $this->passageText = $external->passageText;
                 $this->passageUrl = $external->passageUrl;
                 $this->referenceLocal = $external->referenceLocal;

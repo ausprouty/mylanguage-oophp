@@ -21,6 +21,12 @@ class BiblePassage
         $this->dateChecked = '';
         $this->timesUsed= 0;
     }
+    public function getPassageText(){
+        return $this->passageText;
+    }
+    public function getPassageUrl(){
+        return $this->passageUrl;
+    }
     public static function createBiblePassageId(string $bid, BibleReferenceInfo $passage){
         // 1026-Luke-10-1-42
             $bpid=$bid .'-' .
@@ -51,13 +57,8 @@ class BiblePassage
             return null;
         }
     }
-    public function getPassageText(){
-        writeLogDebug('getPassageText', $this->passageText);
-        return $this->passageText;
-    }
-    public function getPassageUrl(){
-        return $this->passageUrl;
-    }
+
+   
     protected function insertPassageRecord($bpid, $referenceLocal,  $passageText, $passageUrl){
         if ($passageText) {
             $dateLastUsed = date("Y-m-d");
