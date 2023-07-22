@@ -8,6 +8,7 @@ require_once __DIR__.'/includes/writeLog.php';
 
 //API
 get(ROOT . 'api/bibles/$languageCodeHL', 'api/biblesForLanguage.php');
+get(ROOT . 'api/bibles/dbs/next/$languageCodeHL','api/bibleForDbsNext.php');
 get(ROOT . 'api/bibles/text/$languageCodeHL', 'api/biblesForLanguageTextOnly.php');
 get(ROOT . 'api/language/$languageCodeHL', 'api/languageDetails.php');
 post(ROOT . 'api/passage/text', 'api/passageForBible.php');
@@ -52,6 +53,9 @@ get(ROOT . 'test/biblebrain/languages/country', 'tests/canGetLanguagesForCountry
 
 // Bible Gateway
 get(ROOT . 'test/biblegateway', 'tests/canGetBibleGatewayPassage.php');
+
+//YouVersion
+get(ROOT . 'test/youversion/passage', 'tests/canGetBibleYouVersionPassage.php');
 
 // DBS
 get(ROOT . 'test/dbs/translation', 'tests/canGetDBSTranslation.php');
