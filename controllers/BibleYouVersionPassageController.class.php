@@ -3,7 +3,7 @@
 /*  see https://documenter.getpostman.com/view/12519377/Tz5p6dp7
 */
 
-class BibleBrainPassageController extends BiblePassage {
+class BibleYouVersionPassageController extends BiblePassage {
     private $dbConnection;
     private $bibleReferenceInfo;
     private $bible;
@@ -24,17 +24,16 @@ class BibleBrainPassageController extends BiblePassage {
     }
  
 
-    /* to get verses: https://4.dbt.io/api/bibles/filesets/:fileset_id/:book/:chapter?verse_start=5&verse_end=5&v=4
+    /* to get verses: https://www.bible.com/bible/111/GEN.1.NIV
   */
-    public function getExternal()
-    {
-       $url = 'https://www.bible.com/bible/'. $this->bible->externalId;
-       $url .= '/'. $this->bibleReferenceInfo->bookID . '/'. $this->bibleReferenceInfo->chapterStart;
+    public function getExternal()  {
+       $uversionBookID =  $this->bibleReferenceInfo->getUversionBookID();
+       $book = strtoupper($this->bibleReferenceInfo->bookID) . '.' . $this->bibleReferenceInfo->chapterStart;
+       $chapter = str_replace('%', $book , $this->bible->externalId);
+       $url = 'https://www.bible.com/bible/'. $chapter;
         writeLogDebug('url', $url);
-        $passage =  new BibleYouVersionConnection($url);
-        writeLogDebug('passage', $passage);
-        $this->response = $passage->response;
-        writeLogDebug ('BibleBrainPassageController-38- response', $this->response);
+        $webpage = new WebsiteConnection($url);
+        writeLogDebug ('BibleYouVersionPassageController-38', $webpage);
         // todo: so set it here
     }
     public function showPassageText(){

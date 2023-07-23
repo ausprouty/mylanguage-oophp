@@ -42,7 +42,7 @@ class BibleReferenceInfo
         $this->chapterEnd= null;
         $this->verseEnd= null;
     }
-
+    public function get
     public function setFromPassage(string $entry, string $languageCodeIso = 'eng'){
         $this->checkEntrySpacing($entry);
         $this->findBookName();
@@ -113,7 +113,7 @@ class BibleReferenceInfo
         }
     }
     protected function findBookNumber(){
-        $query = 'SELECT bid FROM bible_books
+        $query = 'SELECT bookNumber FROM bible_books
             WHERE bookId = :bookId
             LIMIT 1';
         $params = array(':bookId'=> $this->bookID);
@@ -121,6 +121,20 @@ class BibleReferenceInfo
             $statement = $this->dbConnection->executeQuery($query, $params);
             $data = $statement->fetch(PDO::FETCH_COLUMN);
             $this->bookNumber = $data;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+    }
+    protected function finduversionBookID(){
+        $query = 'SELECT finduversionBookID FROM bible_books
+            WHERE bookId = :bookId
+            LIMIT 1';
+        $params = array(':bookId'=> $this->bookID);
+        try {
+            $statement = $this->dbConnection->executeQuery($query, $params);
+            $data = $statement->fetch(PDO::FETCH_COLUMN);
+            $this->finduversionBookID = $data;
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return null;
