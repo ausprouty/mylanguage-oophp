@@ -24,17 +24,25 @@ class BibleYouVersionPassageController extends BiblePassage {
     }
  
 
-    /* to get verses: https://www.bible.com/bible/111/GEN.1.NIV
+    /* to get verses: https://www.bible.com/bible/111/GEN.1.7-14.NIV
+
+    https://www.bible.com/bible/37/GEN.1.7-14.CEB
   */
     public function getExternal()  {
-       $uversionBookID =  $this->bibleReferenceInfo->getUversionBookID();
-       $book = strtoupper($this->bibleReferenceInfo->bookID) . '.' . $this->bibleReferenceInfo->chapterStart;
-       $chapter = str_replace('%', $book , $this->bible->externalId);
+       $uversionBibleBookID =  $this->bibleReferenceInfo->getUversionBookID(); //GEN
+       $bibleBookAndChapter =   $uversionBibleBookID . '.' . $this->bibleReferenceInfo->chapterStart . '.'; // GEN.1.
+       $bibleBookAndChapter .=   $this->bibleReferenceInfo->verseStart . '-'. $this->bibleReferenceInfo->verseEnd ; // GEN.1
+       $chapter = str_replace('%', $bibleBookAndChapter , $this->bible->externalId); // 11/%.NIV   => /111/GEN.1.NIV
        $url = 'https://www.bible.com/bible/'. $chapter;
         writeLogDebug('url', $url);
         $webpage = new WebsiteConnection($url);
         writeLogDebug ('BibleYouVersionPassageController-38', $webpage);
         // todo: so set it here
+    }
+
+    private function formatExternalText($webpage){
+        $begin = '<div class="ChapterContent_label';
+        $end = '<div class="ChapterContent_version-copyright';
     }
     public function showPassageText(){
         return $this->passageText;

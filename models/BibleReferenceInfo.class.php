@@ -21,6 +21,7 @@ class BibleReferenceInfo
     private  $languageCodeIso;
     public   $bookName;
     public   $bookID;
+    public   $uversionBookID;
     public   $bookNumber;
     public   $testament;
     public   $chapterStart;
@@ -35,6 +36,7 @@ class BibleReferenceInfo
         $this->languageCodeIso= null;
         $this->bookName= ' ';
         $this->bookID= null;
+        $this->uversionBookID = null;
         $this->bookNumber = null;
         $this->testament= null;
         $this->chapterStart= null;
@@ -42,17 +44,21 @@ class BibleReferenceInfo
         $this->chapterEnd= null;
         $this->verseEnd= null;
     }
-    public function get
     public function setFromPassage(string $entry, string $languageCodeIso = 'eng'){
         $this->checkEntrySpacing($entry);
         $this->findBookName();
         $this->findBookID();
         $this->findBookNumber();
-        $this->getTestament();
+        $this->findUversionBookID();        $this->getTestament();
         $this->findChapterAndVerses();
         return $this;// this should give us   $this->entry;
 
     }
+
+    public function getUversionBookID(){
+        return $this->uversionBookID;
+    }
+       
     public function setFromDbtArray(array $dbtArray){
         print_r ($dbtArray);
         $entry =$this->checkEntrySpacing ($dbtArray['entry']);
@@ -98,7 +104,7 @@ class BibleReferenceInfo
         $this->bookName= $book;
 
     }
-    protected function findBookID(){
+    private function findBookID(){
         $query = 'SELECT bookId FROM bible_book_names
             WHERE (languageCodeIso = :languageCodeIso OR languageCodeIso = :english)
             AND name = :book_lookup LIMIT 1';
@@ -112,7 +118,7 @@ class BibleReferenceInfo
             return null;
         }
     }
-    protected function findBookNumber(){
+    private function findBookNumber(){
         $query = 'SELECT bookNumber FROM bible_books
             WHERE bookId = :bookId
             LIMIT 1';
@@ -126,15 +132,15 @@ class BibleReferenceInfo
             return null;
         }
     }
-    protected function finduversionBookID(){
-        $query = 'SELECT finduversionBookID FROM bible_books
+    private function findUversionBookID(){
+        $query = 'SELECT uversionBookID FROM bible_books
             WHERE bookId = :bookId
             LIMIT 1';
         $params = array(':bookId'=> $this->bookID);
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
             $data = $statement->fetch(PDO::FETCH_COLUMN);
-            $this->finduversionBookID = $data;
+            $this->uversionBookID = $data;
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return null;
