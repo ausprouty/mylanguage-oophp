@@ -115,14 +115,16 @@ class Bible {
         }
 
     }
-    public function getBestBibleByLanguageCodeHL($code){
-        $query = "SELECT * FROM bibles WHERE languageCodeHL = :code ORDER BY weight DESC LIMIT 1";
+    static function getBestBibleByLanguageCodeHL($code){
+        $dbConnection = new DatabaseConnection();
+        $query = "SELECT * FROM bibles 
+            WHERE languageCodeHL = :code 
+            ORDER BY weight DESC LIMIT 1";
         $params = array(':code'=>$code);
         try {
-            $statement = $this->dbConnection->executeQuery($query, $params);
+            $statement = $dbConnection->executeQuery($query, $params);
             $data = $statement->fetch(PDO::FETCH_OBJ);
-
-            $this->setBibleValues($data);
+           return $data;
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return null;

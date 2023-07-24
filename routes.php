@@ -31,7 +31,8 @@ get(ROOT . 'import/biblebrain/bibles', 'imports/addBibleBrainBibles.php');
 get(ROOT . 'import/biblebrain/languages','imports/addBibleBrainLanguages.php');
 get(ROOT . 'import/biblebrain/language/details','imports/updateBibleBrainLanguageDetails.php');
 get(ROOT . 'import/biblegateway/bibles', 'imports/addBibleGatewayBibles.php');
-get(ROOT . 'import/dbswords', 'translation/importRoutines/importDbsTranslationFromGoogle.php');
+get(ROOT . 'import/dbs/words', 'translation/importRoutines/importDbsTranslationFromGoogle.php');
+get(ROOT . 'import/dbs/database', 'imports/UpdateDbsLanguages.php');
 
 // TESTS
 get(ROOT . 'test', 'tests/test.php');
