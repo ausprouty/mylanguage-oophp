@@ -3,11 +3,13 @@
 
 echo "
 
-<h2>YOuVersion</h2>
-<p> <a href= '/mylanguage-oophp/test/youversion/passage'>Get Passage</a></p>
+
+
 
 
 <h1>API</h1>
+<p><a href = '/mylanguage-oophp/api/dbs/languages'>Language options for DBS</a></p>
+<p><a href = '/mylanguage-oophp/api/dbs/studies'>Study options for DBS</a></p>
 <p><a href = '/mylanguage-oophp/api/bibles/eng'>Bibles for Language</a></p>
 <p><a href = '/mylanguage-oophp/api/dbs/eng00/frn00/2'>DBS 2 French-English</a></p>
 <p><a href = '/mylanguage-oophp/api/dbs2/eng00/frn00/2'>New DBS 2 French-English</a></p>
@@ -45,6 +47,10 @@ echo "
 <h2>Word(local)</h2>
 <p> <a href= '/mylanguage-oophp/test/word/passage'>Get Passage</a></p>
 
+<h2>YOuVersion</h2>
+<p> <a href= '/mylanguage-oophp/test/youversion/passage'>Get Passage</a></p>
+
+
 
 <h2>Bibles</h2>
 <p><a href = '/mylanguage-oophp/test/bibles/best'> Best Bible for Language</a></p>
@@ -52,10 +58,8 @@ echo "
 
 <h2>DBS</h2>
 <p><a href = '/mylanguage-oophp/test/dbs/translation'>Can get DBS Translation</a></p>
-
 <p><a href = '/mylanguage-oophp/test/dbs/bilingual'>Bi-lingual DBS</a></p>
 <p><a href = '/mylanguage-oophp/test/dbs/eng00/frn00'>Bilingual French-English DBS</a></p>
 <p><a href = '/mylanguage-oophp/test/dbs/pdf'>Can Create Pdf</a></p>
-
 
 ";

@@ -12,7 +12,6 @@ $passage = new PassageSelectController($bibleReferenceInfo, $bible);
 $response = new stdClass();
 $response->url = $passage->getPassageUrl();
 $response->text = $passage->getPassageText();
-writeLogDebug('PassageForBible-16 - response', $response);
 ReturnDataController::returnData($response);
 
 

@@ -21,7 +21,20 @@ class DbsLanguageController{
             }
             $collectionCode = $bible->collectionCode;
             $dbs = new  DbsLanguage($languageCodeHL, $collectionCode, $format);
-            echo ("$languageCodeHL<br>");
+        }
+    }
+    public function getOptions(){
+        $dbConnection = new DatabaseConnection();
+        $query = "SELECT dbs_languages.*, hl_languages.name,  hl_languages.ethnicName
+                  FROM dbs_languages INNER JOIN hl_languages
+                  ON dbs_languages.languageCodeHL = hl_languages.languageCodeHL";
+        try {
+            $statement = $dbConnection->executeQuery($query);
+            $data = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $data;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
         }
     }
 }

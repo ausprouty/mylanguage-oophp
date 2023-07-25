@@ -10,6 +10,8 @@ require_once __DIR__.'/includes/writeLog.php';
 get(ROOT . 'api/bibles/$languageCodeHL', 'api/biblesForLanguage.php');
 get(ROOT . 'api/bibles/dbs/next/$languageCodeHL','api/bibleForDbsNext.php');
 get(ROOT . 'api/bibles/text/$languageCodeHL', 'api/biblesForLanguageTextOnly.php');
+get(ROOT . 'api/dbs/languages', 'api/dbsLanguageOptions.php');
+get(ROOT . 'api/dbs/studies', 'api/dbsStudyOptions.php');
 get(ROOT . 'api/language/$languageCodeHL', 'api/languageDetails.php');
 post(ROOT . 'api/passage/text', 'api/passageForBible.php');
 
