@@ -11,8 +11,8 @@ echo "
 <p><a href = '/mylanguage-oophp/api/dbs/languages'>Language options for DBS</a></p>
 <p><a href = '/mylanguage-oophp/api/dbs/studies'>Study options for DBS</a></p>
 <p><a href = '/mylanguage-oophp/api/bibles/eng'>Bibles for Language</a></p>
-<p><a href = '/mylanguage-oophp/api/dbs/eng00/frn00/2'>DBS 2 French-English</a></p>
-<p><a href = '/mylanguage-oophp/api/dbs2/eng00/frn00/2'>New DBS 2 French-English</a></p>
+<p><a href = '/mylanguage-oophp/api/dbs/2/eng00/frn00'>DBS 2 French-English</a></p>
+<p><a href = '/mylanguage-oophp/api/dbs2/2/eng00/frn00'>New DBS 2 French-English</a></p>
 
 <h1> Import Routines for MyLanguage OOPHP</h1>
 

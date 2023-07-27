@@ -58,7 +58,7 @@ class Bible {
     public function getBid(){
         return $this->bid;
     }
-    static function getAllBiblesByLanguageCodeHL($anguageCodeHL){
+    static function getAllBiblesByLanguageCodeHL($languageCodeHL){
         $dbConnection = new DatabaseConnection();
         $query = "SELECT * FROM bibles WHERE languageCodeHL = :code 
         ORDER BY volumeName";

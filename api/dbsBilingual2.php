@@ -1,4 +1,5 @@
 <?php
+
 $dbs = new DbsBilingualTemplateController2($lang1, $lang2, $lesson);
 
 $bible1 = new Bible();

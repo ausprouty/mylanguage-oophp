@@ -1,0 +1,301 @@
+"otherLocales": [{
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "crm",
+		"local_name": " ᐃᓕᓖᒧᐎᓐ"
+	},
+	"versions": [{
+		"id": 483,
+		"local_abbreviation": "MCNT91",
+		"local_title": "ᐅᔅᑭ ᑎᔅᑌᒥᓐᑦ",
+		"publisher_id": 239
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "ami",
+		"local_name": "'Amis"
+	},
+	"versions": [{
+		"id": 3411,
+		"local_abbreviation": "AMIS2019",
+		"local_title": "阿美語聖經-新約附詩篇箴言",
+		"publisher_id": 295
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "kud",
+		"local_name": "'Auhelawa"
+	},
+	"versions": [{
+		"id": 1069,
+		"local_abbreviation": "kud",
+		"local_title": "Yaubada Yana Walo Yemidi Vauvauna",
+		"publisher_id": 3
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "abm",
+		"local_name": "Abanyom"
+	},
+	"versions": [{
+		"id": 3421,
+		"local_abbreviation": "ABM",
+		"local_title": "Abanyom LP New Testament Portions",
+		"publisher_id": 986
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "aau",
+		"local_name": "Abau"
+	},
+	"versions": [{
+		"id": 1015,
+		"local_abbreviation": "aau",
+		"local_title": "God so Sokior-ok Iwon",
+		"publisher_id": 3
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "abn",
+		"local_name": "Abua"
+	},
+	"versions": [{
+		"id": 2632,
+		"local_abbreviation": "ẠḌI",
+		"local_title": "Ạḍinya Iigbia",
+		"publisher_id": 138
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "kgr",
+		"local_name": "Abun"
+	},
+	"versions": [{
+		"id": 2864,
+		"local_abbreviation": "KGR",
+		"local_title": "Abun Scripture",
+		"publisher_id": 3
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "mgj",
+		"local_name": "Abureni"
+	},
+	"versions": [{
+		"id": 3381,
+		"local_abbreviation": "MGJ",
+		"local_title": "Abureni",
+		"publisher_id": 986
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "ace",
+		"local_name": "Aceh"
+	},
+	"versions": [{
+		"id": 2835,
+		"local_abbreviation": "LAIACE",
+		"local_title": "Alkitab HABA GET",
+		"publisher_id": 8
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "aca",
+		"local_name": "Achagua"
+	},
+	"versions": [{
+		"id": 1418,
+		"local_abbreviation": "aca",
+		"local_title": "Liáꞌa Chuánshi Dios Shínaa",
+		"publisher_id": 3
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "acr",
+		"local_name": "Achi'"
+	},
+	"versions": [{
+		"id": 3247,
+		"local_abbreviation": "ACHICUB",
+		"local_title": "Wuj Pa K'ubultzij",
+		"publisher_id": 152
+	}, {
+		"id": 3,
+		"local_abbreviation": "acrC",
+		"local_title": "I ʼUtz Laj Tzij Re I Dios",
+		"publisher_id": 3
+	}, {
+		"id": 517,
+		"local_abbreviation": "acrN",
+		"local_title": "Ri utzilaj tzij re ri kanimajawal Jesucristo",
+		"publisher_id": 3
+	}, {
+		"id": 513,
+		"local_abbreviation": "acrT",
+		"local_title": "Ri Utzilaj Tzij re ri Kanimajawal Jesucristo",
+		"publisher_id": 3
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "acu",
+		"local_name": "Achuar"
+	},
+	"versions": [{
+		"id": 1295,
+		"local_abbreviation": "acu",
+		"local_title": "Achuar: Yuse Chichame Aarmauri Porciones del Antiguo Testamento y El Nuevo Testamento",
+		"publisher_id": 3
+	}, {
+		"id": 4,
+		"local_abbreviation": "acuNT",
+		"local_title": "Yuse chichame aarmauri; Yaanchuik, Chicham; Yamaram Chicham",
+		"publisher_id": 3
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "ada",
+		"local_name": "Adangme"
+	},
+	"versions": [{
+		"id": 2322,
+		"local_abbreviation": "DAN77",
+		"local_title": "Somi He Ɔ",
+		"publisher_id": 30
+	}, {
+		"id": 2265,
+		"local_abbreviation": "Dangme",
+		"local_title": "BAIBLO ALOO NGMAMI KLƆUKLƆU Ɔ",
+		"publisher_id": 259
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "tiu",
+		"local_name": "Adasen"
+	},
+	"versions": [{
+		"id": 2812,
+		"local_abbreviation": "YBT",
+		"local_title": "Ya Baru nga Tulag",
+		"publisher_id": 821
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "adh",
+		"local_name": "Adhola"
+	},
+	"versions": [{
+		"id": 2185,
+		"local_abbreviation": "DHOCDC",
+		"local_title": "KITAWO MALEŊ Catholic",
+		"publisher_id": 141
+	}, {
+		"id": 2186,
+		"local_abbreviation": "DHOPE",
+		"local_title": "KITAWO MALEŊ",
+		"publisher_id": 141
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "adi",
+		"local_name": "Adi"
+	},
+	"versions": [{
+		"id": 1530,
+		"local_abbreviation": "adiBSI",
+		"local_title": "DEENA BAIBÉL (BSI)",
+		"publisher_id": 97
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "wsg",
+		"local_name": "Adilabad Gondi"
+	},
+	"versions": [{
+		"id": 2019,
+		"local_abbreviation": "WSGNT",
+		"local_title": "ఆదిలాబాద్ గోండి పూన నియమ్",
+		"publisher_id": 97
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "adj",
+		"local_name": "Adjukru"
+	},
+	"versions": [{
+		"id": 1462,
+		"local_abbreviation": "adj",
+		"local_title": "Adioukrou",
+		"publisher_id": 3
+	}]
+}, {
+	"language": {
+		"iso_639_1": null,
+		"language_tag": "adz",
+		"local_name": "Adzera"
+	},
+	"versions": [{
+		"id": 1229,
+		"local_abbreviation": "adz",
+		"local_title": "Miamun",
+		"publisher_id": 3
+	}]
+}, {
+	"language": {
+		"iso_639_1": "af",
+		"language_tag": "afr",
+		"local_name": "Afrikaans"
+	},
+	"versions": [{
+		"id": 2,
+		"local_abbreviation": "ABA",
+		"local_title": "Bybel vir almal",
+		"publisher_id": 2
+	}, {
+		"id": 3499,
+		"local_abbreviation": "AFR20",
+		"local_title": "Die Bybel 2020-vertaling",
+		"publisher_id": 2
+	}, {
+		"id": 5,
+		"local_abbreviation": "AFR53",
+		"local_title": "Afrikaans 1933/1953",
+		"publisher_id": 2
+	}, {
+		"id": 6,
+		"local_abbreviation": "AFR83",
+		"local_title": "Afrikaans 1983",
+		"publisher_id": 2
+	}, {
+		"id": 3660,
+		"local_abbreviation": "CAB23",
+		"local_title": "Contemporary Afrikaans Bible 2023",
+		"publisher_id": 4686
+	}, {
+		"id": 50,
+		"local_abbreviation": "DB",
+		"local_title": "Die Boodskap",
+		"publisher_id": 133
+	}, {
+		"id": 117,
+		"local_abbreviation": "NLV",
+		"local_title": "Nuwe Lewende Vertaling",
+		"publisher_id": 133
+	}]
+}], "totalPages": 100,

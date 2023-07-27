@@ -18,8 +18,8 @@ post(ROOT . 'api/passage/text', 'api/passageForBible.php');
 post(ROOT . 'api/secure/bibles/weight/change', 'api/secure/bibleWeightChange.php');
 
 
-get(ROOT . 'api/dbs/$lesson/$lang1/$lang2/', 'api/dbsBilingual.php');
-get(ROOT . 'api/dbs2/$lesson/$lang1/$lang2/', 'api/dbsBilingual2.php');
+get(ROOT . 'api/dbs/$lesson/$lang1/$lang2', 'api/dbsBilingual.php');
+get(ROOT . 'api/dbs2/$lesson/$lang1/$lang2', 'api/dbsBilingual2.php');
 get(ROOT . 'api/dbs/$lesson/$lang1', 'api/dbs.php');
 
 // Index
