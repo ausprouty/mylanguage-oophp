@@ -64,7 +64,12 @@ class DbsBilingualTemplateController
         $template = str_replace('||language||', $this->language2, $template);
 
         $biblePassage1= new PassageSelectController ($this->bibleReferenceInfo, $this->bible1);
+        writeLogDebug('bible1', $this->bible1);
+        writeLogDebug('passage1', $biblePassage1);
+        writeLogDebug('refinfo', $this->bibleReferenceInfo);
         $biblePassage2= new PassageSelectController ($this->bibleReferenceInfo, $this->bible2);
+        writeLogDebug('bible2', $this->bible2);
+        writeLogDebug('passage2', $biblePassage2);
         $template = str_replace('{{Bible Reference}}', $biblePassage1->referenceLocal, $template);
         $template = str_replace('||Bible Reference||', $biblePassage2->referenceLocal, $template);
         $template = str_replace('{{url}}', $biblePassage1->passageUrl, $template);

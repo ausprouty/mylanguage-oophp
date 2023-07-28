@@ -1,14 +1,15 @@
 <?php
+writeLogDebug('dbsBilingual', "$languageCodeHL1, $languageCodeHL2, $lesson");
 
-$dbs = new DbsBilingualTemplateController($lang1, $lang2, $lesson);
+$dbs = new DbsBilingualTemplateController($languageCodeHL1, $languageCodeHL2, $lesson);
 
 $bible1 = new Bible();
-$bible1->getBestBibleByLanguageCodeHL($lang1);
+$bible1->setBestBibleByLanguageCodeHL($languageCodeHL1);
 $dbs->setBibleOne($bible1);
 
 
 $bible2 = new Bible();
-$bible2->getBestBibleByLanguageCodeHL($lang2);
+$bible2->setBestBibleByLanguageCodeHL($languageCodeHL2);
 $dbs->setBibleTwo($bible2);
 
 

@@ -18,9 +18,9 @@ post(ROOT . 'api/passage/text', 'api/passageForBible.php');
 post(ROOT . 'api/secure/bibles/weight/change', 'api/secure/bibleWeightChange.php');
 
 
-get(ROOT . 'api/dbs/$lesson/$lang1/$lang2', 'api/dbsBilingual.php');
-get(ROOT . 'api/dbs2/$lesson/$lang1/$lang2', 'api/dbsBilingual2.php');
-get(ROOT . 'api/dbs/$lesson/$lang1', 'api/dbs.php');
+get(ROOT . 'api/dbs/$lesson/$languageCodeHL1/$languageCodeHL2', 'api/dbsBilingual.php');
+get(ROOT . 'api/dbs2/$lesson/$languageCodeHL1/$languageCodeHL2', 'api/dbsBilingual2.php');
+get(ROOT . 'api/dbs/$lesson/$languageCodeHL', 'api/dbs.php');
 
 // Index
 get('/mylanguage-oophp', 'views/index.php');
