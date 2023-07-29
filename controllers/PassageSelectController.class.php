@@ -56,6 +56,7 @@ class PassageSelectController extends BiblePassage
                 break;
             case 'word':
                 $external = new BibleWordPassageController($this->bibleReferenceInfo, $this->bible);
+                writeLogDebug('passageselectcontroller-60', $external);
                 $this->passageText = $external->passageText;
                 $this->passageUrl = $external->passageUrl;
                 $this->referenceLocal = $external->referenceLocal;

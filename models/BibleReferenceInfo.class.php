@@ -44,15 +44,14 @@ class BibleReferenceInfo
         $this->chapterEnd= null;
         $this->verseEnd= null;
     }
-    public function setFromPassage(string $entry, string $languageCodeIso = 'eng'){
+    public function setFromEntry(string $entry, string $languageCodeIso = 'eng'){
         $this->checkEntrySpacing($entry);
         $this->findBookName();
         $this->findBookID();
         $this->findBookNumber();
-        $this->findUversionBookID();        $this->getTestament();
+        $this->findUversionBookID();        
+        $this->getTestament();
         $this->findChapterAndVerses();
-        return $this;// this should give us   $this->entry;
-
     }
 
     public function getUversionBookID(){
@@ -125,8 +124,8 @@ class BibleReferenceInfo
         $params = array(':bookId'=> $this->bookID);
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
-            $data = $statement->fetch(PDO::FETCH_COLUMN);
-            $this->bookNumber = $data;
+            $bookNumber = $statement->fetch(PDO::FETCH_COLUMN);
+            $this->bookNumber = $bookNumber;
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return null;
@@ -139,8 +138,8 @@ class BibleReferenceInfo
         $params = array(':bookId'=> $this->bookID);
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
-            $data = $statement->fetch(PDO::FETCH_COLUMN);
-            $this->uversionBookID = $data;
+            $uversionBookID = $statement->fetch(PDO::FETCH_COLUMN);
+            $this->uversionBookID = $uversionBookID;
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return null;
@@ -153,8 +152,8 @@ class BibleReferenceInfo
         $params = array(':bookId'=>$this->bookID );
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
-            $data = $statement->fetch(PDO::FETCH_COLUMN);
-            $this->testament = $data;
+            $testament = $statement->fetch(PDO::FETCH_COLUMN);
+            $this->testament = $testament;
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return null;
@@ -187,11 +186,13 @@ class BibleReferenceInfo
             }
         }
     }
-    public function exportPublic(){
+    public function getPublic(){
             $export= new stdClass();
             $export->entry = $this->entry;
             $export->bookName = $this->bookName;
             $export->bookID = $this->bookID;
+            $export->uversionBookID = $this->uversionBookID;
+            $export->bookNumber =  $this->bookNumber;
             $export->testament = $this->testament;
             $export->chapterStart = $this->chapterStart;
             $export->verseStart = $this->verseStart;
@@ -199,11 +200,14 @@ class BibleReferenceInfo
             $export->verseEnd = $this->verseEnd;
             return  $export;
     }
-    public function importPublic($import)
+
+    public function setPublic($import)
     {
         $this->entry = $import->entry;
         $this->bookName = $import->bookName;
         $this->bookID = $import->bookID;
+        $this->uversionBookID = $import->uversionBookID;
+        $this->bookNumber =  $import->bookNumber;
         $this->testament = $import->testament;
         $this->chapterStart = $import->chapterStart;
         $this->verseStart = $import->verseStart;

@@ -4,19 +4,17 @@
 class DbsReference {
     private $dbConnection;
     private $lesson;
-    public $bibleReferenceInfo;
     public $reference;
     public $description;
 
-    public function __construct($lesson = null, BibleReferenceInfo $bibleReferenceInfo = null, $reference= null, $description= null) {
+    public function __construct($lesson = null, $reference= null, $description= null) {
         $this->dbConnection = new DatabaseConnection();
         $this->lesson = $lesson;
-        $this->bibleReferenceInfo = $bibleReferenceInfo;
         $this->reference = $reference;
         $this->description = $description;
     }
 
-    public function getLesson($lesson)
+    public function setLesson($lesson)
     {
         $query = "SELECT * FROM dbs_references WHERE lesson = :lesson";
         $params = array('lesson'=>$lesson);
@@ -27,13 +25,19 @@ class DbsReference {
                 $this->lesson =$data->lesson;
                 $this->reference= $data->reference;
                 $this->description =$data->description;
-                $this->bibleReferenceInfo = json_decode($data->bible_reference_info);
             }
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return null;
         }
     }
+    public function getEntry(){
+        return $this->reference;
+    }
+    public function getDescription(){
+        return $this->description;
+    }
+
 
 
 

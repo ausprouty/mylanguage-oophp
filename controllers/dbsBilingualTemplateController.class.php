@@ -27,9 +27,9 @@ class DbsBilingualTemplateController
         $language2 = new Language;
         $language2-> findOneByCode('HL' , $languageCodeHL2);
         $this->language2 = $language2->getName();
-        $title = new DbsReference();
-        $title->getLesson($lesson);
-        $this->title = $title->description;
+        $dbsReference = new DbsReference();
+        $dbsReference->setLesson($lesson);
+        $this->title = $dbsReference->getDescription();
 
     }
 
@@ -64,8 +64,8 @@ class DbsBilingualTemplateController
         $template = str_replace('||language||', $this->language2, $template);
 
         $biblePassage1= new PassageSelectController ($this->bibleReferenceInfo, $this->bible1);
-        writeLogDebug('bible1', $this->bible1);
-        writeLogDebug('passage1', $biblePassage1);
+        //writeLogDebug('bible1', $this->bible1);
+        //writeLogDebug('passage1', $biblePassage1);
         writeLogDebug('refinfo', $this->bibleReferenceInfo);
         $biblePassage2= new PassageSelectController ($this->bibleReferenceInfo, $this->bible2);
         writeLogDebug('bible2', $this->bible2);

@@ -17,7 +17,6 @@ class DbsStudyController{
     public function formatWithEnglishTitle(){
         $formated = [];
         foreach ($this->data as $lesson){
-            writeLogAppend('thisData', $lesson);
             $title = $lesson ['lesson'] . '. ' . $lesson['description']  . ' (' . $lesson['reference'] . ')';
             $obj =  new stdClass();
             $obj->title = $title;

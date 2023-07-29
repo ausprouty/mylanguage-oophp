@@ -31,7 +31,8 @@ class BibleWordPassageController extends BiblePassage {
         $bookNumber = '0' .  $bookNumber;
        }
        $chapterNumber = $this->bibleReferenceInfo->chapterStart;
-       $fileName= $bibleDir .  $bookNumber . '/'.  $chapterNumber;'.html';
+       $fileName= $bibleDir .  $bookNumber . '/'.  $chapterNumber;
+       writeLogDebug('BibleWordPassageController-35', $fileName);
        $webpage = null;
        if (file_exists ($fileName . '.html')){
             $webpage = file_get_contents($fileName . '.html');
@@ -45,6 +46,7 @@ class BibleWordPassageController extends BiblePassage {
     }
 
     private function formatExternal($webpage){
+        writeLogDebug('BibleWordPassageController-48', $webpage);
         $cleanPage = $this->cleanPage($webpage);
         $bibleText = $this->selectVerses($cleanPage);
         $output =   "\n" . '<!-- begin bible -->'; 

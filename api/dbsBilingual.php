@@ -14,9 +14,12 @@ $dbs->setBibleTwo($bible2);
 
 
 $dbsReference= new DbsReference();
-$dbsReference->getLesson($lesson);
+$dbsReference->setLesson($lesson);
+
 $bibleReferenceInfo= new  BibleReferenceInfo();
-$bibleReferenceInfo->importPublic($dbsReference->bibleReferenceInfo);
+writeLogDebug('entry', $dbsReference->getEntry());
+$bibleReferenceInfo->setFromEntry($dbsReference->getEntry());
+writeLogDebug('line 22', $dbsReference->getEntry());
 
 $dbs->setPassage($bibleReferenceInfo);
 $dbs->getBilingualTemplate();
