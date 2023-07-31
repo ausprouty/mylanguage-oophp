@@ -31,7 +31,7 @@ class BibleBrainTextPlainController extends BibleBrainPassageController
   }
   */
 
-    public function showPassageText()
+    public function getPassageText()
     {   $text = null;
         $multiVerseLine = false;
         $startVerseNumber = null;

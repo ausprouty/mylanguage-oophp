@@ -49,7 +49,7 @@ class BibleYouVersionPassageController extends BiblePassage {
         $begin = '<div class="ChapterContent_label';
         $end = '<div class="ChapterContent_version-copyright';
     }
-    public function showPassageText(){
+    public function getPassageText(){
         return $this->passageText;
     }
     public function getProtectedPassageText(){

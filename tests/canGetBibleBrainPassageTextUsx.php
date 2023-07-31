@@ -8,4 +8,4 @@ $bibleReferenceInfo->setFromPassage('Luke 1:1-6');
 writeLogDebug('bibleReferenceInfo', $bibleReferenceInfo);
 $passage = new BibleBrainTextJsonController($bibleReferenceInfo, $bible);
 $passage->getExternal();
-echo ($passage->showPassageText());
+echo ($passage->getPassageText());

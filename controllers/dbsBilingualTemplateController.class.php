@@ -63,6 +63,8 @@ class DbsBilingualTemplateController
         $this->template = str_replace('||Bible Reference||', $this->biblePassage2->referenceLocalLanguage,$this->template);
         $this->template = str_replace('{{url}}', $this->biblePassage1->passageUrl, $this->template);
         $this->template = str_replace('||url||', $this->biblePassage2->passageUrl, $this->template);
+        $this->template = str_replace('{{Bid}}', $this->bible1->bid, $this->template);
+        $this->template = str_replace('||Bid||', $this->bible2->bid, $this->template);
         $this->template = str_replace('{{Title}}', $this->title,$this->template);
         
         $this->createBibleBlock();
@@ -100,7 +102,6 @@ class DbsBilingualTemplateController
         $this->bibleBlock .= $this->showTextOrLink1();
         $this->bibleBlock .= $this->showTextOrLink2();
         $this->bibleBlock .= '</tr>' . "\n";
-        writeLogDebug('line 108', $this->bibleBlock);
     }
     private function showTextOrLink1(){
         if (strlen($this->biblePassage1->passageText) <22){

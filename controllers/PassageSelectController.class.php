@@ -41,7 +41,7 @@ class PassageSelectController extends BiblePassage
             case 'bible_brain':
                 $passage = new BibleBrainTextPlainController($this->bibleReferenceInfo, $this->bible);
                 $passage->getExternal();
-                $passage->showPassageText();
+                $passage->getPassageText();
                 $this->passageText = $passage->passageText;
                 $this->passageUrl = $passage->passageUrl;
                 $this->referenceLocalLanguage = $passage->referenceLocalLanguage;

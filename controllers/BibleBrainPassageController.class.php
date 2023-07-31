@@ -34,7 +34,7 @@ class BibleBrainPassageController extends BiblePassage {
         $passage =  new BibleBrainConnection($url);
         $this->response = $passage->response;
     }
-    public function showPassageText(){
+    public function getPassageText(){
         return $this->passageText;
     }
     public function getProtectedPassageText(){

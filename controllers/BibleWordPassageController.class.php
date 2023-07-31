@@ -46,10 +46,10 @@ class BibleWordPassageController extends BiblePassage {
 
     private function formatExternal($webpage){
         $cleanPage = $this->cleanPage($webpage);
-        $bibleText = $this->selectVerses($cleanPage);
-        $output =   "\n" . '<!-- begin bible -->'; 
-        $output .=  $bibleText ."\n" . '<!-- end bible -->' . "\n" ;
-        $this->passageText = $output;
+        $this->passageText =   "\n" . '<!-- begin bible -->';
+        $this->passageText .=   $this->selectVerses($cleanPage);
+        $this->passageText .=  $bibleText ."\n" . '<!-- end bible -->' . "\n" ;
+        $this->referenceLocalLanguage = createReferenceLocalLanguage($cleanPage);
     }
     private function cleanPage($webpage){
         $find = '<!--... the Word of God:-->'; // trim off front
@@ -84,14 +84,16 @@ class BibleWordPassageController extends BiblePassage {
         }
         return $text;
     }
-    private function createLocalReference($websiteReference){
+    private function createReferenceLocalLanguage($cleanPage){
         $expectedInReference = $this->bibleReferenceInfo->chapterStart . ':' .
             $this->bibleReferenceInfo->verseStart . '-' . $this->bibleReferenceInfo->verseEnd;
-        if (strpos($websiteReference, $expectedInReference) == FALSE){
-            $lastSpace =strrpos($websiteReference, ' ');
-            $websiteReference = substr($websiteReference,0, $lastSpace) .' '. $expectedInReference;
-        }
-        $this->referenceLocalLanguage =$websiteReference;
+        writeLogDebug('expected', $expectedInReference);
+        writeLogDebug('cleanPage', $cleanPage);
+        //if (strpos($websiteReference, $expectedInReference) == FALSE){
+        //    $lastSpace =strrpos($websiteReference, ' ');
+        //    $websiteReference = substr($websiteReference,0, $lastSpace) .' '. $expectedInReference;
+        //}
+       // $this->referenceLocalLanguage = $websiteReference;
     }
 
 }

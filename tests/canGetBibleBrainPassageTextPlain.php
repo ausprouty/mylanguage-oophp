@@ -8,4 +8,4 @@ writeLogDebug('bibleReferenceInfo', $bibleReferenceInfo);
 
 $passage = new BibleBrainTextPlainController($bibleReferenceInfo, $bible);
 $passage->getExternal();
-echo ($passage->showPassageText());
+echo ($passage->getPassageText());

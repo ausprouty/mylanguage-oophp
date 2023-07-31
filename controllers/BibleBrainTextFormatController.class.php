@@ -5,7 +5,7 @@
 class BibleBrainTextFormatController extends BibleBrainPassageController
 {
  
-    public function showPassageText()
+    public function getPassageText()
     {
         return $this->passageText;
     }
