@@ -22,7 +22,6 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
         $url .= '&page=1&limit='. $limit;
         $bibles =  new BibleBrainConnection($url);
         $this->response = $bibles->response->data;
-        writeLogDebug ('getBiblesForLanguageIso',$this->response);
 
     }
     public function showResponse(){
@@ -54,7 +53,6 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
 
     }
     public function updateBibleDatabaseWithArray(){
-        writeLogDebug('updateBibleDatabaseWithArray- ' . $this->languageCodeIso, $this->response);
         $count = 0;
         $audioTypes = array('audio_drama', 'audio', 'audio_stream', 'audio_drama_stream');
         $textTypes = array('text_plain', 'text_format', 'text_usx', 'text_html', 'text_json');
@@ -68,7 +66,6 @@ https://4.dbt.io/api/bibles?language_code=HAE&page=1&limit=25
             $this->volumeNameAlt = $translation->vname;
 
             foreach ($translation->filesets as $fileset){
-                writeLogDebug('updateBibleDatabaseWithArray'. $count, $fileset);
                 $count++;
                 $text=0;
                 $audio=0;

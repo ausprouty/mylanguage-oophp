@@ -39,7 +39,6 @@ class BibleBrainTextPlainController extends BibleBrainPassageController
             $this->passageText = 'Text not found';
             return $this->passageText;
         }
-        writeLogDebug ('BibleBrainTextPlainController-38', $this->response);
         foreach ($this->response->data as $verse){
             if (!isset($verse->verse_text)){
                 $text = 'Text Not Found';
@@ -60,7 +59,6 @@ class BibleBrainTextPlainController extends BibleBrainPassageController
             }
 
         }
-        writeLogDebug ('BibleBrainTextPlainController-55', $text);
          $this->passageText = $text;
         return $this->passageText;
     }

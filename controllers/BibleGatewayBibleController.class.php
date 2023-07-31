@@ -224,7 +224,6 @@ class BibleGatewayBibleController{
 
     }
     private function addNewLanguage($try){
-        writeLogAppend('newLanguages',  $this->languageName  . " --' . $try");
         $dbConnection = new DatabaseConnection();
         $query = "INSERT INTO hl_languages 
         (languageCodeHL, languageCodeIso, ethnicName ) 

@@ -31,19 +31,14 @@ class BibleBrainPassageController extends BiblePassage {
         $url = 'https://4.dbt.io/api/bibles/filesets/' . $this->bible->externalId;
         $url .= '/'. $this->bibleReferenceInfo->bookID . '/'. $this->bibleReferenceInfo->chapterStart;
         $url .= '?verse_start=' . $this->bibleReferenceInfo->verseStart . '&verse_end=' .$this->bibleReferenceInfo->verseEnd;
-        writeLogDebug('url', $url);
         $passage =  new BibleBrainConnection($url);
-        writeLogDebug('passage', $passage);
         $this->response = $passage->response;
-        writeLogDebug ('BibleBrainPassageController-38- response', $this->response);
-        // todo: so set it here
     }
     public function showPassageText(){
         return $this->passageText;
     }
     public function getProtectedPassageText(){
         $response = $this->getPassageText();
-        writeLogDebug('getProtectedPassageText', $response);
         return $response;
     }
     

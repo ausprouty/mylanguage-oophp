@@ -42,14 +42,12 @@ class BibleBrainTextJsonController extends BibleBrainPassageController
   public function getExternal(){
     parent::getExternal();
     $response = $this->response->data[0];
-    writeLogDebug ('BibleBrainTextJsonController-43', $response);
     $this->getPassageJson($response->path);  
   }
 
   private function getPassageJson($url){
       $json =  new CloudFrontConnection($url);
       $this->json = $json->response;
-      writeLogDebug('showPassageJson-52', $json);
   }
   public function getJson(){
     return $this->json;
