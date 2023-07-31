@@ -54,7 +54,6 @@ class BibleGatewayPassageController extends BiblePassage {
         foreach($passages as $passage){
             $bible .= $passage;
         }
-       // writeLogDebug('bibleGatewayFormat-51', $bible);
         $html->clear();
         unset($html);
         //
@@ -76,8 +75,6 @@ class BibleGatewayPassageController extends BiblePassage {
         foreach ($ret as $footnote){
             $footnote->outertext= '';
         }
-        $bible = $html->outertext;
-       // writeLogDebug('bibleGatewayFormat-75', $bible);
 
         $html = str_get_html($bible);
         $ret = $html->find ('span[class=woj]');
@@ -85,7 +82,6 @@ class BibleGatewayPassageController extends BiblePassage {
             $span->outertext= $span->innertext;
         }
         $bible = $html->outertext;
-       // writeLogDebug('bibleGatewayFormat-82', $bible);
         $html->clear();
         $html = str_get_html($bible);
         // remove links to footnotes
@@ -113,14 +109,12 @@ class BibleGatewayPassageController extends BiblePassage {
             $chapter->outertext= '<sup class="versenum">1&nbsp;</sup>';
         }
         $bible = $html->outertext;
-       // writeLogDebug('bibleGatewayFormat-111', $bible);
         unset($html);
         $bad= array(
             '<!--end of crossrefs-->'
         );
         $good='';
         $bible= str_replace( $bad, $good, $bible);
-       // writeLogDebug('bibleGatewayFormat-116', $bible);
         $pos_start = strpos($bible,'<p' );
         if ($pos_start !== FALSE){
             $bible = substr($bible, $pos_start);

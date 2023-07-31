@@ -29,14 +29,13 @@ class BibleYouVersionPassageController extends BiblePassage {
     https://www.bible.com/bible/37/GEN.1.7-14.CEB
   */
     public function getExternal()  {
-       $uversionBibleBookID =  $this->bibleReferenceInfo->getUversionBookID(); //GEN
-       $bibleBookAndChapter =   $uversionBibleBookID . '.' . $this->bibleReferenceInfo->chapterStart . '.'; // GEN.1.
-       $bibleBookAndChapter .=   $this->bibleReferenceInfo->verseStart . '-'. $this->bibleReferenceInfo->verseEnd ; // GEN.1
-       $chapter = str_replace('%', $bibleBookAndChapter , $this->bible->externalId); // 11/%.NIV   => /111/GEN.1.NIV
-       $url = 'https://www.bible.com/bible/'. $chapter;
-        writeLogDebug('url', $url);
+        $uversionBibleBookID =  $this->bibleReferenceInfo->getUversionBookID(); //GEN
+        $bibleBookAndChapter =   $uversionBibleBookID . '.' . $this->bibleReferenceInfo->chapterStart . '.'; // GEN.1.
+        $bibleBookAndChapter .=   $this->bibleReferenceInfo->verseStart . '-'. $this->bibleReferenceInfo->verseEnd ; // GEN.1
+        $chapter = str_replace('%', $bibleBookAndChapter , $this->bible->externalId); // 11/%.NIV   => /111/GEN.1.NIV
+        $url = 'https://www.bible.com/bible/'. $chapter;
         $webpage = new WebsiteConnection($url);
-        writeLogDebug ('BibleYouVersionPassageController-38', $webpage);
+
         // todo: so set it here
     }
 
@@ -49,7 +48,6 @@ class BibleYouVersionPassageController extends BiblePassage {
     }
     public function getProtectedPassageText(){
         $response = $this->getPassageText();
-        writeLogDebug('getProtectedPassageText', $response);
         return $response;
     }
     

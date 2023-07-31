@@ -72,7 +72,7 @@ class DbsBilingualTemplateController2
         $template = str_replace('{{url}}', $biblePassage1->passageUrl, $template);
         $template = str_replace('||url||', $biblePassage2->passageUrl, $template);
         $template = str_replace('{{Title}}', $this->title, $template);
-        writeLogDebug('template', $template);
+
 
         $this->template = $template;
     }

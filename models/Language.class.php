@@ -113,7 +113,15 @@ class Language
     }
 
     public function getDirection() {
-        return $this->direction;
+        writeLogAppend('getDirection', "$this->name --- $this->direction");
+        if ($this->direction == 'rtl'){
+            return $this->direction;
+        }
+        else{
+            return 'ltr';
+
+        }
+       
     }
 
     public function getNumeralSet() {
