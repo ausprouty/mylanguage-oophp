@@ -14,7 +14,7 @@ class BibleBrainPassageController extends BiblePassage {
         $this->dbConnection = new DatabaseConnection();
         $this->bibleReferenceInfo=$bibleReferenceInfo;
         $this->bible = $bible;
-        $this->referenceLocal = '';
+        $this->referenceLocalLanguage = '';
         $this->passageText = '';
         $this->passageUrl = '';
         $this->dateLastUsed = '';

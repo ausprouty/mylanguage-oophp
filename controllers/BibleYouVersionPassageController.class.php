@@ -13,15 +13,16 @@ class BibleYouVersionPassageController extends BiblePassage {
     public function __construct( BibleReferenceInfo $bibleReferenceInfo, Bible $bible){
         $this->bibleReferenceInfo=$bibleReferenceInfo;
         $this->bible = $bible;
-        $this->referenceLocal = '';
+        $this->referenceLocalLanguage = '';
         $this->passageText = '';
-        $this->passageUrl = '';
+        $this->passageUrl = $this->getPassageUrl();
         $this->dateLastUsed = '';
         $this->dateChecked = '';
         $this->timesUsed = 0;
+        
     }
  
-    public function getLink(){
+    public function getPassageUrl(){
         $uversionBibleBookID =  $this->bibleReferenceInfo->getUversionBookID(); //GEN
         $bibleBookAndChapter =   $uversionBibleBookID . '.' . $this->bibleReferenceInfo->chapterStart . '.'; // GEN.1.
         $bibleBookAndChapter .=   $this->bibleReferenceInfo->verseStart . '-'. $this->bibleReferenceInfo->verseEnd ; // GEN.1

@@ -4,7 +4,7 @@ class BiblePassage
 {
     private    $dbConnection;
     public     $bpid;
-    protected  $referenceLocal;
+    protected  $referenceLocalLanguage;
     protected  $passageText;
     protected  $passageUrl;
     protected  $dateLastUsed;
@@ -14,7 +14,7 @@ class BiblePassage
     public function __construct(){
         $this->dbConnection = new DatabaseConnection();
         $this->bpid = '';
-        $this->referenceLocal= '';
+        $this->referenceLocalLanguage= '';
         $this->passageText = '';
         $this->passageUrl='';
         $this->dateLastUsed = '';
@@ -44,7 +44,7 @@ class BiblePassage
             $data = $statement->fetch(PDO::FETCH_OBJ);
             if ($data){
                 $this->bpid= $data->bpid;
-                $this->referenceLocal = $data->referenceLocal;
+                $this->referenceLocalLanguageDatabase = $data->referenceLocalLanguage;
                 $this->passageText = $data->passageText;
                 $this->passageUrl = $data->passageUrl;
                 $this->dateLastUsed = $data->dateLastUsed;
@@ -59,14 +59,14 @@ class BiblePassage
     }
 
    
-    protected function insertPassageRecord($bpid, $referenceLocal,  $passageText, $passageUrl){
+    protected function insertPassageRecord($bpid, $referenceLocalLanguage,  $passageText, $passageUrl){
         if ($passageText) {
             $dateLastUsed = date("Y-m-d");
-            $query = "INSERT INTO bible_passages (bpid, referenceLocal,  passageText, passageUrl, dateLastUsed, dateChecked, timesUsed)
-            VALUES (:bpid,:referenceLocal, :passageText, :passageUrl, :dateLastUsed, :dateChecked, :timesUsed)";
+            $query = "INSERT INTO bible_passages (bpid, referenceLocalLanguage,  passageText, passageUrl, dateLastUsed, dateChecked, timesUsed)
+            VALUES (:bpid,:referenceLocalLanguage, :passageText, :passageUrl, :dateLastUsed, :dateChecked, :timesUsed)";
             $params = array(
                 ':bpid' => $bpid,
-                'referenceLocal' => $referenceLocal,
+                'referenceLocalLanguage' => $referenceLocalLanguage,
                 ':passageText' => $passageText,
                 ':passageUrl' => $passageUrl,
                 ':dateLastUsed' => $dateLastUsed,
@@ -77,7 +77,7 @@ class BiblePassage
             $this->dbConnection->executeQuery($query, $params);
         }
     }
-    protected function savePassageRecord($bpid, $referenceLocal,  $passageText, $passageUrl){
+    protected function savePassageRecord($bpid, $referenceLocalLanguage,  $passageText, $passageUrl){
         $this->dbConnection = new DatabaseConnection();
         $query = 'SELECT bpid FROM bible_passages WHERE bpid = :bpid LIMIT 1';
         $params = array(':bpid'=> $bpid);
@@ -90,12 +90,12 @@ class BiblePassage
         }
         if ($data){
             $query = "UPDATE bible_passages
-                SET  referenceLocal = :referenceLocal,
+                SET  referenceLocalLanguage = :referenceLocalLanguage,
                 passageText = :passageText,
                 passageUrl = :passageUrl
                 WHERE bpid = :bpid LIMIT 1";
             $params = array(
-                ':referenceLocal' => $referenceLocal,
+                ':referenceLocalLanguage' => $referenceLocalLanguage,
                 ':passageText'=> $passageText,
                 ':passageUrl'=> $passageUrl,
                 ':bpid' => $this->bpid
@@ -103,7 +103,7 @@ class BiblePassage
             $this->dbConnection->executeQuery($query, $params);
         }
         else{
-           $this->insertPassageRecord($bpid, $referenceLocal,  $passageText, $passageUrl);
+           $this->insertPassageRecord($bpid, $referenceLocalLanguage,  $passageText, $passageUrl);
         }
     }
     protected function updateDateChecked(){
@@ -142,13 +142,13 @@ class BiblePassage
         );
         $this->dbConnection->executeQuery($query, $params);
     }
-    protected function updateReferenceLocal(){ 
-        echo ("In updateReferenceLocal with value of $this->referenceLocal and bpid of $this->bpid");
+    protected function updatereferenceLocalLanguage(){ 
+        echo ("In updatereferenceLocalLanguage with value of $this->referenceLocalLanguage and bpid of $this->bpid");
         $query = "UPDATE bible_passages
-            SET referenceLocal = :referenceLocal
+            SET referenceLocalLanguage = :referenceLocalLanguage
             WHERE bpid = :bpid LIMIT 1";
         $params = array(
-            ':referenceLocal' => $this->referenceLocal,
+            ':referenceLocalLanguage' => $this->referenceLocalLanguage,
             ':bpid' => $this->bpid
         );
         $this->dbConnection = new DatabaseConnection();

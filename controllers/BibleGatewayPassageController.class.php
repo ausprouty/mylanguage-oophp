@@ -12,7 +12,7 @@ class BibleGatewayPassageController extends BiblePassage {
  
         $this->bibleReferenceInfo=$bibleReferenceInfo;
         $this->bible = $bible;
-        $this->referenceLocal = '';
+        $this->referenceLocalLanguage = '';
         $this->passageText = '';
         $this->passageUrl = '';
         $this->dateLastUsed = '';
@@ -133,7 +133,7 @@ class BibleGatewayPassageController extends BiblePassage {
             $lastSpace =strrpos($websiteReference, ' ');
             $websiteReference = substr($websiteReference,0, $lastSpace) .' '. $expectedInReference;
         }
-        $this->referenceLocal =$websiteReference;
+        $this->referenceLocalLanguage =$websiteReference;
     }
 
 }
