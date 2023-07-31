@@ -48,7 +48,7 @@ echo "
 <p> <a href= '/mylanguage-oophp/test/word/passage/af'>Get af Passage from external id</a></p>
 
 <h2>YOuVersion</h2>
-<p> <a href= '/mylanguage-oophp/test/youversion/passage'>Get Passage</a></p>
+<p> <a href= '/mylanguage-oophp/test/youversion/link'>Get Passage Link</a></p>
 
 
 

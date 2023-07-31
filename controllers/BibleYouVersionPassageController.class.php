@@ -4,14 +4,13 @@
 */
 
 class BibleYouVersionPassageController extends BiblePassage {
-    private $dbConnection;
+
     private $bibleReferenceInfo;
     private $bible;
     public $response;
 
 
     public function __construct( BibleReferenceInfo $bibleReferenceInfo, Bible $bible){
-        $this->dbConnection = new DatabaseConnection();
         $this->bibleReferenceInfo=$bibleReferenceInfo;
         $this->bible = $bible;
         $this->referenceLocal = '';
@@ -20,10 +19,16 @@ class BibleYouVersionPassageController extends BiblePassage {
         $this->dateLastUsed = '';
         $this->dateChecked = '';
         $this->timesUsed = 0;
-        $this->getExternal();
     }
  
-
+    public function getLink(){
+        $uversionBibleBookID =  $this->bibleReferenceInfo->getUversionBookID(); //GEN
+        $bibleBookAndChapter =   $uversionBibleBookID . '.' . $this->bibleReferenceInfo->chapterStart . '.'; // GEN.1.
+        $bibleBookAndChapter .=   $this->bibleReferenceInfo->verseStart . '-'. $this->bibleReferenceInfo->verseEnd ; // GEN.1
+        $chapter = str_replace('%', $bibleBookAndChapter , $this->bible->externalId); // 11/%.NIV   => /111/GEN.1.NIV
+        $this->passageUrl = 'https://www.bible.com/bible/'. $chapter;
+        return $this->passageUrl;
+    }
     /* to get verses: https://www.bible.com/bible/111/GEN.1.7-14.NIV
 
     https://www.bible.com/bible/37/GEN.1.7-14.CEB

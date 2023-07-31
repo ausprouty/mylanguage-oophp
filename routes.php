@@ -58,7 +58,7 @@ get(ROOT . 'test/biblebrain/languages/country', 'tests/canGetLanguagesForCountry
 get(ROOT . 'test/biblegateway', 'tests/canGetBibleGatewayPassage.php');
 
 //YouVersion
-get(ROOT . 'test/youversion/passage', 'tests/canGetBibleYouVersionPassage.php');
+get(ROOT . 'test/youversion/link', 'tests/canGetBibleYouVersionLink.php');
 
 // DBS
 get(ROOT . 'test/dbs/translation', 'tests/canGetDBSTranslation.php');
