@@ -38,6 +38,7 @@ class BibleYouVersionPassageController extends BiblePassage {
         // <meta content="ԾՆՈՒՆԴ 1:1-28 ՍԿԶԲՈՒՄ Աստված ստեղծեց երկինքն ու երկիրը։
         $webpage = $this->getExternal();
         $posEnd = strpos($webpage, $chapterAndVerse);
+        $short = substr($webpage, 0, $posEnd);
         $posBegin = strrpos($short , '"') + 1;
         $bookName = trim (substr($short, $posBegin));
         $this->referenceLocalLanguage = $bookName . ' '. $chapterAndVerse;
