@@ -11,24 +11,25 @@ class BibleYouVersionPassageController extends BiblePassage {
 
 
     public function __construct( BibleReferenceInfo $bibleReferenceInfo, Bible $bible){
-        $this->bibleReferenceInfo=$bibleReferenceInfo;
+      
+        $this->bibleReferenceInfo = $bibleReferenceInfo;
         $this->bible = $bible;
-        $this->referenceLocalLanguage = '';
+        $this->referenceLocalLanguage = 'unknown';
         $this->passageText = '';
-        $this->passageUrl = $this->getPassageUrl();
+        $this->setPassageUrl();
         $this->dateLastUsed = '';
         $this->dateChecked = '';
         $this->timesUsed = 0;
         
     }
  
-    public function getPassageUrl(){
+    private function setPassageUrl(){
         $uversionBibleBookID =  $this->bibleReferenceInfo->getUversionBookID(); //GEN
         $bibleBookAndChapter =   $uversionBibleBookID . '.' . $this->bibleReferenceInfo->chapterStart . '.'; // GEN.1.
         $bibleBookAndChapter .=   $this->bibleReferenceInfo->verseStart . '-'. $this->bibleReferenceInfo->verseEnd ; // GEN.1
         $chapter = str_replace('%', $bibleBookAndChapter , $this->bible->externalId); // 11/%.NIV   => /111/GEN.1.NIV
         $this->passageUrl = 'https://www.bible.com/bible/'. $chapter;
-        return $this->passageUrl;
+        writeLogDebug('setPassageUrl-32', $this->passageUrl);
     }
     /* to get verses: https://www.bible.com/bible/111/GEN.1.7-14.NIV
 
@@ -41,21 +42,24 @@ class BibleYouVersionPassageController extends BiblePassage {
         $chapter = str_replace('%', $bibleBookAndChapter , $this->bible->externalId); // 11/%.NIV   => /111/GEN.1.NIV
         $url = 'https://www.bible.com/bible/'. $chapter;
         $webpage = new WebsiteConnection($url);
-
-        // todo: so set it here
     }
 
     private function formatExternalText($webpage){
+        //todo: we are not yet using this.  We are using reference instead
         $begin = '<div class="ChapterContent_label';
         $end = '<div class="ChapterContent_version-copyright';
     }
     public function getPassageText(){
         return $this->passageText;
     }
-    public function getProtectedPassageText(){
-        $response = $this->getPassageText();
-        return $response;
+    public function getPassageUrl(){
+        writeLogDebug('getPassageUrl-56', $this->passageUrl);
+        return $this->passageUrl;
     }
+    public function getReferenceLocalLanguage(){
+        return $this->referenceLocalLanguage;
+    }
+ 
     
   
 }

@@ -5,18 +5,21 @@
 
 class BibleBrainPassageController extends BiblePassage {
     private $dbConnection;
-    private $bibleReferenceInfo;
-    private $bible;
+    protected $bibleReferenceInfo;
+    protected $bible;
     public $response;
 
 
     public function __construct( BibleReferenceInfo $bibleReferenceInfo, Bible $bible){
         $this->dbConnection = new DatabaseConnection();
-        $this->bibleReferenceInfo=$bibleReferenceInfo;
+        $this->bibleReferenceInfo = $bibleReferenceInfo;
+        writeLogDebug('biblebrainpassagecontroller-16', $this->bibleReferenceInfo);
         $this->bible = $bible;
         $this->referenceLocalLanguage = '';
         $this->passageText = '';
-        $this->passageUrl = '';
+        // https://live.bible.is/bible/engesv/mat/1
+        $this->passageUrl = 'https://live.bible.is/bible/'. $this->bible->externalId . '/';
+        $this->passageUrl  .= $this->bibleReferenceInfo->bookID . '/'. $this->bibleReferenceInfo->chapterStart;
         $this->dateLastUsed = '';
         $this->dateChecked = '';
         $this->timesUsed = 0;
@@ -37,10 +40,10 @@ class BibleBrainPassageController extends BiblePassage {
     public function getPassageText(){
         return $this->passageText;
     }
-    public function getProtectedPassageText(){
-        $response = $this->getPassageText();
-        return $response;
+    public function getPassageUrl(){
+        return this->passageUrl;
     }
+
     
   
 }

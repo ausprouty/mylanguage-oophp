@@ -62,5 +62,21 @@ class BibleBrainTextPlainController extends BibleBrainPassageController
          $this->passageText = $text;
         return $this->passageText;
     }
+
+    public function getReferenceLocalLanguage(){
+        writeLogDebug('line67', $this->bibleReferenceInfo );
+        $this->referenceLocalLanguage = $this->getBookNameLocalLanguage();
+        $this->referenceLocalLanguage .= $this->bibleReferenceInfo->chapterStart . ':' .
+            $this->bibleReferenceInfo->verseStart  .'-' .$this->bibleReferenceInfo->verseEnd;
+        writeLog('reference', $this->referenceLocalLanguage);
+    }
+
+    public function getBookNameLocalLanguage(){
+        writeLogDebug('line74', $this->response->data);
+        if (!isset($this->response->data)){
+           return 'Name not found';
+        }
+        return $this->response->data[0]->book_name_alt;
+    }
     
 }

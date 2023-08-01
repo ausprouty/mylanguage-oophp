@@ -47,9 +47,9 @@ class BibleWordPassageController extends BiblePassage {
     private function formatExternal($webpage){
         $cleanPage = $this->cleanPage($webpage);
         $this->passageText =   "\n" . '<!-- begin bible -->';
-        $this->passageText .=   $this->selectVerses($cleanPage);
-        $this->passageText .=  $bibleText ."\n" . '<!-- end bible -->' . "\n" ;
-        $this->referenceLocalLanguage = createReferenceLocalLanguage($cleanPage);
+        $this->passageText .=   $this->selectVerses($cleanPage) ."\n" ;
+        $this->passageText .=  '<!-- end bible -->' . "\n" ;
+        $this->referenceLocalLanguage = $this->createReferenceLocalLanguage($cleanPage);
     }
     private function cleanPage($webpage){
         $find = '<!--... the Word of God:-->'; // trim off front

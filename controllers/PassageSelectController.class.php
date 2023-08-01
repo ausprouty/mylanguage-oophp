@@ -6,7 +6,7 @@ class PassageSelectController extends BiblePassage
 {
 
     //private $dbConnection;
-    private $bibleReferenceInfo;
+    protected $bibleReferenceInfo;
     private $bible;
     private $passageId;// used to see if data is stored
     public  $passageText;
@@ -40,11 +40,9 @@ class PassageSelectController extends BiblePassage
         switch($this->bible->source){
             case 'bible_brain':
                 $passage = new BibleBrainTextPlainController($this->bibleReferenceInfo, $this->bible);
-                $passage->getExternal();
-                $passage->getPassageText();
-                $this->passageText = $passage->passageText;
-                $this->passageUrl = $passage->passageUrl;
-                $this->referenceLocalLanguage = $passage->referenceLocalLanguage;
+                $this->passageText = $passage->getPassageText();
+                $this->passageUrl = $passage->getPassageUrl();
+                $this->referenceLocalLanguage = $passage->getReferenceLocalLanguage();
                 break;
             case 'bible_gateway':
                 $external = new BibleGatewayPassageController($this->bibleReferenceInfo, $this->bible);
@@ -53,11 +51,11 @@ class PassageSelectController extends BiblePassage
                 $this->referenceLocalLanguage = $external->referenceLocalLanguage;
                 break;
             case 'youversion':
-                    $external = new BibleYouVersionPassageController($this->bibleReferenceInfo, $this->bible);
+                    $passage = new BibleYouVersionPassageController($this->bibleReferenceInfo, $this->bible);
                     $this->passageText = null;
-                    $this->passageUrl = $external->passageUrl;
+                    $this->passageUrl = $passage->getPassageUrl();
                     writeLogDebug('url', $this->passageUrl);
-                    $this->referenceLocalLanguage = $external->referenceLocalLanguage;
+                    $this->referenceLocalLanguage = $passage->getReferenceLocalLanguage();
                     writeLogDebug('reference',  $this->referenceLocalLanguage);
                     break;    
             case 'word':
