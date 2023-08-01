@@ -52,11 +52,13 @@ class DbsBilingualTemplateController
     }
     public function getBilingualTemplate()
     {
-        $file = __DIR__ .'/../templates/bilingualdbs.template.html';
+        $file = ROOT_TEMPLATES . 'bilingualDbs.template.html';
         if (!file_exists($file)){
             return null;
         }
         $this->template = file_get_contents($file);
+        $this->createBibleBlock();
+        $this->template= str_replace ('{{Bible Block}}', $this->bibleBlock, $this->template);
         $this->template = str_replace('{{language}}', $this->language1->getName(),$this->template);
         $this->template = str_replace('||language||', $this->language2->getName(),$this->template);
         $this->template = str_replace('{{Bible Reference}}', $this->biblePassage1->referenceLocalLanguage,$this->template);
@@ -66,10 +68,6 @@ class DbsBilingualTemplateController
         $this->template = str_replace('{{Bid}}', $this->bible1->bid, $this->template);
         $this->template = str_replace('||Bid||', $this->bible2->bid, $this->template);
         $this->template = str_replace('{{Title}}', $this->title,$this->template);
-        
-        $this->createBibleBlock();
-        writeLogDebug('bibleBlock',  $this->bibleBlock);
-        $this->template= str_replace ('{{Bible Block}}', $this->bibleBlock, $this->template);
         $this->template= str_replace ('{{dir_language1}}', $this->language1->getDirection(),$this->template);
         $this->template= str_replace ('||dir_language2||', $this->language2->getDirection(),$this->template);
        
@@ -85,7 +83,6 @@ class DbsBilingualTemplateController
 
     private function createBibleBlock(){
         // a blank record is <div dir="ltr"></div>
-
         if (strlen($this->biblePassage1->passageText) >  22 
             && strlen($this->biblePassage2->passageText) > 22){
             $this->createBiblePassageRows();
@@ -96,42 +93,60 @@ class DbsBilingualTemplateController
     }
 
     private function createBibleBlockWhenTextMissing(){
-        $text1 = 
-        $text2 = $this->showTextOrLink2();
-        $this->bibleBlock = '<tr  class="{{dir_language1}} dbs">' . "\n";
-        $this->bibleBlock .= $this->showTextOrLink1();
-        $this->bibleBlock .= $this->showTextOrLink2();
-        $this->bibleBlock .= '</tr>' . "\n";
-    }
-    private function showTextOrLink1(){
-        if (strlen($this->biblePassage1->passageText) <22){
-            return '<td  class="{{dir_language1}} dbs bible">' . 
-                '<a href="' . $this->biblePassage1->passageUrl . '">{{Read Passage}}</a>' .
-                '</td>' . "\n";
+        $block = '';
+        if (strlen($this->biblePassage2->passageText) > strlen($this->biblePassage1->passageText)){
+            $block .= $this->showTextOrLink($this->biblePassage1);
+            $block .= $this->showTextOrLink($this->biblePassage2);
         }
         else{
-            return '<td  class="{{dir_language1}} dbs bible" style="width:80%">' . 
-                     $this->biblePassage1->passageText . 
-                     '</td>' . "\n";
+            $block .= $this->showTextOrLink($this->biblePassage2);
+            $block .= $this->showTextOrLink($this->biblePassage1);
         }
     }
-    private function showTextOrLink2(){
-        if (strlen($this->biblePassage2->passageText) <22){
-            return '<td  class="||dir_language2|| dbs bible">' . 
-                '<a href="' . $this->biblePassage2->passageUrl . '">||Read Passage||</a>' .
-                '</td>' . "\n";
-        }
-        else{
-            return '<td  class="||dir_language2|| dbs bible" style="width:80%">' . 
-                     $this->biblePassage2->passageText . 
-                     '</td>' . "\n";
+    private function showTextOrLink($biblePassage){
+        if (strlen($biblePassage->passageText) <22){
+            return $this->showDivLink($biblePassage); 
+        }else{
+            return $this->showDivText($biblePassage);
         }
     }
+    private function showDivLink($biblePassage){
+        writeLogDebug('showDivLink', $biblePassage);
+        writeLogDebug('showDivLinkBible', $biblePassage->getBible());
+        $template = file_get_contents(ROOT_TEMPLATES . 'bibleBlockDivLink.template.html');
+        $existing = array(
+            '{{dir_language}}',
+            '{{url}}',
+            '{{Bible Reference}}',
+            '{{Bid}}'
+        );
+        $new = array(
+            $biblePassage->getBibleDirection(),
+            $biblePassage->passageUrl,
+            $biblePassage->referenceLocalLanguage,
+            $biblePassage->getBibleBid()
+        );
+        $template = str_replace($existing, $new, $template);
+        return $template;
+
+    }
+    private function showDivText($biblePassage){
+        writeLogDebug('showDivText', $biblePassage);
+        writeLogDebug('showDivTextBible', $biblePassage->getBible());
+        $template = file_get_contents(ROOT_TEMPLATES . 'bibleBlockDivText.template.html');
+        return $template;
+    }
+ 
 
     private function createBiblePassageRows(){
+        $file = ROOT_TEMPLATES . 'bibleBlockTable.template.html';
+        if (!file_exists($file)){
+            return null;
+        }
+        $template = file_get_contents($file);
         $paragraphs1 = $this->findParagraphs($this->biblePassage1->passageText);
         $paragraphs2 = $this->findParagraphs($this->biblePassage2->passageText);
-        $this->bibleBlock = '';
+        $passageRows = '';
         $length1 = count($paragraphs1) -1;
         $length2 = count($paragraphs2) -1;
         $key1 = 0;
@@ -160,10 +175,10 @@ class DbsBilingualTemplateController
             if ($nextColumn1Verse ==  $nextColumn2Verse ){
                 $column1 .= '</td>';
                 $column2 .= '</td>';
-                $this->bibleBlock .= '<tr class="{{dir_language1}} dbs">' . "\n";
-                $this->bibleBlock .= "$column1\n";
-                $this->bibleBlock .= "$column2\n";
-                $this->bibleBlock .= "</tr>\n";
+                $passageRows .= '<tr class="{{dir_language1}} dbs">' . "\n";
+                $passageRows  .= "$column1\n";
+                $passageRows  .= "$column2\n";
+                $passageRows  .= "</tr>\n";
                 $key1++;
                 $key2++;
                 $newRow = true;
@@ -181,7 +196,7 @@ class DbsBilingualTemplateController
                 }
             }
         }
-        return $this->bibleBlock;
+        $this->bibleBlock = str_replace('{passage_rows}', $passageRows, $template);
     }
 
     private function findParagraphs($text){

@@ -122,8 +122,7 @@ class BibleWordPassageController extends BiblePassage {
     private function createReferenceLocalLanguage($cleanPage){
         $expectedInReference = $this->bibleReferenceInfo->chapterStart . ':' .
             $this->bibleReferenceInfo->verseStart . '-' . $this->bibleReferenceInfo->verseEnd;
-        writeLogDebug('expected', $expectedInReference);
-        writeLogDebug('cleanPage', $cleanPage);
+
         //if (strpos($websiteReference, $expectedInReference) == FALSE){
         //    $lastSpace =strrpos($websiteReference, ' ');
         //    $websiteReference = substr($websiteReference,0, $lastSpace) .' '. $expectedInReference;

@@ -13,7 +13,6 @@ class BibleBrainPassageController extends BiblePassage {
     public function __construct( BibleReferenceInfo $bibleReferenceInfo, Bible $bible){
         $this->dbConnection = new DatabaseConnection();
         $this->bibleReferenceInfo = $bibleReferenceInfo;
-        writeLogDebug('biblebrainpassagecontroller-16', $this->bibleReferenceInfo);
         $this->bible = $bible;
         $this->referenceLocalLanguage = '';
         $this->passageText = '';
