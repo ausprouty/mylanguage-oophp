@@ -51,18 +51,16 @@ class PassageSelectController extends BiblePassage
                 $this->referenceLocalLanguage = $external->referenceLocalLanguage;
                 break;
             case 'youversion':
-                    $passage = new BibleYouVersionPassageController($this->bibleReferenceInfo, $this->bible);
-                    $this->passageText = null;
-                    $this->passageUrl = $passage->getPassageUrl();
-                    writeLogDebug('url', $this->passageUrl);
-                    $this->referenceLocalLanguage = $passage->getReferenceLocalLanguage();
-                    writeLogDebug('reference',  $this->referenceLocalLanguage);
-                    break;    
+                $passage = new BibleYouVersionPassageController($this->bibleReferenceInfo, $this->bible);
+                $this->passageText = $passage->getPassageText();
+                $this->passageUrl = $passage->getPassageUrl();
+                $this->referenceLocalLanguage = $passage->getReferenceLocalLanguage();
+                break;    
             case 'word':
-                $external = new BibleWordPassageController($this->bibleReferenceInfo, $this->bible);
-                $this->passageText = $external->passageText;
-                $this->passageUrl = $external->passageUrl;
-                $this->referenceLocalLanguage = $external->referenceLocalLanguage;
+                $passage = new BibleWordPassageController($this->bibleReferenceInfo, $this->bible);
+                $this->passageText = $passage->getPassageText();
+                $this->passageUrl = $passage->getPassageUrl();
+                $this->referenceLocalLanguage = $passage->getReferenceLocalLanguage();
                 break;
 
             default:

@@ -14,24 +14,44 @@ class BibleWordPassageController extends BiblePassage {
         $this->bible = $bible;
         $this->referenceLocalLanguage = '';
         $this->passageText = '';
-        $this->passageUrl = '';
+        $this->createPassageUrl();
         $this->dateLastUsed = '';
         $this->dateChecked = '';
         $this->timesUsed = 0;
         $this->getExternal();
     }
- 
 
-    public function getExternal(){
-       $dir = ROOT_RESOURCES . '/bibles/wordproject/';
-       $externalId = $this->bible->externalId;
-       $bibleDir = $dir .  $externalId. '/'.  $externalId . '/';
+    public function getReferenceLocalLanguage(){
+        return $this->referenceLocalLanguage;
+    }
+    public function getPassageText(){
+        return $this->passageText;
+    }
+    public function getPassageURL(){
+        return $this->passageUrl;
+    }
+
+
+    private function createPassageUrl(){
+       //sample: https://wordproject.org/bibles/am/43/1.htm
+       $this->passageUrl =  'https://wordproject.org/bibles/' .  $this->bible->externalId  .'/';
+       $this->passageUrl .= $this->chapterPage();
+       $this->passageUrl .= '.htm';
+    }
+ 
+    private function chapterPage(){
        $bookNumber =  $this->bibleReferenceInfo->bookNumber;
        if (intval( $bookNumber)<10){
         $bookNumber = '0' .  $bookNumber;
        }
        $chapterNumber = $this->bibleReferenceInfo->chapterStart;
-       $fileName= $bibleDir .  $bookNumber . '/'.  $chapterNumber;
+       return $bookNumber . '/'.  $chapterNumber;
+    }
+    public function getExternal(){
+       $dir = ROOT_RESOURCES . '/bibles/wordproject/';
+       $externalId = $this->bible->externalId;
+       $bibleDir = $dir .  $externalId. '/'.  $externalId . '/';
+       $fileName = $bibleDir . $this->chapterPage();
        $webpage = null;
        if (file_exists ($fileName . '.html')){
             $webpage = file_get_contents($fileName . '.html');
@@ -41,8 +61,23 @@ class BibleWordPassageController extends BiblePassage {
         }
        if ($webpage){
             $this->formatExternal($webpage);
+            $this->setReferenceLocalLanguage($webpage);
        }
     }
+
+    private function setReferenceLocalLanguage($webpage){
+        // <p class="ym-noprint"> Hoofstuk:    
+        $find = '<p class="ym-noprint">';
+        $posStart = strpos($webpage, $find) + strlen($find);
+        $posEnd = strpos($webpage, ':', $posStart);
+        $length = $posEnd-$posStart;
+        $bookName = trim (substr($webpage, $posStart, $length));
+        $verses = $this->bibleReferenceInfo->chapterStart . ':';
+        $verses .=  $this->bibleReferenceInfo->verseStart . '-'. $this->bibleReferenceInfo->verseEnd;
+        $this->referenceLocalLanguage = $bookName . ' '. $verses;
+
+    }
+
 
     private function formatExternal($webpage){
         $cleanPage = $this->cleanPage($webpage);
@@ -95,5 +130,7 @@ class BibleWordPassageController extends BiblePassage {
         //}
        // $this->referenceLocalLanguage = $websiteReference;
     }
+
+   
 
 }

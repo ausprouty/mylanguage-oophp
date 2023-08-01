@@ -14,12 +14,13 @@ class BibleYouVersionPassageController extends BiblePassage {
       
         $this->bibleReferenceInfo = $bibleReferenceInfo;
         $this->bible = $bible;
-        $this->referenceLocalLanguage = 'unknown';
+       
         $this->passageText = '';
         $this->setPassageUrl();
         $this->dateLastUsed = '';
         $this->dateChecked = '';
         $this->timesUsed = 0;
+        $this->setReferenceLocalLanguage();
         
     }
  
@@ -31,17 +32,31 @@ class BibleYouVersionPassageController extends BiblePassage {
         $this->passageUrl = 'https://www.bible.com/bible/'. $chapter;
         writeLogDebug('setPassageUrl-32', $this->passageUrl);
     }
+
+    private function setReferenceLocalLanguage(){
+        $chapterAndVerse =  $this->bibleReferenceInfo->chapterStart . ': '; 
+        $chapterAndVerse .=   $this->bibleReferenceInfo->verseStart . '-'. $this->bibleReferenceInfo->verseEnd ;
+        // <meta content="ԾՆՈՒՆԴ 1:1-28 ՍԿԶԲՈՒՄ Աստված ստեղծեց երկինքն ու երկիրը։
+        $webpage = $this->getExternal();
+        $posEnd = strpos($webpage, $chapterAndVerse);
+        $posBegin = strrpos($webpage , '"', $posEnd);
+        $length = $posEnd - $posBegin;
+        $bookName = trim (substr($webpage, $posBegin, $length));
+        $this->referenceLocalLanguage = $bookName . ' '. $chapterAndVerse;
+        writeLogDebug('setReferenceLocalLanguage-46', )
+    }
     /* to get verses: https://www.bible.com/bible/111/GEN.1.7-14.NIV
 
     https://www.bible.com/bible/37/GEN.1.7-14.CEB
   */
-    public function getExternal()  {
+    private function getExternal()  {
         $uversionBibleBookID =  $this->bibleReferenceInfo->getUversionBookID(); //GEN
         $bibleBookAndChapter =   $uversionBibleBookID . '.' . $this->bibleReferenceInfo->chapterStart . '.'; // GEN.1.
         $bibleBookAndChapter .=   $this->bibleReferenceInfo->verseStart . '-'. $this->bibleReferenceInfo->verseEnd ; // GEN.1
         $chapter = str_replace('%', $bibleBookAndChapter , $this->bible->externalId); // 11/%.NIV   => /111/GEN.1.NIV
         $url = 'https://www.bible.com/bible/'. $chapter;
         $webpage = new WebsiteConnection($url);
+        return $webpage->response;
     }
 
     private function formatExternalText($webpage){
@@ -59,7 +74,7 @@ class BibleYouVersionPassageController extends BiblePassage {
     public function getReferenceLocalLanguage(){
         return $this->referenceLocalLanguage;
     }
- 
+
     
-  
+ 
 }
