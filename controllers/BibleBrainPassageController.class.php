@@ -40,9 +40,7 @@ class BibleBrainPassageController extends BiblePassage {
         return $this->passageText;
     }
     public function getPassageUrl(){
-        return this->passageUrl;
+        return $this->passageUrl;
     }
 
-    
-  
 }

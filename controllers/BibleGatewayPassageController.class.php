@@ -41,9 +41,7 @@ class BibleGatewayPassageController extends BiblePassage {
             $this->passageText = '';
         }
     }
-   
-
-     private function formatExternal($webpage){
+    private function formatExternal($webpage){
         require_once('./libraries/simplehtmldom_1_9_1/simple_html_dom.php');
         $html = str_get_html($webpage);
         $e = $html->find('.dropdown-display-text', 0);

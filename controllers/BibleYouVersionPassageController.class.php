@@ -9,21 +9,26 @@ class BibleYouVersionPassageController extends BiblePassage {
     private $bible;
     public $response;
 
-
     public function __construct( BibleReferenceInfo $bibleReferenceInfo, Bible $bible){
       
         $this->bibleReferenceInfo = $bibleReferenceInfo;
         $this->bible = $bible;
-       
         $this->passageText = '';
         $this->setPassageUrl();
         $this->dateLastUsed = '';
         $this->dateChecked = '';
         $this->timesUsed = 0;
         $this->setReferenceLocalLanguage();
-        
     }
- 
+    public function getPassageText(){
+        return $this->passageText;
+    }
+    public function getPassageUrl(){
+        return $this->passageUrl;
+    }
+    public function getReferenceLocalLanguage(){
+        return $this->referenceLocalLanguage;
+    }
     private function setPassageUrl(){
         $uversionBibleBookID =  $this->bibleReferenceInfo->getUversionBookID(); //GEN
         $bibleBookAndChapter =   $uversionBibleBookID . '.' . $this->bibleReferenceInfo->chapterStart . '.'; // GEN.1.
@@ -31,7 +36,6 @@ class BibleYouVersionPassageController extends BiblePassage {
         $chapter = str_replace('%', $bibleBookAndChapter , $this->bible->externalId); // 11/%.NIV   => /111/GEN.1.NIV
         $this->passageUrl = 'https://www.bible.com/bible/'. $chapter;
     }
-
     private function setReferenceLocalLanguage(){
         $chapterAndVerse =  $this->bibleReferenceInfo->chapterStart . ':'; 
         $chapterAndVerse .=   $this->bibleReferenceInfo->verseStart . '-'. $this->bibleReferenceInfo->verseEnd ;
@@ -56,22 +60,9 @@ class BibleYouVersionPassageController extends BiblePassage {
         $webpage = new WebsiteConnection($url);
         return $webpage->response;
     }
-
     private function formatExternalText($webpage){
         //todo: we are not yet using this.  We are using reference instead
         $begin = '<div class="ChapterContent_label';
         $end = '<div class="ChapterContent_version-copyright';
     }
-    public function getPassageText(){
-        return $this->passageText;
-    }
-    public function getPassageUrl(){
-        return $this->passageUrl;
-    }
-    public function getReferenceLocalLanguage(){
-        return $this->referenceLocalLanguage;
-    }
-
-    
- 
 }

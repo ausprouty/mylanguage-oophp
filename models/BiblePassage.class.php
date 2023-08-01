@@ -27,6 +27,9 @@ class BiblePassage
     public function getPassageUrl(){
         return $this->passageUrl;
     }
+    public function getReferenceLocalLanguage(){
+        return $this->referenceLocalLanguage;
+    }
     public static function createBiblePassageId(string $bid, BibleReferenceInfo $passage){
         // 1026-Luke-10-1-42
             $bpid=$bid .'-' .
@@ -42,9 +45,10 @@ class BiblePassage
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
             $data = $statement->fetch(PDO::FETCH_OBJ);
+            writeLogDebug('findStoredById-'. $bpid, $data);
             if ($data){
                 $this->bpid= $data->bpid;
-                $this->referenceLocalLanguageDatabase = $data->referenceLocalLanguage;
+                $this->referenceLocalLanguage = $data->referenceLocalLanguage;
                 $this->passageText = $data->passageText;
                 $this->passageUrl = $data->passageUrl;
                 $this->dateLastUsed = $data->dateLastUsed;
@@ -57,6 +61,7 @@ class BiblePassage
             return null;
         }
     }
+   
 
    
     protected function insertPassageRecord($bpid, $referenceLocalLanguage,  $passageText, $passageUrl){

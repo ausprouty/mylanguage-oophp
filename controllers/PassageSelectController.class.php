@@ -21,7 +21,6 @@ class PassageSelectController extends BiblePassage
             $this->passageUrl= null;
             $this->checkDatabase();
     }
-
     public function getBible(){
         return $this->bible;
     }
@@ -38,11 +37,10 @@ class PassageSelectController extends BiblePassage
         $this->passageId = BiblePassage::createBiblePassageId($this->bible->bid,  $this->bibleReferenceInfo);
         $passage = new BiblePassage();
         $passage->findStoredById($this->passageId);
-        if ($passage->referenceLocalLanguage) {
-       // if ($passage->passageText){
-            $this->passageText= $passage->passageText;
-            $this->passageUrl = $passage->passageUrl;
-            $this->referenceLocalLanguage = $passage->referenceLocalLanguage;
+        if ($passage->getReferenceLocalLanguage()) {
+            $this->passageText= $passage->getPassageText();
+            $this->passageUrl = $passage->getPassageUrl();
+            $this->referenceLocalLanguage = $passage->getReferenceLocalLanguage();
         }
         else{
             $this->getExternal();
@@ -53,36 +51,26 @@ class PassageSelectController extends BiblePassage
         switch($this->bible->source){
             case 'bible_brain':
                 $passage = new BibleBrainTextPlainController($this->bibleReferenceInfo, $this->bible);
-                $this->passageText = $passage->getPassageText();
-                $this->passageUrl = $passage->getPassageUrl();
-                $this->referenceLocalLanguage = $passage->getReferenceLocalLanguage();
                 break;
             case 'bible_gateway':
                 $external = new BibleGatewayPassageController($this->bibleReferenceInfo, $this->bible);
-                $this->passageText = $external->passageText;
-                $this->passageUrl = $external->passageUrl;
-                $this->referenceLocalLanguage = $external->referenceLocalLanguage;
                 break;
             case 'youversion':
                 $passage = new BibleYouVersionPassageController($this->bibleReferenceInfo, $this->bible);
-                $this->passageText = $passage->getPassageText();
-                $this->passageUrl = $passage->getPassageUrl();
-                $this->referenceLocalLanguage = $passage->getReferenceLocalLanguage();
                 break;    
             case 'word':
                 $passage = new BibleWordPassageController($this->bibleReferenceInfo, $this->bible);
-                $this->passageText = $passage->getPassageText();
-                $this->passageUrl = $passage->getPassageUrl();
-                $this->referenceLocalLanguage = $passage->getReferenceLocalLanguage();
                 break;
-
             default:
             break;
         }
-     if ($this->passageText){
-        $this->wrapTextDir();
-        parent::savePassageRecord($this->passageId, $this->referenceLocalLanguage,  $this->passageText, $this->passageUrl);
-     }
+        $this->passageText = $passage->getPassageText();
+        $this->passageUrl = $passage->getPassageUrl();
+        $this->referenceLocalLanguage = $passage->getReferenceLocalLanguage();
+        if ($this->passageText){
+            $this->wrapTextDir();
+            parent::savePassageRecord($this->passageId, $this->referenceLocalLanguage,  $this->passageText, $this->passageUrl);
+        }
        
         
     }
