@@ -21,6 +21,7 @@ class DbsStudyController{
             $obj =  new stdClass();
             $obj->title = $title;
             $obj->lesson = $lesson['lesson'];
+            $obj->testament = $lesson['testament'];
             $formatted[] = $obj;
         }
         return $formatted;

@@ -80,9 +80,11 @@ class DbsBilingualTemplateController
 
     }
     private function createBibleBlock(){
-        // a blank record is <div dir="ltr"></div>
-        if (strlen($this->biblePassage1->passageText) >  22 
-            && strlen($this->biblePassage2->passageText) > 22){
+        // a blank record is NULL
+        writeLogDebug('createBibleBlock-84', $this->biblePassage1->passageText);
+        writeLogDebug('createBibleBlock-85', $this->biblePassage2->passageText);
+        if ($this->biblePassage1->passageText !==  NULL 
+            && $this->biblePassage2->passageText !== NULL){
             $this->createBiblePassageRows();
         }
         else{
@@ -91,7 +93,7 @@ class DbsBilingualTemplateController
     }
     private function createBibleBlockWhenTextMissing(){
         $this->bibleBlock = '';
-        if (strlen($this->biblePassage2->passageText) > strlen($this->biblePassage1->passageText)){
+        if ($this->biblePassage2->passageText !== NULL){
             $this->bibleBlock .= $this->showTextOrLink($this->biblePassage1);
             $this->bibleBlock .= $this->showTextOrLink($this->biblePassage2);
         }
@@ -101,7 +103,7 @@ class DbsBilingualTemplateController
         }
     }
     private function showTextOrLink($biblePassage){
-        if (strlen($biblePassage->passageText) <22){
+        if ($biblePassage->passageText == NULL){
             return $this->showDivLink($biblePassage); 
         }else{
             return $this->showDivText($biblePassage);

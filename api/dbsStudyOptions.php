@@ -1,5 +1,5 @@
 <?php
 
-$lessons = new dbsStudyController();
+$lessons = new DbsStudyController();
 $data = $lessons->formatWithEnglishTitle();
 ReturnDataController::returnData($data);

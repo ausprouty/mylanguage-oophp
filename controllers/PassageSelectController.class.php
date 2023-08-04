@@ -38,22 +38,26 @@ class PassageSelectController extends BiblePassage
         $passage = new BiblePassage();
         $passage->findStoredById($this->passageId);
         if ($passage->getReferenceLocalLanguage()) {
+            writeLogAppend('using Stored', $this->bible->bid);
             $this->passageText= $passage->getPassageText();
             $this->passageUrl = $passage->getPassageUrl();
             $this->referenceLocalLanguage = $passage->getReferenceLocalLanguage();
         }
         else{
             $this->getExternal();
+            writeLogAppend('using external', $this->bible->bid);
         }
+        writeLogAppend('referenceLocalLanguage', $this->referenceLocalLanguage);
         $this->wrapTextDir();
     }
     private function getExternal(){
         switch($this->bible->source){
             case 'bible_brain':
                 $passage = new BibleBrainTextPlainController($this->bibleReferenceInfo, $this->bible);
+                writeLogAppend('using bible brain', $this->bible->bid);
                 break;
             case 'bible_gateway':
-                $external = new BibleGatewayPassageController($this->bibleReferenceInfo, $this->bible);
+                $passage = new BibleGatewayPassageController($this->bibleReferenceInfo, $this->bible);
                 break;
             case 'youversion':
                 $passage = new BibleYouVersionPassageController($this->bibleReferenceInfo, $this->bible);
@@ -67,14 +71,13 @@ class PassageSelectController extends BiblePassage
         $this->passageText = $passage->getPassageText();
         $this->passageUrl = $passage->getPassageUrl();
         $this->referenceLocalLanguage = $passage->getReferenceLocalLanguage();
-        if ($this->passageText){
-            $this->wrapTextDir();
-            parent::savePassageRecord($this->passageId, $this->referenceLocalLanguage,  $this->passageText, $this->passageUrl);
-        }
-       
-        
+        writeLogAppend('getExternal', $this->referenceLocalLanguage);
+        parent::savePassageRecord($this->passageId, $this->referenceLocalLanguage,  $this->passageText, $this->passageUrl); 
     }
     private function wrapTextDir(){
+        if ($this->passageText == NULL){
+            return;
+        }
         if ($this->bible->direction == 'rtl'){
             $dir = 'rtl';
         }

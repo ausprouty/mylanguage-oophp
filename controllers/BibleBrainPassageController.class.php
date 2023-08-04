@@ -23,6 +23,8 @@ class BibleBrainPassageController extends BiblePassage {
         $this->dateChecked = '';
         $this->timesUsed = 0;
         $this->getExternal();
+        $this->formatPassageText();
+        $this->setReferenceLocalLanguage();
     }
  
 
@@ -35,6 +37,7 @@ class BibleBrainPassageController extends BiblePassage {
         $url .= '?verse_start=' . $this->bibleReferenceInfo->verseStart . '&verse_end=' .$this->bibleReferenceInfo->verseEnd;
         $passage =  new BibleBrainConnection($url);
         $this->response = $passage->response;
+        writeLogDebug('bibleBrain', $this->response);
     }
     public function getPassageText(){
         return $this->passageText;

@@ -31,17 +31,17 @@ class BibleBrainTextPlainController extends BibleBrainPassageController
   }
   */
 
-    public function getPassageText()
+    public function formatPassageText()
     {   $text = null;
         $multiVerseLine = false;
         $startVerseNumber = null;
         if (!isset($this->response->data)){
-            $this->passageText = 'Text not found';
+            $this->passageText = NULL;
             return $this->passageText;
         }
         foreach ($this->response->data as $verse){
             if (!isset($verse->verse_text)){
-                $text = 'Text Not Found';
+                $text = NULL;
                 break;
             }
             $verseNum = $verse->verse_start_alt;
@@ -63,10 +63,15 @@ class BibleBrainTextPlainController extends BibleBrainPassageController
         return $this->passageText;
     }
 
-    public function getReferenceLocalLanguage(){
+    public function setReferenceLocalLanguage(){
         $this->referenceLocalLanguage = $this->getBookNameLocalLanguage();
-        $this->referenceLocalLanguage .= $this->bibleReferenceInfo->chapterStart . ':' .
+        $this->referenceLocalLanguage .= ' '. $this->bibleReferenceInfo->chapterStart . ':' .
             $this->bibleReferenceInfo->verseStart  .'-' .$this->bibleReferenceInfo->verseEnd;
+        writeLogDebug('getReferenceLocalLanguage',$this->referenceLocalLanguage );
+    }
+
+    public function getReferenceLocalLanguage(){
+        return $this->referenceLocalLanguage;
     }
 
     public function getBookNameLocalLanguage(){
