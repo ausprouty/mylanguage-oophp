@@ -58,6 +58,7 @@ class DbsBilingualTemplateController
         $this->template = file_get_contents($file);
         $this->createBibleBlock();
         $this->template= str_replace ('{{Bible Block}}', $this->bibleBlock, $this->template);
+        writeLogDebug('bibleBlockInController',$this->bibleBlock );
         $this->template = str_replace('{{language}}', $this->language1->getName(),$this->template);
         $this->template = str_replace('||language||', $this->language2->getName(),$this->template);
         $this->template = str_replace('{{Bible Reference}}', $this->biblePassage1->referenceLocalLanguage,$this->template);
@@ -77,6 +78,7 @@ class DbsBilingualTemplateController
             $find= '||' . $key . '||';
             $this->template= str_replace ($find, $value,$this->template);
         }
+        writeLogDebug('templateInController',$this->template );
 
     }
     private function createBibleBlock(){
@@ -84,7 +86,10 @@ class DbsBilingualTemplateController
         writeLogDebug('createBibleBlock-84', $this->biblePassage1->passageText);
         writeLogDebug('createBibleBlock-85', $this->biblePassage2->passageText);
         if ($this->biblePassage1->passageText !==  NULL 
-            && $this->biblePassage2->passageText !== NULL){
+            && $this->biblePassage2->passageText !== NULL
+            && $this->biblePassage1->passageText !==  '' 
+            && $this->biblePassage2->passageText !== '')
+            {
             $this->createBiblePassageRows();
         }
         else{
@@ -93,7 +98,8 @@ class DbsBilingualTemplateController
     }
     private function createBibleBlockWhenTextMissing(){
         $this->bibleBlock = '';
-        if ($this->biblePassage2->passageText !== NULL){
+        if ($this->biblePassage2->passageText !== NULL
+            && $this->biblePassage2->passageText !== ''){
             $this->bibleBlock .= $this->showTextOrLink($this->biblePassage1);
             $this->bibleBlock .= $this->showTextOrLink($this->biblePassage2);
         }
@@ -162,12 +168,13 @@ class DbsBilingualTemplateController
         $passageRows = '';
         $length1 = count($paragraphs1) -1;
         $length2 = count($paragraphs2) -1;
+     
         $key1 = 0;
         $key2 = 0;
         $nextColumn1Verse = 0;
         $nextColumn2Verse = 0;
         $newRow = true;
-        while ($nextColumn1Verse != 999999 && $nextColumn2Verse != 999999 ){
+        while ($nextColumn1Verse != 999999 || $nextColumn2Verse != 999999 ){
             if ($newRow){
                 $column1 = '<td class=""{{dir_language1}} dbs">' . $paragraphs1[$key1]->text;
                 $column2 = '<td class="||dir_language2|| dbs">' . $paragraphs2[$key2]->text;
@@ -209,7 +216,7 @@ class DbsBilingualTemplateController
                 }
             }
         }
-        $this->bibleBlock = str_replace('{passage_rows}', $passageRows, $template);
+        $this->bibleBlock = str_replace('{{passage_rows}}', $passageRows, $template);
     }
 
     private function findParagraphs($text){

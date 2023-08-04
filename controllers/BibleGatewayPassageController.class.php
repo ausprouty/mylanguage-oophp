@@ -81,6 +81,18 @@ class BibleGatewayPassageController extends BiblePassage {
         $bible = $html->outertext;
         $html->clear();
         $html = str_get_html($bible);
+        // remove read chapter
+        
+        $ret= $html->find('a[class=full-chap-link]');
+        foreach ($ret as $footnote){
+            $footnote->outertext= '';
+        }
+
+        // remove  footnotes div
+        $ret= $html->find('div[class=footnotes]');
+        foreach ($ret as $footnote){
+            $footnote->outertext= '';
+        }
         // remove links to footnotes
         $ret= $html->find('sup[class=footnote]');
         foreach ($ret as $footnote){

@@ -61,6 +61,7 @@ class PassageSelectController extends BiblePassage
                 break;
             case 'youversion':
                 $passage = new BibleYouVersionPassageController($this->bibleReferenceInfo, $this->bible);
+                writeLogDebug('youversion', $passage);
                 break;    
             case 'word':
                 $passage = new BibleWordPassageController($this->bibleReferenceInfo, $this->bible);
