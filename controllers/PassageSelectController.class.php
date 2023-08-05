@@ -25,16 +25,16 @@ class PassageSelectController extends BiblePassage
         return $this->bible;
     }
     public function getBibleDirection(){
-        return $this->bible->direction;
+        return $this->bible->getDirection();
     }
     public function getBibleBid(){
-        return $this->bible->bid;
+        return $this->bible->getBid();
     }
     public function getBibleReferenceInfo(){
         return $this->bibleReferenceInfo;
     }
     private  function checkDatabase(){
-        $this->passageId = BiblePassage::createBiblePassageId($this->bible->bid,  $this->bibleReferenceInfo);
+        $this->passageId = BiblePassage::createBiblePassageId($this->bible->getBid(),  $this->bibleReferenceInfo);
         $passage = new BiblePassage();
         $passage->findStoredById($this->passageId);
         if ($passage->getReferenceLocalLanguage()) {
@@ -90,7 +90,7 @@ class PassageSelectController extends BiblePassage
         $this->passageText = $text;
     }
     private function updateDirection(){
-        $languageCodeHL = $this->bible->languageCodeHL;
+        $languageCodeHL = $this->bible->getLanguageCodeHL();
         $language = new Language();
         $language->findOneByCode('HL', $languageCodeHL);
         $direction = $language->getDirection();

@@ -36,6 +36,7 @@ get(ROOT . 'import/biblebrain/language/details','imports/updateBibleBrainLanguag
 get(ROOT . 'import/biblegateway/bibles', 'imports/addBibleGatewayBibles.php');
 get(ROOT . 'import/dbs/words', 'translation/importRoutines/importDbsTranslationFromGoogle.php');
 get(ROOT . 'import/dbs/database', 'imports/UpdateDbsLanguages.php');
+get(ROOT . 'import/bible/externalId', 'imports/updateBibleExternalId.php');
 
 // TESTS
 get(ROOT . 'test', 'tests/test.php');

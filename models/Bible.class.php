@@ -3,19 +3,19 @@
 
 class Bible {
   private  $dbConnection;
-  public $bid;
+  private $bid;
   public $source;
-  public $externalId;
-  public $abbreviation;
-  public $volumeName;
-  public $volumeNameAlt;
-  public $languageCode;
-  public $languageName;
-  public $languageEnglish;
-  public $languageCodeHL;
-  public $languageCodeDrupal;
-  public $idBibleGateway;
-  public $collectionCode;
+  private $externalId;
+  private$abbreviation;
+  private $volumeName;
+  private $volumeNameAlt;
+  private $languageCode;
+  private $languageName;
+  private $languageEnglish;
+  private $languageCodeHL;
+  private $languageCodeDrupal;
+  private $idBibleGateway;
+  private $collectionCode;
   public $direction;
   public $numerals;
   public $spacePdf;
@@ -24,9 +24,10 @@ class Bible {
   public $text;
   public $audio;
   public $video;
+  private $weight;
+  private $dateVerified;
 
-  public $weight;
-  public $dateVerified;
+ 
 
    public function __construct(){
         $this->dbConnection = new DatabaseConnection();
@@ -51,13 +52,25 @@ class Bible {
         $this->weight = ' ';
         $this->dateVerified = ' ';
     }
-
-    public function getVolumeName(){
-        return $this->volumeName;
-    }
     public function getBid(){
         return $this->bid;
     }
+    public function getCollectionCode(){
+        return $this->collectionCode;
+    }
+    public function getDirection(){
+        return $this->direction;
+    }
+    public function getExternalId(){
+        return $this->externalId;
+    }
+    public function getLanguageCodeHL(){
+        return $this->languageCodeHL;
+      }
+    public function getVolumeName(){
+        return $this->volumeName;
+    }
+   
     static function getAllBiblesByLanguageCodeHL($languageCodeHL){
         $dbConnection = new DatabaseConnection();
         $query = "SELECT * FROM bibles WHERE languageCodeHL = :code 

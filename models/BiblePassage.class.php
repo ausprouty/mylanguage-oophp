@@ -33,10 +33,10 @@ class BiblePassage
     public static function createBiblePassageId(string $bid, BibleReferenceInfo $passage){
         // 1026-Luke-10-1-42
             $bpid=$bid .'-' .
-            $passage->bookID . '-' .
-            $passage->chapterStart . '-'.
-            $passage->verseStart . '-' .
-            $passage->verseEnd;
+            $passage->getBookID() . '-' .
+            $passage->getChapterStart() . '-'.
+            $passage->getVerseStart() . '-' .
+            $passage->getVerseEnd();
         return $bpid;
     }
     public function findStoredById($bpid){

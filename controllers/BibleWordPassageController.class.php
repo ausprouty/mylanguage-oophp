@@ -34,7 +34,7 @@ class BibleWordPassageController extends BiblePassage {
 
     private function createPassageUrl(){
        //sample: https://wordproject.org/bibles/am/43/1.htm
-       $this->passageUrl =  'https://wordproject.org/bibles/' .  $this->bible->externalId  .'/';
+       $this->passageUrl =  'https://wordproject.org/bibles/' .  $this->bible->getExternalId()  .'/';
        $this->passageUrl .= $this->chapterPage();
        $this->passageUrl .= '.htm';
     }
@@ -44,12 +44,12 @@ class BibleWordPassageController extends BiblePassage {
        if (intval( $bookNumber)<10){
         $bookNumber = '0' .  $bookNumber;
        }
-       $chapterNumber = $this->bibleReferenceInfo->chapterStart;
+       $chapterNumber = $this->bibleReferenceInfo->getChapterStart();
        return $bookNumber . '/'.  $chapterNumber;
     }
     public function getExternal(){
        $dir = ROOT_RESOURCES . '/bibles/wordproject/';
-       $externalId = $this->bible->externalId;
+       $externalId = $this->bible->getExternalId();
        $bibleDir = $dir .  $externalId. '/'.  $externalId . '/';
        $fileName = $bibleDir . $this->chapterPage();
        $webpage = null;
@@ -72,8 +72,8 @@ class BibleWordPassageController extends BiblePassage {
         $posEnd = strpos($webpage, ':', $posStart);
         $length = $posEnd-$posStart;
         $bookName = trim (substr($webpage, $posStart, $length));
-        $verses = $this->bibleReferenceInfo->chapterStart . ':';
-        $verses .=  $this->bibleReferenceInfo->verseStart . '-'. $this->bibleReferenceInfo->verseEnd;
+        $verses = $this->bibleReferenceInfo->getChapterStart() . ':';
+        $verses .=  $this->bibleReferenceInfo->getVerseStart() . '-'. $this->bibleReferenceInfo->getVerseEnd();
         $this->referenceLocalLanguage = $bookName . ' '. $verses;
 
     }
@@ -98,8 +98,8 @@ class BibleWordPassageController extends BiblePassage {
     }
     private function selectVerses($page){
         $text = '';
-        $firstVerse = intval($this->bibleReferenceInfo->verseStart);
-        $lastVerse = intval($this->bibleReferenceInfo->verseEnd);
+        $firstVerse = intval($this->bibleReferenceInfo->getVerseStart());
+        $lastVerse = intval($this->bibleReferenceInfo->getVerseEnd());
         $bad = array('<p>', '</p>');
         $page = str_replace($bad, '', $page);
         $bad = array ('<br/>', '<br />');
@@ -120,8 +120,8 @@ class BibleWordPassageController extends BiblePassage {
         return $text;
     }
     private function createReferenceLocalLanguage($cleanPage){
-        $expectedInReference = $this->bibleReferenceInfo->chapterStart . ':' .
-            $this->bibleReferenceInfo->verseStart . '-' . $this->bibleReferenceInfo->verseEnd;
+        $expectedInReference = $this->bibleReferenceInfo->getChapterStart() . ':' .
+            $this->bibleReferenceInfo->getVerseStart() . '-' . $this->bibleReferenceInfo->getVerseEnd();
 
         //if (strpos($websiteReference, $expectedInReference) == FALSE){
         //    $lastSpace =strrpos($websiteReference, ' ');

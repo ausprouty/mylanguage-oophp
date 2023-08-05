@@ -65,8 +65,8 @@ class BibleBrainTextPlainController extends BibleBrainPassageController
 
     public function setReferenceLocalLanguage(){
         $this->referenceLocalLanguage = $this->getBookNameLocalLanguage();
-        $this->referenceLocalLanguage .= ' '. $this->bibleReferenceInfo->chapterStart . ':' .
-            $this->bibleReferenceInfo->verseStart  .'-' .$this->bibleReferenceInfo->verseEnd;
+        $this->referenceLocalLanguage .= ' '. $this->bibleReferenceInfo->getChapterStart() . ':' .
+            $this->bibleReferenceInfo->getVerseStart()  .'-' .$this->bibleReferenceInfo->getVerseEnd();
         writeLogDebug('getReferenceLocalLanguage',$this->referenceLocalLanguage );
     }
 

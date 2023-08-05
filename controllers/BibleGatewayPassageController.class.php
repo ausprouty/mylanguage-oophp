@@ -31,8 +31,8 @@ class BibleGatewayPassageController extends BiblePassage {
         );
         $reference_shaped = str_replace(' ', '%20', $reference_shaped);
 */
-	    $reference_shaped = str_replace(' ' , '%20', $this->bibleReferenceInfo->entry);
-        $this->passageUrl= 'https://biblegateway.com/passage/?search='. $reference_shaped . '&version='. $this->bible->externalId ;
+	    $reference_shaped = str_replace(' ' , '%20', $this->bibleReferenceInfo->getEntry());
+        $this->passageUrl= 'https://biblegateway.com/passage/?search='. $reference_shaped . '&version='. $this->bible->getExternalId() ;
         $webpage = new WebsiteConnection($this->passageUrl);
         if ($webpage->response){
             $this->passageText =  $this->formatExternal($webpage->response);
@@ -137,8 +137,8 @@ class BibleGatewayPassageController extends BiblePassage {
         return $output;
     }
     private function createLocalReference($websiteReference){
-        $expectedInReference = $this->bibleReferenceInfo->chapterStart . ':' .
-            $this->bibleReferenceInfo->verseStart . '-' . $this->bibleReferenceInfo->verseEnd;
+        $expectedInReference = $this->bibleReferenceInfo->getChapterStart() . ':' .
+            $this->bibleReferenceInfo->getVerseStart() . '-' . $this->bibleReferenceInfo->getVerseEnd();
         if (strpos($websiteReference, $expectedInReference) == FALSE){
             $lastSpace =strrpos($websiteReference, ' ');
             $websiteReference = substr($websiteReference,0, $lastSpace) .' '. $expectedInReference;

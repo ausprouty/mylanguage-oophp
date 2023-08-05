@@ -16,6 +16,8 @@ echo "
 
 <h1> Import Routines for MyLanguage OOPHP</h1>
 
+<p><a href = '/mylanguage-oophp/import/bible/externalId'>Update ExternalID</a></p>
+
 <p><a href = '/mylanguage-oophp/import/bible/languages'>Import HL Language Codes into Bibles</a></p>
 <p><a href = '/mylanguage-oophp/import/bibleBookNames/languages'>Import HL Language Codes into Bible Book Names</a></p>
 

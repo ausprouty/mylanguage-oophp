@@ -17,23 +17,23 @@ class BibleReferenceInfo
 {
 
     private  $dbConnection;
-    public   $entry;
-    private  $languageCodeIso;
-    public   $bookName;
-    public   $bookID;
-    public   $uversionBookID;
-    public   $bookNumber;
-    public   $testament;
-    public   $chapterStart;
-    public   $verseStart;
-    public   $chapterEnd;
-    public   $verseEnd;
+    private   $entry;
+    private   $languageCodeHL;
+    private   $bookName;
+    private   $bookID;
+    private   $uversionBookID;
+    private   $bookNumber;
+    private   $testament;
+    private   $chapterStart;
+    private   $verseStart;
+    private   $chapterEnd;
+    private   $verseEnd;
 
 
    public function __construct(){
         $this->dbConnection = new DatabaseConnection();
         $this->entry= ' ';
-        $this->languageCodeIso= null;
+        $this->languageCodeHL= null;
         $this->bookName= ' ';
         $this->bookID= null;
         $this->uversionBookID = null;
@@ -44,7 +44,7 @@ class BibleReferenceInfo
         $this->chapterEnd= null;
         $this->verseEnd= null;
     }
-    public function setFromEntry(string $entry, string $languageCodeIso = 'eng'){
+    public function setFromEntry(string $entry, string $languageCodeHL = 'eng00'){
         $this->checkEntrySpacing($entry);
         $this->findBookName();
         $this->findBookID();
@@ -53,16 +53,39 @@ class BibleReferenceInfo
         $this->getTestament();
         $this->findChapterAndVerses();
     }
-
+    public function getBookID(){
+        return $this->bookID;
+    }
+    public function getBookName(){
+        return $this->bookName;
+    }
+    public function getBookNumber(){
+        return $this->bookNumber;
+    }
+    public function getChapterStart(){
+        return $this->chapterStart;
+    }
+    public function getEntry(){
+        return $this->entry;
+    }
+    public function getLanguageCodeHL(){
+        return $this->languageCodeHL;
+    }
     public function getUversionBookID(){
         return $this->uversionBookID;
     }
-       
+    public function getVerseStart(){
+        return $this->verseStart;
+    }
+    public function getVerseEnd(){
+        return $this->verseEnd;
+    }
+   
     public function setFromDbtArray(array $dbtArray){
         print_r ($dbtArray);
         $entry =$this->checkEntrySpacing ($dbtArray['entry']);
         $this->entry= $entry;
-        $this->languageCodeIso=null;
+        $this->languageCodeHL=null;
         $this->bookName= $this->findBookName();
         $this->bookID= $dbtArray['bookId'];
         $this->testament= $dbtArray['collection_code'];
@@ -105,13 +128,15 @@ class BibleReferenceInfo
     }
     private function findBookID(){
         $query = 'SELECT bookId FROM bible_book_names
-            WHERE (languageCodeIso = :languageCodeIso OR languageCodeIso = :english)
+            WHERE (languageCodeHL = :languageCodeHL OR languageCodeHL = :english)
             AND name = :book_lookup LIMIT 1';
-        $params = array(':languageCodeIso'=>$this->languageCodeIso, ':english' => 'eng', ':book_lookup'=>$this->bookName );
+        $params = array(
+             ':languageCodeHL'=>$this->languageCodeHL, 
+             ':english' => 'eng00', 
+             ':book_lookup'=>$this->bookName );
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
-            $data = $statement->fetch(PDO::FETCH_COLUMN);
-            $this->bookID = $data;
+            $this->bookID  = $statement->fetch(PDO::FETCH_COLUMN);
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
             return null;
@@ -145,7 +170,6 @@ class BibleReferenceInfo
             return null;
         }
     }
-
     private function getTestament(){
         $query = 'SELECT testament FROM bible_books
             WHERE bookId = :bookId  LIMIT 1';
@@ -159,8 +183,6 @@ class BibleReferenceInfo
             return null;
         }
     }
-
-
     private function findChapterAndVerses(){
         $pass = str_replace($this->bookName, '', $this->entry);
         $pass = str_replace(' ' , '', $pass);

@@ -16,9 +16,7 @@ class BibleBrainPassageController extends BiblePassage {
         $this->bible = $bible;
         $this->referenceLocalLanguage = '';
         $this->passageText = '';
-        // https://live.bible.is/bible/engesv/mat/1
-        $this->passageUrl = 'https://live.bible.is/bible/'. $this->bible->externalId . '/';
-        $this->passageUrl  .= $this->bibleReferenceInfo->bookID . '/'. $this->bibleReferenceInfo->chapterStart;
+        $this->setPassageUrl();
         $this->dateLastUsed = '';
         $this->dateChecked = '';
         $this->timesUsed = 0;
@@ -32,18 +30,19 @@ class BibleBrainPassageController extends BiblePassage {
   */
     public function getExternal()
     {
-        $url = 'https://4.dbt.io/api/bibles/filesets/' . $this->bible->externalId;
-        $url .= '/'. $this->bibleReferenceInfo->bookID . '/'. $this->bibleReferenceInfo->chapterStart;
-        $url .= '?verse_start=' . $this->bibleReferenceInfo->verseStart . '&verse_end=' .$this->bibleReferenceInfo->verseEnd;
+        $url = 'https://4.dbt.io/api/bibles/filesets/' . $this->bible->getExternalId();
+        $url .= '/'. $this->bibleReferenceInfo->getBookID() . '/'. $this->bibleReferenceInfo->getChapterStart();
+        $url .= '?verse_start=' . $this->bibleReferenceInfo->getVerseStart() . '&verse_end=' .$this->bibleReferenceInfo->getVerseEnd();
         $passage =  new BibleBrainConnection($url);
         $this->response = $passage->response;
         writeLogDebug('bibleBrain', $this->response);
     }
-    public function getPassageText(){
-        return $this->passageText;
-    }
-    public function getPassageUrl(){
-        return $this->passageUrl;
+    function setPassageUrl(){
+        // https://live.bible.is/bible/engesv/mat/1
+        $this->passageUrl = 'https://live.bible.is/bible/'. $this->bible->getExternalId() . '/';
+        $this->passageUrl  .= $this->bibleReferenceInfo->getbookID() . '/'. 
+            $this->bibleReferenceInfo->getChapterStart();
     }
 
 }
+
