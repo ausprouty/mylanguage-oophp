@@ -7,6 +7,7 @@ class BibleYouVersionPassageController extends BiblePassage {
 
     private $bibleReferenceInfo;
     private $bible;
+    private $bookName;
     public $response;
 
     public function __construct( BibleReferenceInfo $bibleReferenceInfo, Bible $bible){
@@ -14,6 +15,7 @@ class BibleYouVersionPassageController extends BiblePassage {
         $this->bibleReferenceInfo = $bibleReferenceInfo;
         $this->bible = $bible;
         $this->passageText = '';
+        $this->retrieveBookName = '';
         $this->setPassageUrl();
         $this->dateLastUsed = '';
         $this->dateChecked = '';
@@ -40,15 +42,47 @@ class BibleYouVersionPassageController extends BiblePassage {
         $chapterAndVerse =  $this->bibleReferenceInfo->chapterStart . ':'; 
         $chapterAndVerse .=   $this->bibleReferenceInfo->verseStart . '-'. $this->bibleReferenceInfo->verseEnd ;
         // <meta content="ԾՆՈՒՆԴ 1:1-28 ՍԿԶԲՈՒՄ Աստված ստեղծեց երկինքն ու երկիրը։
+        $this->retrieveBookName();
+        $this->referenceLocalLanguage = $this->bookName . ' '. $chapterAndVerse;
+    }
+    private function retrieveBookName(){
+        $dbConnection = new DatabaseConnection();
+        $query = "SELECT name FROM bible_book_names
+            WHERE languageCodeHL = :languageCodeHL
+            AND bookID = :bookID 
+            LIMIT 1";
+        $params = array(
+            ':languageCodeHL'=> $weight,
+            ':bookID' => $bid, 
+        );
+        $statement = $dbConnection->executeQuery($query, $params);
+        $this->bookName = $statement->fetch(PDO::FETCH_COLUMN);
+        if (!$this->bookName){
+            $this-> retrieveExternalBookName();
+        }
+        
+    }
+    private function retrieveExternalBookName(){
         $webpage = $this->getExternal();
         $posEnd = strpos($webpage, $chapterAndVerse);
         $short = substr($webpage, 0, $posEnd);
         $posBegin = strrpos($short , '"') + 1;
-        $bookName = trim (substr($short, $posBegin));
-        $this->referenceLocalLanguage = $bookName . ' '. $chapterAndVerse;
+        $this->bookName = trim (substr($short, $posBegin));
+    }
+    private function saveBookName(){
+        $dbConnection = new DatabaseConnection();
+        $query = "INSERT INTO bible_book_names
+        (bookId, languageCodeHL, name)
+        VALUES (:bookId, :languageCodeHL, :name)";
+        $params = array(
+            ':bookID' => $bid, 
+            ':languageCodeHL'=> $weight,
+            ':name' => $this->bookName,
+            
+        );
+        $statement = $dbConnection->executeQuery($query, $params);
     }
     /* to get verses: https://www.bible.com/bible/111/GEN.1.7-14.NIV
-
     https://www.bible.com/bible/37/GEN.1.7-14.CEB
   */
     private function getExternal()  {

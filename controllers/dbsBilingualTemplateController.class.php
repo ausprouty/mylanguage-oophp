@@ -58,7 +58,6 @@ class DbsBilingualTemplateController
         $this->template = file_get_contents($file);
         $this->createBibleBlock();
         $this->template= str_replace ('{{Bible Block}}', $this->bibleBlock, $this->template);
-        writeLogDebug('bibleBlockInController',$this->bibleBlock );
         $this->template = str_replace('{{language}}', $this->language1->getName(),$this->template);
         $this->template = str_replace('||language||', $this->language2->getName(),$this->template);
         $this->template = str_replace('{{Bible Reference}}', $this->biblePassage1->referenceLocalLanguage,$this->template);
@@ -78,13 +77,11 @@ class DbsBilingualTemplateController
             $find= '||' . $key . '||';
             $this->template= str_replace ($find, $value,$this->template);
         }
-        writeLogDebug('templateInController',$this->template );
 
     }
     private function createBibleBlock(){
         // a blank record is NULL
-        writeLogDebug('createBibleBlock-84', $this->biblePassage1->passageText);
-        writeLogDebug('createBibleBlock-85', $this->biblePassage2->passageText);
+
         if ($this->biblePassage1->passageText !==  NULL 
             && $this->biblePassage2->passageText !== NULL
             && $this->biblePassage1->passageText !==  '' 
@@ -131,7 +128,6 @@ class DbsBilingualTemplateController
             $biblePassage->getBibleBid()
         );
         $template = str_replace($existing, $new, $template);
-        writeLogAppend('showDivLink', $template);
         return $template;
 
     }
@@ -152,7 +148,6 @@ class DbsBilingualTemplateController
             $biblePassage->getPassageText()
         );
         $template = str_replace($existing, $new, $template);
-        writeLogAppend('showDivText', $template);
         return $template;
     }
  

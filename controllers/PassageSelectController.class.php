@@ -38,14 +38,12 @@ class PassageSelectController extends BiblePassage
         $passage = new BiblePassage();
         $passage->findStoredById($this->passageId);
         if ($passage->getReferenceLocalLanguage()) {
-            writeLogAppend('using Stored', $this->bible->bid);
             $this->passageText= $passage->getPassageText();
             $this->passageUrl = $passage->getPassageUrl();
             $this->referenceLocalLanguage = $passage->getReferenceLocalLanguage();
         }
         else{
             $this->getExternal();
-            writeLogAppend('using external', $this->bible->bid);
         }
         writeLogAppend('referenceLocalLanguage', $this->referenceLocalLanguage);
         $this->wrapTextDir();
@@ -54,14 +52,12 @@ class PassageSelectController extends BiblePassage
         switch($this->bible->source){
             case 'bible_brain':
                 $passage = new BibleBrainTextPlainController($this->bibleReferenceInfo, $this->bible);
-                writeLogAppend('using bible brain', $this->bible->bid);
                 break;
             case 'bible_gateway':
                 $passage = new BibleGatewayPassageController($this->bibleReferenceInfo, $this->bible);
                 break;
             case 'youversion':
                 $passage = new BibleYouVersionPassageController($this->bibleReferenceInfo, $this->bible);
-                writeLogDebug('youversion', $passage);
                 break;    
             case 'word':
                 $passage = new BibleWordPassageController($this->bibleReferenceInfo, $this->bible);

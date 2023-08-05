@@ -28,6 +28,7 @@ get('/mylanguage-oophp', 'views/index.php');
 // Imports
 
 get(ROOT . 'import/bible/languages', 'imports/addHLCodeToBible.php');
+get(ROOT . 'import/bibleBookNames/languages', 'imports/addHLCodeToBibleBookNames.php');
 get(ROOT . 'import/biblebrain/setup', 'imports/clearBibleBrainCheckDate.php');
 get(ROOT . 'import/biblebrain/bibles', 'imports/addBibleBrainBibles.php');
 get(ROOT . 'import/biblebrain/languages','imports/addBibleBrainLanguages.php');

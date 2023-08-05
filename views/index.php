@@ -16,7 +16,10 @@ echo "
 
 <h1> Import Routines for MyLanguage OOPHP</h1>
 
-<p><a href = '/mylanguage-oophp/import/bible/languages''>Import HL Language Codes into Bibles</a></p>
+<p><a href = '/mylanguage-oophp/import/bible/languages'>Import HL Language Codes into Bibles</a></p>
+<p><a href = '/mylanguage-oophp/import/bibleBookNames/languages'>Import HL Language Codes into Bible Book Names</a></p>
+
+
 <p><a href = '/mylanguage-oophp/import/biblebrain/languages'>Import Languages from BibleBrain</a></p>
 <br>
 <p><a href = '/mylanguage-oophp/import/biblebrain/setup'>Reset Bible Brain Check Date for below</a></p>
