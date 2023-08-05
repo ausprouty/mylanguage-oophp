@@ -40,7 +40,7 @@ class BibleWordPassageController extends BiblePassage {
     }
  
     private function chapterPage(){
-       $bookNumber =  $this->bibleReferenceInfo->bookNumber;
+       $bookNumber =  $this->bibleReferenceInfo->getBookNumber();
        if (intval( $bookNumber)<10){
         $bookNumber = '0' .  $bookNumber;
        }

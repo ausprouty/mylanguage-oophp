@@ -81,11 +81,13 @@ class DbsBilingualTemplateController
     }
     private function createBibleBlock(){
         // a blank record is NULL
+        writeLogDebug('creatBibleBlock1', $this->biblePassage1->getPassageText());
+        writeLogDebug('creatBibleBlock2', $this->biblePassage2->getPassageText());
 
-        if ($this->biblePassage1->passageText !==  NULL 
-            && $this->biblePassage2->passageText !== NULL
-            && $this->biblePassage1->passageText !==  '' 
-            && $this->biblePassage2->passageText !== '')
+        if ($this->biblePassage1->getPassageText() !==  NULL 
+            && $this->biblePassage2->getPassageText() !== NULL
+            && $this->biblePassage1->getPassageText() !==  '' 
+            && $this->biblePassage2->getPassageText() !== '')
             {
             $this->createBiblePassageRows();
         }
@@ -95,8 +97,8 @@ class DbsBilingualTemplateController
     }
     private function createBibleBlockWhenTextMissing(){
         $this->bibleBlock = '';
-        if ($this->biblePassage2->passageText !== NULL
-            && $this->biblePassage2->passageText !== ''){
+        if ($this->biblePassage2->getPassageText() !== NULL
+            && $this->biblePassage2->getPassageText() !== ''){
             $this->bibleBlock .= $this->showTextOrLink($this->biblePassage1);
             $this->bibleBlock .= $this->showTextOrLink($this->biblePassage2);
         }
@@ -106,7 +108,7 @@ class DbsBilingualTemplateController
         }
     }
     private function showTextOrLink($biblePassage){
-        if ($biblePassage->passageText == NULL){
+        if ($biblePassage->getPassageText() == NULL){
             return $this->showDivLink($biblePassage); 
         }else{
             return $this->showDivText($biblePassage);
@@ -158,8 +160,8 @@ class DbsBilingualTemplateController
             return null;
         }
         $template = file_get_contents($file);
-        $paragraphs1 = $this->findParagraphs($this->biblePassage1->passageText);
-        $paragraphs2 = $this->findParagraphs($this->biblePassage2->passageText);
+        $paragraphs1 = $this->findParagraphs($this->biblePassage1->getPassageText());
+        $paragraphs2 = $this->findParagraphs($this->biblePassage2->getPassageText());
         $passageRows = '';
         $length1 = count($paragraphs1) -1;
         $length2 = count($paragraphs2) -1;

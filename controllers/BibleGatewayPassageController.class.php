@@ -38,13 +38,16 @@ class BibleGatewayPassageController extends BiblePassage {
             $this->passageText =  $this->formatExternal($webpage->response);
         }
         else{
-            $this->passageText = '';
+            $this->passageText = null;
         }
     }
     private function formatExternal($webpage){
         require_once('./libraries/simplehtmldom_1_9_1/simple_html_dom.php');
         $html = str_get_html($webpage);
         $e = $html->find('.dropdown-display-text', 0);
+        if (!$e){
+            return null;
+        }
         $this->createLocalReference($e->innertext);
         $passages = $html->find('.passage-text');
         $bible = '';
@@ -58,10 +61,12 @@ class BibleGatewayPassageController extends BiblePassage {
         //
 
         $html = str_get_html($bible);
-        $ret = $html->find ('span');
-        foreach ($ret as $span){
-            $span->outertext= $span->innertext;
-        }
+        //$ret = $html->find ('span');
+        //foreach ($ret as $span){
+       //     $span->outertext= $span->innertext;
+       // }
+
+       
         // remove all links
         $ret = $html->find ('a');
         foreach ($ret as $href){
@@ -72,7 +77,6 @@ class BibleGatewayPassageController extends BiblePassage {
         foreach ($ret as $footnote){
             $footnote->outertext= '';
         }
-
         $html = str_get_html($bible);
         $ret = $html->find ('span[class=woj]');
         foreach ($ret as $span){
@@ -107,6 +111,12 @@ class BibleGatewayPassageController extends BiblePassage {
         foreach ($ret as $cross_reference){
             $cross_reference->outertext= '';
         }
+       
+         // remove  citations
+         $ret= $html->find('span[class=citation]');
+         foreach ($ret as $citation){
+             $citation->outertext= '';
+         }
         $ret= $html->find('div[class=il-text]');
         foreach ($ret as $cross_reference){
             $cross_reference->outertext= '';
@@ -131,6 +141,15 @@ class BibleGatewayPassageController extends BiblePassage {
             $bible= str_ireplace('</div>', '', $bible);
             $bible= str_ireplace('<div class="passage-other-trans">', '', $bible);
         }
+        // remove id and 
+        $pattern = '/\bid="[^"]+"/';
+        $bible = preg_replace($pattern, '', $bible);
+        '/<span class="text [^"]+">/';
+        $pattern = '/class="text [^"]+">/';
+        $bible = preg_replace($pattern, 'class="text">', $bible);
+        // remove subheadings <h3>
+        $bible = preg_replace('/<h3\b[^>]*>(.*?)<\/h3>/si', '', $bible);
+        writeLogDebug('clean', $bible);
         $output =   "\n" . '<!-- begin bible -->'; 
         $output .= $bible  ."\n" . '<!-- end bible -->' . "\n" ;
 
