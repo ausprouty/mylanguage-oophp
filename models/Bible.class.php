@@ -160,6 +160,31 @@ class Bible {
         }
 
     }
+
+    public function setBestDbsBibleByLanguageCodeHL($code, $testament){
+        // 'C' for complete will be found AFTER 'NT' or 'OT'
+        $dbConnection = new DatabaseConnection();
+        $query = "SELECT * FROM bibles 
+            WHERE languageCodeHL = :code 
+            AND (collectionCode = :complete OR collectionCode = :testament)
+            AND weight = 9 
+            ORDER BY collectionCode desc
+            LIMIT 1";
+        $params = array(
+            ':code'=>$code,
+            ':complete' => 'C',
+            ':testament' => $testament
+        );
+        try {
+            $statement = $dbConnection->executeQuery($query, $params);
+            $data = $statement->fetch(PDO::FETCH_OBJ);
+            $this->setBibleValues($data);
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+
+    }
    
     public function selectBibleByBid($bid){
         $query = "SELECT * FROM bibles WHERE bid = :bid LIMIT 1";

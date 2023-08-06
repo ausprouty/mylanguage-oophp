@@ -50,7 +50,7 @@ class BibleReferenceInfo
         $this->findBookID();
         $this->findBookNumber();
         $this->findUversionBookID();        
-        $this->getTestament();
+        $this->findTestament();
         $this->findChapterAndVerses();
     }
     public function getBookID(){
@@ -70,6 +70,9 @@ class BibleReferenceInfo
     }
     public function getLanguageCodeHL(){
         return $this->languageCodeHL;
+    }
+    public function getTestament(){
+        return $this->testament;
     }
     public function getUversionBookID(){
         return $this->uversionBookID;
@@ -170,7 +173,7 @@ class BibleReferenceInfo
             return null;
         }
     }
-    private function getTestament(){
+    private function findTestament(){
         $query = 'SELECT testament FROM bible_books
             WHERE bookId = :bookId  LIMIT 1';
         $params = array(':bookId'=>$this->bookID );
