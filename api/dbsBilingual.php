@@ -18,5 +18,5 @@ $bible2->setBestDbsBibleByLanguageCodeHL($languageCodeHL2, $testament);
 $dbs->setBibleTwo($bible2);
 
 $dbs->setPassage($bibleReferenceInfo);
-$dbs->getBilingualTemplate();
+$dbs->setBilingualTemplate();
 ReturnDataController::returnData($dbs->template);

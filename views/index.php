@@ -4,7 +4,10 @@
 echo "
 
 
-
+<h2>DBS</h2>
+<p><a href = '/mylanguage-oophp/test/dbs/translation'>Can get DBS Translation</a></p>
+<p><a href = '/mylanguage-oophp/test/dbs/bilingual'>Bi-lingual DBS</a></p>
+<p><a href = '/mylanguage-oophp/test/dbs/pdf'>Can Create Pdf</a></p>
 
 
 <h1>API</h1>
@@ -61,10 +64,6 @@ echo "
 <p><a href = '/mylanguage-oophp/test/bibles/best'> Best Bible for Language</a></p>
 <p><a href = '/mylanguage-oophp/test/passage/select'>Select Passage</a></p>
 
-<h2>DBS</h2>
-<p><a href = '/mylanguage-oophp/test/dbs/translation'>Can get DBS Translation</a></p>
-<p><a href = '/mylanguage-oophp/test/dbs/bilingual'>Bi-lingual DBS</a></p>
-<p><a href = '/mylanguage-oophp/test/dbs/eng00/frn00'>Bilingual French-English DBS</a></p>
-<p><a href = '/mylanguage-oophp/test/dbs/pdf'>Can Create Pdf</a></p>
+
 
 ";

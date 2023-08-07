@@ -65,7 +65,7 @@ get(ROOT . 'test/youversion/link', 'tests/canGetBibleYouVersionLink.php');
 // DBS
 get(ROOT . 'test/dbs/translation', 'tests/canGetDBSTranslation.php');
 get(ROOT . 'test/dbs/bilingual', 'tests/canMakeStandardBilingualDBS.php');
-get(ROOT . 'test/dbs/pdf', 'tests/canPrintPdf.php');
+get(ROOT . 'test/dbs/pdf', 'tests/canPrintDbsPdf.php');
 
 
 //Bibles

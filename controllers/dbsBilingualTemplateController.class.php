@@ -10,7 +10,7 @@ class DbsBilingualTemplateController
     private  $bibleReferenceInfo;
     private  $language1;
     private  $language2;
-    public   $template;
+    private  $template;
     private  $title;
     private  $translation1;
     private  $translation2;
@@ -35,6 +35,9 @@ class DbsBilingualTemplateController
         $this->biblePassage2 = '';
 
     }
+    public function getTemplate(){
+        return $this->template;
+    }
     public function setBibleOne(Bible $bible)
     {
         $this->bible1=$bible;
@@ -49,7 +52,7 @@ class DbsBilingualTemplateController
         $this->biblePassage1= new PassageSelectController ($this->bibleReferenceInfo, $this->bible1);
         $this->biblePassage2= new PassageSelectController ($this->bibleReferenceInfo, $this->bible2);
     }
-    public function getBilingualTemplate()
+    public function setBilingualTemplate()
     {
         $file = ROOT_TEMPLATES . 'bilingualDbs.template.html';
         if (!file_exists($file)){
@@ -57,6 +60,7 @@ class DbsBilingualTemplateController
         }
         $this->template = file_get_contents($file);
         $this->createBibleBlock();
+        writeLogDebug('template-63', $this->bibleBlock);
         $this->template= str_replace ('{{Bible Block}}', $this->bibleBlock, $this->template);
         $this->template = str_replace('{{language}}', $this->language1->getName(),$this->template);
         $this->template = str_replace('||language||', $this->language2->getName(),$this->template);
@@ -67,8 +71,9 @@ class DbsBilingualTemplateController
         $this->template = str_replace('{{Bid}}', $this->bible1->getBid(), $this->template);
         $this->template = str_replace('||Bid||', $this->bible2->getBid(), $this->template);
         $this->template = str_replace('{{Title}}', $this->title,$this->template);
-        $this->template= str_replace ('{{dir_language1}}', $this->language1->getDirection(),$this->template);
-        $this->template= str_replace ('||dir_language2||', $this->language2->getDirection(),$this->template);
+        $this->template= str_replace ('{{dir_language1}}', $this->language1->getDirection(), $this->template);
+        $this->template= str_replace ('||dir_language2||', $this->language2->getDirection(), $this->template);
+        writeLogDebug('template-76', $this->template);
         foreach ($this->translation1 as $key => $value){
             $find= '{{' . $key . '}}';
             $this->template= str_replace ($find, $value,$this->template);
@@ -77,6 +82,7 @@ class DbsBilingualTemplateController
             $find= '||' . $key . '||';
             $this->template= str_replace ($find, $value,$this->template);
         }
+        writeLogDebug('template-85', $this->template);
 
     }
     private function createBibleBlock(){
@@ -171,7 +177,7 @@ class DbsBilingualTemplateController
         $newRow = true;
         while ($nextColumn1Verse != 999999 || $nextColumn2Verse != 999999 ){
             if ($newRow){
-                $column1 = '<td class=""{{dir_language1}} dbs">' . $paragraphs1[$key1]->text;
+                $column1 = '<td class="{{dir_language1}} dbs">' . $paragraphs1[$key1]->text;
                 $column2 = '<td class="||dir_language2|| dbs">' . $paragraphs2[$key2]->text;
                 $newRow = false;
             }
