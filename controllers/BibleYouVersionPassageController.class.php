@@ -72,9 +72,29 @@ class BibleYouVersionPassageController extends BiblePassage {
     private function retrieveExternalBookName(){
         $webpage = $this->getExternal();
         $posEnd = strpos($webpage, $this->chapterAndVerse);
-        $short = substr($webpage, 0, $posEnd);
-        $posBegin = strrpos($short , '"') + 1;
-        $this->bookName = trim (substr($short, $posBegin));
+        if ($posEnd){
+            $short = substr($webpage, 0, $posEnd);
+            $posBegin = strrpos($short , '"') + 1;
+            $this->bookName = trim (substr($short, $posBegin));
+            writeLogAppend ('shortBookName', $this->bookName);
+        }
+        else{
+            $find = 'class="book-chapter-text">';
+            $posBegin = strpos($webpage, $find);
+            if ($posBegin){
+                $posEnd = strpos($webpage, '</h1>', $posBegin);
+                $posBegin = $posBegin + length($find);
+                $length = $posEnd-$posBegin;
+                $this->bookName = trim (substr($webpage, $posBegin, $length));
+                writeLogAppend ('longBookName', $this->bookName);
+
+            }
+            else{
+                $this->bookName = null;
+            }
+
+        }
+       
     }
     private function saveBookName(){
         $dbConnection = new DatabaseConnection();

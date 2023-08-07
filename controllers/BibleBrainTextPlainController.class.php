@@ -48,7 +48,6 @@ class BibleBrainTextPlainController extends BibleBrainPassageController
             if ($multiVerseLine){
                 $multiVerseLine = false;
                 $verseNum = $startVerseNumber . '-' . $verse->verse_end_alt;
-
             }
             if ($verse->verse_text == '-'){
                 $multiVerseLine = true;
@@ -76,7 +75,7 @@ class BibleBrainTextPlainController extends BibleBrainPassageController
 
     public function getBookNameLocalLanguage(){
         if (!isset($this->response->data)){
-           return 'Name not found';
+           return $this->bibleReferenceInfo->getBookName();
         }
         return $this->response->data[0]->book_name_alt;
     }

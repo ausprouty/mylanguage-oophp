@@ -49,7 +49,8 @@ class PassageSelectController extends BiblePassage
         $this->wrapTextDir();
     }
     private function getExternal(){
-        switch($this->bible->source){
+        writeLogAppend('source', $this->bible->getSource());
+        switch($this->bible->getSource()){
             case 'bible_brain':
                 $passage = new BibleBrainTextPlainController($this->bibleReferenceInfo, $this->bible);
                 break;

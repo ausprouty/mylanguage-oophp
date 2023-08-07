@@ -43,6 +43,12 @@ class BibleBrainPassageController extends BiblePassage {
         $this->passageUrl  .= $this->bibleReferenceInfo->getbookID() . '/'. 
             $this->bibleReferenceInfo->getChapterStart();
     }
+    function getBibleLanguageName(){
+        return $this->bible->languageName;
+    }
+    function getBibleLanguageEnglish(){
+        return $this->bible->languageEnglish;
+    }
 
 }
 

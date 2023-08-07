@@ -2,34 +2,34 @@
 
 
 class Bible {
-  private  $dbConnection;
-  private $bid;
-  public $source;
-  private $externalId;
-  private$abbreviation;
-  private $volumeName;
-  private $volumeNameAlt;
-  private $languageCode;
-  private $languageName;
-  private $languageEnglish;
-  private $languageCodeHL;
-  private $languageCodeDrupal;
-  private $idBibleGateway;
-  private $collectionCode;
-  public $direction;
-  public $numerals;
-  public $spacePdf;
-  public $noBoldPdf;
-  public $format;
-  public $text;
-  public $audio;
-  public $video;
-  private $weight;
-  private $dateVerified;
+    private  $dbConnection;
+    private $bid;
+    private $source;
+    private $externalId;
+    private$abbreviation;
+    private $volumeName;
+    private $volumeNameAlt;
+    private $languageCode;
+    private $languageName;
+    private $languageEnglish;
+    private $languageCodeHL;
+    private $languageCodeDrupal;
+    private $idBibleGateway;
+    private $collectionCode;
+    public $direction;
+    public $numerals;
+    public $spacePdf;
+    public $noBoldPdf;
+    public $format;
+    public $text;
+    public $audio;
+    public $video;
+    private $weight;
+    private $dateVerified;
 
  
 
-   public function __construct(){
+    public function __construct(){
         $this->dbConnection = new DatabaseConnection();
         $this->bid = ' ';
         $this->source = ' ';
@@ -66,7 +66,10 @@ class Bible {
     }
     public function getLanguageCodeHL(){
         return $this->languageCodeHL;
-      }
+    }
+    public function getSource(){
+        return $this->source;
+    }
     public function getVolumeName(){
         return $this->volumeName;
     }
@@ -162,6 +165,7 @@ class Bible {
     }
 
     public function setBestDbsBibleByLanguageCodeHL($code, $testament){
+        writeLogAppend ('bestBible', "$code   $testament");
         // 'C' for complete will be found AFTER 'NT' or 'OT'
         $dbConnection = new DatabaseConnection();
         $query = "SELECT * FROM bibles 
@@ -178,6 +182,7 @@ class Bible {
         try {
             $statement = $dbConnection->executeQuery($query, $params);
             $data = $statement->fetch(PDO::FETCH_OBJ);
+            writeLogDebug('bestBible-'. $code, $data);
             $this->setBibleValues($data);
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
