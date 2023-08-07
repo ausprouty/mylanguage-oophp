@@ -81,8 +81,6 @@ class DbsBilingualTemplateController
     }
     private function createBibleBlock(){
         // a blank record is NULL
-        writeLogDebug('creatBibleBlock1', $this->biblePassage1->getPassageText());
-        writeLogDebug('creatBibleBlock2', $this->biblePassage2->getPassageText());
 
         if ($this->biblePassage1->getPassageText() !==  NULL 
             && $this->biblePassage2->getPassageText() !== NULL
@@ -213,6 +211,12 @@ class DbsBilingualTemplateController
                 }
             }
         }
+        // remove all paragraph markings
+        $pattern = '/<p\s[^>]*>/i';
+        $passageRows = preg_replace($pattern, ' ', $passageRows);
+        $bad = array('<p>' ,'</p>');
+        $good = array (' ');
+        $passageRows = str_replace($bad, '', $passageRows);
         $this->bibleBlock = str_replace('{{passage_rows}}', $passageRows, $template);
     }
 

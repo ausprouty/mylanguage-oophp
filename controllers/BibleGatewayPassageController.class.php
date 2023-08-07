@@ -149,7 +149,6 @@ class BibleGatewayPassageController extends BiblePassage {
         $bible = preg_replace($pattern, 'class="text">', $bible);
         // remove subheadings <h3>
         $bible = preg_replace('/<h3\b[^>]*>(.*?)<\/h3>/si', '', $bible);
-        writeLogDebug('clean', $bible);
         $output =   "\n" . '<!-- begin bible -->'; 
         $output .= $bible  ."\n" . '<!-- end bible -->' . "\n" ;
 

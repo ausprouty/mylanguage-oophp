@@ -5,7 +5,6 @@ $bible = new Bible();
 $bible->selectBibleByBid(6282);
 $bibleReferenceInfo = new BibleReferenceInfo();
 $bibleReferenceInfo->setFromPassage('Luke 1:1-6');
-writeLogDebug('bibleReferenceInfo', $bibleReferenceInfo);
 $passage = new BibleBrainTextJsonController($bibleReferenceInfo, $bible);
 $passage->getExternal();
 echo ($passage->getPassageText());

@@ -45,7 +45,6 @@ class BiblePassage
         try {
             $statement = $this->dbConnection->executeQuery($query, $params);
             $data = $statement->fetch(PDO::FETCH_OBJ);
-            writeLogDebug('findStoredById-'. $bpid, $data);
             if ($data){
                 $this->bpid= $data->bpid;
                 $this->referenceLocalLanguage = $data->referenceLocalLanguage;

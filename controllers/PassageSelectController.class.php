@@ -45,11 +45,9 @@ class PassageSelectController extends BiblePassage
         else{
             $this->getExternal();
         }
-        writeLogAppend('referenceLocalLanguage', $this->referenceLocalLanguage);
         $this->wrapTextDir();
     }
     private function getExternal(){
-        writeLogAppend('source', $this->bible->getSource());
         switch($this->bible->getSource()){
             case 'bible_brain':
                 $passage = new BibleBrainTextPlainController($this->bibleReferenceInfo, $this->bible);
@@ -64,12 +62,15 @@ class PassageSelectController extends BiblePassage
                 $passage = new BibleWordPassageController($this->bibleReferenceInfo, $this->bible);
                 break;
             default:
+                $this->passageText = '';
+                $this->passageUrl = '';
+                $this->referenceLocalLanguage = ' ';
+                return;
             break;
         }
         $this->passageText = $passage->getPassageText();
         $this->passageUrl = $passage->getPassageUrl();
         $this->referenceLocalLanguage = $passage->getReferenceLocalLanguage();
-        writeLogAppend('getExternal', $this->referenceLocalLanguage);
         parent::savePassageRecord($this->passageId, $this->referenceLocalLanguage,  $this->passageText, $this->passageUrl); 
     }
     private function wrapTextDir(){

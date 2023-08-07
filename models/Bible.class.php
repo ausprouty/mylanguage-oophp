@@ -165,7 +165,6 @@ class Bible {
     }
 
     public function setBestDbsBibleByLanguageCodeHL($code, $testament){
-        writeLogAppend ('bestBible', "$code   $testament");
         // 'C' for complete will be found AFTER 'NT' or 'OT'
         $dbConnection = new DatabaseConnection();
         $query = "SELECT * FROM bibles 
@@ -182,7 +181,6 @@ class Bible {
         try {
             $statement = $dbConnection->executeQuery($query, $params);
             $data = $statement->fetch(PDO::FETCH_OBJ);
-            writeLogDebug('bestBible-'. $code, $data);
             $this->setBibleValues($data);
         } catch (Exception $e) {
             echo "Error: " . $e->getMessage();
@@ -247,14 +245,10 @@ class Bible {
                 ':dateVerified' => $this->dateVerified);
             $this->dbConnection->executeQuery($query, $params);
         }
-        else{
-            writeLogAppend('addBibleBrainBible-foundBid'," $bid  - $this->externalId");
-        }
 
     }
     public function setBibleValues($data){
         if (!$data){
-            echo('no data');
             return;
         }
         $this->bid = $data->bid;

@@ -35,7 +35,6 @@ class BibleBrainPassageController extends BiblePassage {
         $url .= '?verse_start=' . $this->bibleReferenceInfo->getVerseStart() . '&verse_end=' .$this->bibleReferenceInfo->getVerseEnd();
         $passage =  new BibleBrainConnection($url);
         $this->response = $passage->response;
-        writeLogDebug('bibleBrain', $this->response);
     }
     function setPassageUrl(){
         // https://live.bible.is/bible/engesv/mat/1

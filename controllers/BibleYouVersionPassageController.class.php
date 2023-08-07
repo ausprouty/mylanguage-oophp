@@ -76,7 +76,6 @@ class BibleYouVersionPassageController extends BiblePassage {
             $short = substr($webpage, 0, $posEnd);
             $posBegin = strrpos($short , '"') + 1;
             $this->bookName = trim (substr($short, $posBegin));
-            writeLogAppend ('shortBookName', $this->bookName);
         }
         else{
             $find = 'class="book-chapter-text">';
@@ -86,7 +85,7 @@ class BibleYouVersionPassageController extends BiblePassage {
                 $posBegin = $posBegin + length($find);
                 $length = $posEnd-$posBegin;
                 $this->bookName = trim (substr($webpage, $posBegin, $length));
-                writeLogAppend ('longBookName', $this->bookName);
+
 
             }
             else{
@@ -117,6 +116,7 @@ class BibleYouVersionPassageController extends BiblePassage {
         $bibleBookAndChapter .=   $this->bibleReferenceInfo->getVerseStart() . '-'. 
                                   $this->bibleReferenceInfo->getVerseEnd() ; // GEN.1
         $chapter = str_replace('%', $bibleBookAndChapter , $this->bible->getExternalId()); // 11/%.NIV   => /111/GEN.1.NIV
+        $chapter = str_replace(' ', '%20', $chapter); // some uversion Bibles have a space in their name
         $url = 'https://www.bible.com/bible/'. $chapter;
         $webpage = new WebsiteConnection($url);
         return $webpage->response;
