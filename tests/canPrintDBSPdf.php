@@ -30,8 +30,8 @@ $dbs->setBilingualTemplate();
 $html = $dbs->getTemplate();
 
 
-//$html = file_get_contents ('c:/ampp/htdocs/mylanguage-oophp/tests/data/dbs2.html');
-
+$filename = $dbs->getPdfName();
+writeLogDebug('filename', $filename);
 
 try{
     $mpdf = new \Mpdf\Mpdf([
@@ -42,7 +42,7 @@ try{
 // Write some HTML code:
     $mpdf->WriteHTML($html);
     // Output a PDF file directly to the browser
-    $mpdf->Output();
+    $mpdf->Output($filename, 'D');
 
 } catch (\Mpdf\MpdfException $e) { // Note: safer fully qualified exception name used for catch
     // Process the exception, log, print etc.

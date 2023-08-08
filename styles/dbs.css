@@ -5,6 +5,9 @@ body{
     background-color: lightgrey;
     
 }
+body.dbs{
+    background-color: white;
+}
 .content{
     max-width: 800px;
     margin:auto;

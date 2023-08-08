@@ -8,6 +8,7 @@ class DbsBilingualTemplateController
     private  $biblePassage1;
     private  $biblePassage2;
     private  $bibleReferenceInfo;
+    private  $pdfName;
     private  $language1;
     private  $language2;
     private  $template;
@@ -27,6 +28,7 @@ class DbsBilingualTemplateController
         $this->language1-> findOneByCode('HL' , $languageCodeHL1);
         $this->language2 = new Language;
         $this->language2-> findOneByCode('HL' , $languageCodeHL2);
+        $this->pdfName = $this->language1->getName()  .'-'. $this->language2->getName() . '-DBS';
         $dbsReference = new DbsReference();
         $dbsReference->setLesson($lesson);
         $this->title = $dbsReference->getDescription();
@@ -37,6 +39,10 @@ class DbsBilingualTemplateController
     }
     public function getTemplate(){
         return $this->template;
+    }
+    public function getPdfName(){
+        writeLogAppend('getPdfName',$this->pdfName );
+        return $this->pdfName;
     }
     public function setBibleOne(Bible $bible)
     {
