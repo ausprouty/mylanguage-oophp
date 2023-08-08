@@ -19,4 +19,21 @@ $dbs->setBibleTwo($bible2);
 
 $dbs->setPassage($bibleReferenceInfo);
 $dbs->setBilingualTemplate();
-ReturnDataController::returnData($dbs->template);
+//ReturnDataController::returnData($dbs->getTemplate());
+$html =  $dbs->getTemplate();
+require_once ROOT_VENDOR .'autoload.php';
+try{
+    $mpdf = new \Mpdf\Mpdf([
+        'mode' => 'utf-8',
+        'orientation' => 'P'
+    ]);
+    $mpdf->SetDisplayMode('fullpage');
+// Write some HTML code:
+    $mpdf->WriteHTML($html);
+    // Output a PDF file directly to the browser
+    $mpdf->Output();
+
+} catch (\Mpdf\MpdfException $e) { // Note: safer fully qualified exception name used for catch
+    // Process the exception, log, print etc.
+    echo $e->getMessage();
+}

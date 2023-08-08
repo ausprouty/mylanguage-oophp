@@ -9,6 +9,7 @@ define('WEBPORT','90');
 define('CHARSET','utf8_general_ci');
 define('COLLATION','utf8_general_ci');
 define('PREFIX','');
+define ('WEB_ROOT',  '/mylanguage-oophp/');
 define ('ROOT',  '/mylanguage-oophp/');
 define ('ROOT_IMPORT_DATA', 'c:/ampp/htdocs/mylanguage-oophp/imports/data/');
 define ('ROOT_LOG', 'c:/ampp/htdocs/mylanguage-oophp/logs/');
