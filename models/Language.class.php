@@ -5,6 +5,7 @@
 class Language
 {
     private $id;
+    private $dbConnection;
     private $name;
     private $ethnicName;
     private $languageCodeBibleBrain;

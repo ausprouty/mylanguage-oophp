@@ -28,14 +28,13 @@ class DbsBilingualTemplateController
         $this->language1-> findOneByCode('HL' , $languageCodeHL1);
         $this->language2 = new Language;
         $this->language2-> findOneByCode('HL' , $languageCodeHL2);
-        $this->pdfName = $this->language1->getName()  .'-'. $this->language2->getName() . '-DBS';
+        $this->pdfName = $this->language1->getName()  .'-'. $this->language2->getName() . '-DBS#' . $lesson .'.pdf';
         $dbsReference = new DbsReference();
         $dbsReference->setLesson($lesson);
         $this->title = $dbsReference->getDescription();
         $this->bibleBlock = '';
         $this->biblePassage1 = '';
         $this->biblePassage2 = '';
-
     }
     public function getTemplate(){
         return $this->template;

@@ -1,5 +1,5 @@
 <?php
 
-$languages = new dbsLanguageController();
+$languages = new DbsLanguageController();
 $options = $languages->getOptions();
 ReturnDataController::returnData($options);

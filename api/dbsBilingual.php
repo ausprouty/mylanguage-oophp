@@ -21,6 +21,9 @@ $dbs->setPassage($bibleReferenceInfo);
 $dbs->setBilingualTemplate();
 //ReturnDataController::returnData($dbs->getTemplate());
 $html =  $dbs->getTemplate();
+ReturnDataController::returnData($html);
+/*$filename = $dbs->getPdfName();
+
 require_once ROOT_VENDOR .'autoload.php';
 try{
     $mpdf = new \Mpdf\Mpdf([
@@ -31,9 +34,11 @@ try{
 // Write some HTML code:
     $mpdf->WriteHTML($html);
     // Output a PDF file directly to the browser
-    $mpdf->Output();
+    //$mpdf->Output();
+    $mpdf->Output($filename, 'D');
 
 } catch (\Mpdf\MpdfException $e) { // Note: safer fully qualified exception name used for catch
     // Process the exception, log, print etc.
     echo $e->getMessage();
 }
+*/

@@ -8,8 +8,9 @@ class BibleYouVersionPassageController extends BiblePassage {
     private $bibleReferenceInfo;
     private $bible;
     private $bookName;
-    public $response;
+    public  $response;
     private $chapterAndVerse;
+    private $retrieveBookName;
 
     public function __construct( BibleReferenceInfo $bibleReferenceInfo, Bible $bible){
       
