@@ -28,7 +28,7 @@ class DbsBilingualTemplateController
         $this->language1-> findOneByCode('HL' , $languageCodeHL1);
         $this->language2 = new Language;
         $this->language2-> findOneByCode('HL' , $languageCodeHL2);
-        $this->pdfName = $this->language1->getName()  .'-'. $this->language2->getName() . '-DBS#' . $lesson .'.pdf';
+        $this->pdfFooter = $this->language1->getName()  .'-'. $this->language2->getName() . ' DBS #' . $lesson .'.pdf';
         $dbsReference = new DbsReference();
         $dbsReference->setLesson($lesson);
         $this->title = $dbsReference->getDescription();
@@ -39,9 +39,9 @@ class DbsBilingualTemplateController
     public function getTemplate(){
         return $this->template;
     }
-    public function getPdfName(){
-        writeLogAppend('getPdfName',$this->pdfName );
-        return $this->pdfName;
+    public function getPdfFooter(){
+        writeLogAppend('getPdfName',$this->pdfFooter );
+        return $this->pdfFooter;
     }
     public function setBibleOne(Bible $bible)
     {
@@ -57,9 +57,10 @@ class DbsBilingualTemplateController
         $this->biblePassage1= new PassageSelectController ($this->bibleReferenceInfo, $this->bible1);
         $this->biblePassage2= new PassageSelectController ($this->bibleReferenceInfo, $this->bible2);
     }
-    public function setBilingualTemplate()
+
+    public function setBilingualTemplate($template = 'bilingualDbs.template.html')
     {
-        $file = ROOT_TEMPLATES . 'bilingualDbs.template.html';
+        $file = ROOT_TEMPLATES . $template;
         if (!file_exists($file)){
             return null;
         }
@@ -78,6 +79,8 @@ class DbsBilingualTemplateController
         $this->template = str_replace('{{Title}}', $this->title,$this->template);
         $this->template= str_replace ('{{dir_language1}}', $this->language1->getDirection(), $this->template);
         $this->template= str_replace ('||dir_language2||', $this->language2->getDirection(), $this->template);
+        $this->template= str_replace ('{{pdfName}}', $this->getPdfFooter() , $this->template);
+
         writeLogDebug('template-76', $this->template);
         foreach ($this->translation1 as $key => $value){
             $find= '{{' . $key . '}}';

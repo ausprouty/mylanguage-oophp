@@ -38,4 +38,10 @@ class DbsLanguageController{
             return null;
         }
     }
+    static function dbsPublicFilename($languageCodeHL1, $languageCodeHL2, $lesson){
+        $lang1 = Language::getEnglishNameFromCodeHL($languageCodeHL1);
+        $lang2 = Language::getEnglishNameFromCodeHL($languageCodeHL2);
+        $title = $lang1 . '-' . $lang2 . 'DBS#'. $lesson . '.pdf';
+        return trim($title);
+    }
 }

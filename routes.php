@@ -24,6 +24,7 @@ post(WEB_ROOT . 'api/secure/bibles/weight/change', 'api/secure/bibleWeightChange
 
 
 get(WEB_ROOT . 'api/dbs/view/$lesson/$languageCodeHL1/$languageCodeHL2', 'api/dbsBilingualView.php');
+get(WEB_ROOT . 'api/dbs/drupal/view/$lesson/$languageCodeHL1/$languageCodeHL2', 'api/dbsBilingualViewDrupal.php');
 get(WEB_ROOT . 'api/dbs/pdf/$lesson/$languageCodeHL1/$languageCodeHL2', 'api/dbsBilingualPdf.php');
 get(WEB_ROOT . 'api/dbs/$lesson/$languageCodeHL', 'api/dbs.php');
 

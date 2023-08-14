@@ -27,9 +27,9 @@ if (!file_exists(ROOT_DBS_PDF . $filename)){
     }
     
 }
-$url = WEBADDRESS_DBS_PDF . $filename;
-writeLogDebug('url', $url);
-ReturnDataController::returnData($url);
+$response['pdf'] = WEBADDRESS_DBS_PDF . $filename;
+$response['name'] = DbsLanguageController::dbsPublicFilename( $languageCodeHL1, $languageCodeHL2, $lesson );
+ReturnDataController::returnData($response);
 
 
 function createDbsForPdf ($languageCodeHL1, $languageCodeHL2, $lesson){

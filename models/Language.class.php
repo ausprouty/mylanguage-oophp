@@ -77,6 +77,24 @@ class Language
 
 
     }
+    static function getEnglishNameFromCodeHL ($languageCodeHL){
+        $dbConnection = new DatabaseConnection();
+        $query = "SELECT name
+            FROM hl_languages
+            WHERE languageCodeHL = :languageCodeHL
+            LIMIT 1";
+        $params = array(':languageCodeHL'=>$languageCodeHL);
+        try {
+            $statement = $dbConnection->executeQuery($query, $params);
+            $languageCodeIso = $statement->fetch(PDO::FETCH_COLUMN);
+            return $languageCodeIso;
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return null;
+        }
+
+
+    }
     public function getName() {
         return $this->name;
     }
