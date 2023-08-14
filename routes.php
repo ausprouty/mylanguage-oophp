@@ -23,8 +23,8 @@ post(WEB_ROOT . 'api/passage/text', 'api/passageForBible.php');
 post(WEB_ROOT . 'api/secure/bibles/weight/change', 'api/secure/bibleWeightChange.php');
 
 
-get(WEB_ROOT . 'api/dbs/$lesson/$languageCodeHL1/$languageCodeHL2', 'api/dbsBilingual.php');
-get(WEB_ROOT . 'api/dbs2/$lesson/$languageCodeHL1/$languageCodeHL2', 'api/dbsBilingual2.php');
+get(WEB_ROOT . 'api/dbs/view/$lesson/$languageCodeHL1/$languageCodeHL2', 'api/dbsBilingualView.php');
+get(WEB_ROOT . 'api/dbs/pdf/$lesson/$languageCodeHL1/$languageCodeHL2', 'api/dbsBilingualPdf.php');
 get(WEB_ROOT . 'api/dbs/$lesson/$languageCodeHL', 'api/dbs.php');
 
 // Index

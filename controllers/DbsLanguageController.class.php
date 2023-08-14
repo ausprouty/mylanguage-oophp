@@ -27,7 +27,8 @@ class DbsLanguageController{
         $dbConnection = new DatabaseConnection();
         $query = "SELECT dbs_languages.*, hl_languages.name,  hl_languages.ethnicName
                   FROM dbs_languages INNER JOIN hl_languages
-                  ON dbs_languages.languageCodeHL = hl_languages.languageCodeHL";
+                  ON dbs_languages.languageCodeHL = hl_languages.languageCodeHL
+                  ORDER BY hl_languages.name";
         try {
             $statement = $dbConnection->executeQuery($query);
             $data = $statement->fetchAll(PDO::FETCH_ASSOC);

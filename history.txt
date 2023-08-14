@@ -1,4 +1,6 @@
 
 installed composer to ampp/php
 
+you can make qr codes with https://phpqrcode.sourceforge.net/index.php#demo
+
 composer require mpdf/mpdf
