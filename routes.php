@@ -34,7 +34,7 @@ get('/remote', 'views/indexRemote.php');
 get('/', 'views/index.php');
 
 // Imports
-
+get(WEB_ROOT . 'import/tracts', 'imports/updateBilingualTracts.php');
 get(WEB_ROOT . 'import/bible/languages', 'imports/addHLCodeToBible.php');
 get(WEB_ROOT . 'import/bibleBookNames/languages', 'imports/addHLCodeToBibleBookNames.php');
 get(WEB_ROOT . 'import/biblebrain/setup', 'imports/clearBibleBrainCheckDate.php');

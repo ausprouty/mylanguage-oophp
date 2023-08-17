@@ -11,6 +11,7 @@ class DbsBilingualTemplateController
     private  $pdfName;
     private  $language1;
     private  $language2;
+    private  $lesson;
     private  $template;
     private  $title;
     private  $translation1;
@@ -19,7 +20,9 @@ class DbsBilingualTemplateController
    
 
     public function __construct( string $languageCodeHL1, string $languageCodeHL2, $lesson)
-    {   $translation1 = new Translation($languageCodeHL1, 'dbs');
+    {   
+        $this->lesson = $lesson;
+        $translation1 = new Translation($languageCodeHL1, 'dbs');
         $this->translation1=  $translation1->translation;
         $translation2 = new Translation($languageCodeHL2, 'dbs');
         $this->translation2= $translation2->translation;
@@ -28,7 +31,7 @@ class DbsBilingualTemplateController
         $this->language1-> findOneByCode('HL' , $languageCodeHL1);
         $this->language2 = new Language;
         $this->language2-> findOneByCode('HL' , $languageCodeHL2);
-        $this->pdfFooter = $this->language1->getName()  .'-'. $this->language2->getName() . ' DBS #' . $lesson .'.pdf';
+        $this->pdfFooter = setPdfFooter();
         $dbsReference = new DbsReference();
         $dbsReference->setLesson($lesson);
         $this->title = $dbsReference->getDescription();
@@ -50,6 +53,10 @@ class DbsBilingualTemplateController
     public function setBibleTwo(Bible $bible)
     {
         $this->bible2=$bible;
+    }
+    private function setPdfFooter(){
+        $this->pdfFooter = $this->language1->getName()  .'-'. $this->language2->getName() . ' DBS #' . $this->lesson .'.pdf';
+
     }
     public function setPassage(BibleReferenceInfo $bibleReferenceInfo)
     {
